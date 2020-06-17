@@ -1,0 +1,129 @@
+﻿@{
+    Layout = "";
+    var appSession = ViewBag.Session as EasyAssetManagerCore.Model.CommonModel.AppSession;
+
+}
+<html>
+<head runat="server">
+    <title></title>
+    <style type="text/css">
+        body {
+            margin: 0mm;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11px;
+        }
+
+        .print_area {
+            float: left;
+            width: 280mm;
+            margin-left: 35mm;
+        }
+
+        .print_header {
+            width: 100%;
+            float: left;
+            margin-top: 7mm;
+        }
+
+            .print_header span {
+                margin-left: 80mm;
+            }
+
+        .print_left {
+            width: 205mm;
+            float: left;
+            margin-top: 7.5mm;
+            line-height: 3.9;
+        }
+
+        .print_right {
+            float: left;
+            width: 70mm;
+            margin-top: -10px;
+            line-height: 2;
+        }
+
+        .float_left {
+            clear: both;
+            float: left;
+        }
+
+        .print_right_add {
+            float: left;
+            width: 70mm;
+            margin-top: 90px;
+            margin-left: -100px;
+            font-size: 13px;
+            line-height: 2;
+        }
+    </style>
+</head>
+
+<body class="receipt">
+    @if (appSession != null && appSession.TransactionSession != null && appSession.TransactionSession.UbsTransactionRefNo != null)
+    {
+        string header = "";
+        switch (appSession.TransactionSession.TransactionType)
+        {
+            case "01": header = "Deposit"; break;
+            case "02": header = "Withdraw"; break;
+            case "03": header = "Bill Payment Cash"; break;
+            case "04": header = "Bill Payment Account"; break;
+            case "05": header = "Fund Transfer Within EBL"; break;
+            case "06": header = "Fund Transfer Other Bank"; break;
+            case "07": header = "Remittance"; break;
+            default: header = ""; break;
+        }
+
+        <div class="print_area">
+            <div class="print_header"><label>@header</label></div>
+            <div class="print_left">
+                <label>@System.DateTime.Now.ToString("dd-MMM-yyyy hh:mm:ss tt")</label><br />
+                <label>@appSession.TransactionSession.TransactionID</label><br />
+                <label>@appSession.User.user_name</label><br />
+                <label>@appSession.TransactionSession.TransactionAccountDesc</label><br />
+                <label>@appSession.TransactionSession.TransactionAccountNo</label><br />
+                <label>@appSession.TransactionSession.TransactionAmount</label><br />
+                <label>Service Charge: @appSession.TransactionSession.TransactionCharge</label><br />
+                <label>VAT on Service Charge:  @appSession.TransactionSession.TransactionChargeVat</label><br />
+                <label>Total Amount:  @appSession.TransactionSession.TransactionTotalAmount</label><br />
+            </div>
+
+            <div class="print_right">
+                <label>@appSession.User.agent_name</label><br />
+                <label>@appSession.User.outlet_name</label><br />
+                <label style="width:64mm">@appSession.User.address</label><br />
+            </div>
+
+            <div class="print_right_add">
+                @if (appSession.TransactionSession.TransactionType == "01")
+                {
+                    <label>Bearer Type: @appSession.TransactionSession.BearerTypeDesc</label><br />
+                    if (appSession.TransactionSession.BearerType == "02")
+                    {
+
+                        <label>Bearer CIF: @appSession.TransactionSession.TransactionCustomerNo</label><br />
+                    }
+                }
+
+                @if (appSession.TransactionSession.TransactionType == "05")
+                {
+
+                    <label>Beneficiary Account No: @appSession.TransactionSession.AlternetAccountNo</label><br />
+                    <label>Beneficiary Title: @appSession.TransactionSession.AlternetAccountDesc</label><br />
+                }
+
+                @if (appSession.TransactionSession.TransactionType == "07")
+                {
+                    //TODO: Sender Name & Sender Country
+                    <label>Sender’s Name: @appSession.TransactionSession.AlternetAccountNo</label><br />
+                    <label>Sender’s Country: @appSession.TransactionSession.TransactionCustomerNo</label><br />
+
+                }
+
+            </div>
+        </div>
+    }
+</body>
+</html>
+

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<EasyAssetManagerCore.Models.EntityModel.WorkflowDetail>
+@{
+    Layout = null;
+}
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped table-bordered table-hover dataTables-example table-responsive" id="tb-accreq">
+        <thead>
+            <tr>
+                <th> Ref No</th>
+                <th> Service Type</th>
+                <th> Acc No</th>
+                <th> Account Name</th>
+                <th> Amount</th>
+                <th> Remarks</th>
+                <th> UBS Ref No</th>
+                <th> Ref Remarks</th>
+                <th> Effect Date</th>
+                <th> Request By</th>
+                <th> Request Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var v in Model)
+            {
+            <tr>
+                <td>@v.wf_slno</td>
+                <td>@v.wf_desc</td>
+                <td>@v.cust_ac_no</td>
+                <td>@v.ac_desc</td>
+                <td>@v.amount </td>
+                <td>@v.remarks</td>
+                <td>@v.wf_ref_no</td>
+                <td>@v.wf_resp_dtl</td>
+                <td>@v.wf_eff_date</td>
+                <td>@v.ins_by</td>
+                <td>@v.ins_date</td>                
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+else 
+{
+    <p>No record found.</p>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        ApplicationCommon.makePagination("tb-accreq");
+
+        var rowCount = $('#tb-accreq >tbody >tr').length;
+        if (rowCount > 0) {
+            $("#sidebarCollapse").addClass('fa-chevron-down').removeClass('fa-chevron-up');
+            $("#divsidebarCollapse").addClass('border-bottom');
+            $('#sidebarContent').css('display', 'none');
+        }
+    });
+</script>

@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "Limit Package List";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox " id="iboxTbl">
+                <div class="ibox-title">
+                    <h5>Limit Package Management</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="iboxTblImg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="iboxContent">
+                    <div id="div_limitPackageList">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <environment names="Development,Staging,Production">
+        <link rel="stylesheet" href="~/ApplicationTheme/lib/sweetalert/dist/sweetalert.css" />
+    </environment>
+}
+@section scripts{
+    <script src="~/ApplicationTheme/lib/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        var classLimitPackageList = function () {
+            var init = function () {
+                eventInitializer();
+
+            };
+            var eventInitializer = function () {
+                searchInitiate();
+            };
+            var editdata = function (limit_id) {
+                window.open("/LimitPackage/Index?limitId=" + limit_id, '_blank');
+                //window.location.href = "/LimitPackage/Index?limitId=" + limit_id;
+            };
+            var viewdata = function (limit_id) {
+                window.open("/LimitPackage/LimitPackageView?limitId=" + limit_id, '_blank');
+               // window.location.href = "/LimitPackage/LimitPackageView?limitId=" + limit_id;
+            };
+            var deletedata = function (limit_id) {
+                swal({
+                    title: "Are you sure?",
+                    text: "Do you really want to delete this package?(Yes/No)",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes",
+                    closeOnConfirm: false
+                }, function () {
+
+                    var formData = new FormData();
+                    formData.append("limitId", limit_id);
+                    var url = '/LimitPackage/DeletLimitPackage';
+                    ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res) {
+                        ApplicationCommon.showNotification(res.messageType, res.messageString);
+                        swal.close();
+                        if (res.messageType == 1) {
+                            searchInitiate();
+                        }
+                    });
+
+                });
+
+            };
+            var searchInitiate = function () {
+                $('#div_limitPackageList').empty();
+                var url = '/LimitPackage/LimitPackageListPartial';
+                $('#div_limitPackageList').load(url);
+            };
+            return { init: init, editdata: editdata, viewdata: viewdata, deletedata: deletedata };
+        }();
+
+        classLimitPackageList.init();
+
+    </script>
+}
+
+
+

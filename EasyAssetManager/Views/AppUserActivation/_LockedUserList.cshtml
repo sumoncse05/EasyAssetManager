@@ -1,0 +1,103 @@
+﻿@model IEnumerable<EasyAssetManagerCore.Models.EntityModel.User>
+@{
+    Layout = null;
+}
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped table-bordered table-hover dataTables-example" id="tb-accinactveuser">
+        <thead>
+            <tr>
+                <th class="collapse">Actv Slno</th>
+                <th>User ID</th>
+                <th>User Name</th>
+                <th>Inactive Reason</th>
+                <th>Inactive By</th>
+                <th>Inactive Date</th>
+                <th> Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var v in Model)
+            {
+                <tr>
+                    <td class="collapse">@v.ACTV_SLNO</td>
+                    <td>@v.USER_ID</td>
+                    <td>@v.USER_NAME</td>
+                    <td>@v.INACTIVE_REASON</td>
+                    <td>@v.INACTV_BY </td>
+                    <td>@v.INACTV_DATE</td>
+                    <td>
+                        <button type="button" class="btn btn-success gridButton" onclick="showUpdatedata('@v.ACTV_SLNO','@v.USER_ID','@v.USER_NAME');" data-id="@v.ACTV_SLNO">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </td>                    
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No record found.</p>
+}
+<div class="modal fade" id="updateData" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update User Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label class="col-form-label">User ID</label>
+                        <input type="text" id="user_id" name="user_id" class="form-control form-element" readonly="readonly" />
+                        <input type="hidden" id="actv_slno" name="actv_slno" class="form-element" />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">User Name</label>
+                        <input type="text" id="user_name" name="user_name" class="form-control form-element" readonly="readonly" />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Status<span class="required">*</span></label>
+                        <select class="form-control form-element" id="user_status" name="user_status" data-validation-error-msg="Select status to continue" data-validation="alphanumeric">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Reason<span class="required">*</span></label>
+                        <textarea id="inactive_reason" name="inactive_reason" class="form-control form-element required"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <input type="button" value="Update" class="btn btn-primary ks-next" onclick="classInactiveUserSearch.Updatedata()" id="btnUpdate">
+                <input type="button" value="Close" class="btn btn-danger ks-next" data-dismiss="modal" id="btnClose">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        combo.getUserActiveStatus('user_status', true);
+        $("#user_status option[value='N']").remove();
+        ApplicationCommon.makePagination("tb-accinactveuser");
+
+        var rowCount = $('#tb-accinactveuser >tbody >tr').length;
+        if (rowCount > 0) {
+            $("#sidebarCollapse").addClass('fa-chevron-down').removeClass('fa-chevron-up');
+            $("#divsidebarCollapse").addClass('border-bottom');
+            $('#sidebarContent').css('display', 'none');
+        }
+    });
+    function showUpdatedata(actv_slno, user_id, user_name) {
+        $('#updateData').modal('show');
+        $("#actv_slno").val(actv_slno);
+        $("#user_id").val(user_id);
+        $("#user_name").val(user_name);
+    };
+    
+</script>
+

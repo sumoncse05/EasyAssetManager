@@ -1,0 +1,63 @@
+﻿@model IEnumerable<EasyAssetManagerCore.Models.EntityModel.AccountOpeningReq>
+@{
+    Layout = null;
+}
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped table-bordered table-hover dataTables-example table-responsive" id="tb-AccountAuthorize" width="100%">
+        <thead>
+            <tr>
+                <th>SL No.</th>
+                <th>Account Name</th>
+                <th>Cheque Book</th>
+                <th>Debit Card</th>
+                <th>Remarks</th>
+                <th>Ins By</th>
+                <th>Ins Date</th>
+                <th>Authorize</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var v in Model)
+            {
+                <tr>
+                    <td>@v.ac_reg_slno</td>
+                    <td>@v.ac_name</td>
+                    <td>@v.cheque_book </td>
+                    <td>@v.debit_card</td>
+                    <td>@v.remarks</td>
+                    <td>@v.ins_by</td>
+                    <td>@v.ins_date</td>
+                    @if (string.IsNullOrEmpty(v.auth_date))
+                    {
+                        <td>
+                            <button type="button" class="btn btn-success gridButton" onclick="authorize('@v.ac_reg_slno');" data-id="@v.ac_reg_slno">
+                                <i class="fa fa-check"></i>
+                            </button>
+                        </td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No record found.</p>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        ApplicationCommon.makePagination('tb-AccountAuthorize');
+    });
+
+    function authorize(ac_reg_slno) {
+        window.open("/AccountOpening/AccountAuthorizePreview?ac_reg_slno=" + ac_reg_slno, '_blank');
+    };
+
+</script>
+
+

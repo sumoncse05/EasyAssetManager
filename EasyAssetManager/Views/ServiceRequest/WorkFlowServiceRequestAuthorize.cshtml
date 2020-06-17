@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewData["Title"] = " Authorize Service Request";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="ibox" id="divsidebarCollapse">
+                <div class="ibox-title">
+                    <h5>Search Parameters</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="sidebarCollapse"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="sidebarContent">
+                    <form id="stepProcess" action="#" class="wizard-big">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group row">
+                                        <div class="col-xl-2"></div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Service Type</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <select class="form-control form-element required" id="wf_type" name="wf_type"></select>
+                                        </div>
+                                        <div class="col-xl-5"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-2"></div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Request ID</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="wfslno" name="wfslno" class="form-control form-element" />
+                                        </div>
+                                        <div class="col-xl-5"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-5"></div>
+                                        <div class="col-xl-2">
+                                            <button type="button" class="btn btn-primary" id="search">Search</button>
+                                        </div>
+                                        <div class="col-xl-3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox " id="iboxTbl">
+                <div class="ibox-title">
+                    <h5>Existing Service Request</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="iboxTblImg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="iboxContent">
+                    <div id="div-ServiceRequestAuthorize"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        var classServiceRequestSearch = function () {
+            var init = function () {
+                eventInitializer();
+
+            };
+            var eventInitializer = function () {
+                combo.getGetWorkflowType("wf_type", '/Common/GetWorkflowType', true);
+                $('#search').click(searchInitiate);
+            };
+            var searchInitiate = function () {
+                //if ($('#wfslno').val() == '' && $('#wf_type').val() == '') {
+                //    ApplicationCommon.showNotification("2", "Please provide atleast one parameter to search.");
+                //}
+                //else {
+                    var wfslno = $('#wfslno').val();
+                    $('#div-ServiceRequestAuthorize').empty();
+                    var url = '/ServiceRequest/GetUnauthWorkflowRequest';
+                    $('#div-ServiceRequestAuthorize').load(url + '?wfslno=' + wfslno );
+                //}
+            };
+        var submitAuthorize=function(){
+                var wfslno = $("#lblWfSlno").val();
+                var wf_ref_no = $("#txtWfRefNo").val();
+                var wf_type = $("#hf_wftype").val();
+               var wf_resp_dtl = $("#txtResponseDtl").val();
+         if (!wf_ref_no) {
+         ApplicationCommon.showNotification(2, "Invalid reference no. Please check again.");
+            $("#txtWfRefNo").focus();
+            return false;
+        }
+        if ($("#lblWfAcName").text() == "") {
+        ApplicationCommon.showNotification(2, "Invalid Account name. Please check again.");
+            $("#txtWfRefNo").focus();
+            return false;
+        }
+		if (wf_type != "01" && wf_type != "02") {
+            if ($('#lblAcDesc').text() != $('#lblWfAcName').text()) {
+        ApplicationCommon.showNotification(2, "Invalid account name. Please check again.");
+                $("#txtWfRefNo").focus();
+                return false;
+            }
+        }
+        if (!wf_resp_dtl) {
+        ApplicationCommon.showNotification(2, "Please input remarks.");
+            $("#txtResponseDtl").focus();
+            return false;
+        }
+                var formData = new FormData();
+                formData.append("wfslno", wfslno);
+                formData.append("wf_ref_no", wf_ref_no);
+                formData.append("wf_type", wf_type);
+                formData.append("wf_resp_dtl", wf_resp_dtl);
+                var url = '/ServiceRequest/AuthorizeServiceRequest';
+                ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res) {
+                    ApplicationCommon.showNotification(res.messageType, res.messageString);
+                });
+        };
+            return { init: init,submitAuthorize:submitAuthorize};
+        }();
+
+        classServiceRequestSearch.init();
+
+    </script>
+}

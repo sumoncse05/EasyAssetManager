@@ -1,0 +1,448 @@
+﻿
+@{
+    ViewData["Title"] = "Register Customer";
+}
+
+<style>
+    .wizard-big.wizard > .content {
+        min-height: 430px !important;
+    }
+</style>
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox-title">
+                <h5>Register Customer in Agent Banking</h5>
+            </div>
+            <div class="ibox">
+                <div class="ibox-content">
+                    <form id="stepProcessRegisterCustomer" action="#" class="wizard-big">
+                        <h1>Verification</h1>
+                        <fieldset>
+                            <legend>Confirm Customer for Verification</legend>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Customer No (CIF) <span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control form-element required" id="customer_no" name="customer_no">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-primary" id="btnSearch" type="button">Search</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Customer Birth Date <span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <div class="input-group date">
+                                                <input class="form-control form-element required" type="text" id="date_of_birth" name="date_of_birth" placeholder="dd/mm/yyyy" data-mask="99/99/9999">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Customer Mobile <span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="mobile_number" name="mobile_number" class="form-control form-element required" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <h1>OTP</h1>
+                        <fieldset>
+                            <legend>Verify OTP</legend>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-xl-1">
+                                            <label class="col-form-label">OTP <span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <input type="password" id="otp" name="otp" class="form-control form-element required" />
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <input type="button" value="Re-Send SMS OTP" class="btn btn-default" id="btnReSendOtp">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <h1>Customer</h1>
+                        <fieldset>
+                            <legend>Customer Details</legend>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Customer No (CIF)</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="Vcustomer_no" name="Vcustomer_no" class="form-control form-element" readonly="readonly" />
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Customer Name</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="Vcustomer_name" name="Vcustomer_name" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Father Name</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="Vfather_name" name="Vfather_name" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Mother Name</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="Vmother_name" name="Vmother_name" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Customer Birth Date</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="Vdate_of_birth" name="Vdate_of_birth" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Customer NID</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="Vnid" name="Vnid" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Customer Mobile</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="Vmobile_number" name="Vmobile_number" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Photo</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <img src="~/ApplicationTheme/assets/img/no-photo.jpeg" id="custImageVal" width="150" height="120" name="custImageVal" />
+                                            <input type="hidden" id="oldpic" name="oldpic" class="form-control" />
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <div id="webCam"></div>
+                                        </div>
+                                        <div class="col-xl-1">
+                                            <input type="button" value="Capture" class="btn btn-default" id="btnCapture">
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <img src="~/ApplicationTheme/assets/img/no-photo.jpeg" id="webcampicurl" name="webcampicurl" width="150" height="120" />
+                                            <input type="hidden" id="webcampic" name="webcampic" class="form-control form-element" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Finger Enroll Status:</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" class="form-control" id="lblOtpStatus" name="lblOtpStatus" value="Not Yet Enrolled" style="color:red;" />
+
+                                        </div>
+                                        <div class="col-xl-1">
+                                            <img id="btnCheck" src="~/ApplicationTheme/assets/img/refresh_stopped.gif" style="cursor: pointer !important;" alt="EnrollStatus" width="48" height="48" title="Click to Check Status" />
+                                            
+                                        </div>
+
+                                        <div class="col-xl-2">
+                                        
+                                            <input type="button" value="Re-Generate Request" class="btn btn-default" id="btnGenerate">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <h1>Status</h1>
+                        <fieldset>
+                            <legend>Complete Status</legend>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-xl-3">
+                                            <label class="col-form-label">Registration Ref. No.</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="TransactionId" name="TransactionId" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <div style="text-align:right" id="page1">
+                        <input type="button" value="Submit" class="btn btn-primary ks-next" id="firstPage">
+                    </div>
+                    <div style="text-align:right" id="page2">
+                        <input type="button" value="Previous" class="btn btn-primary ks-previous" id="secondPagePrevious">
+                        <input type="button" value="Next" class="btn btn-primary ks-next" id="secondPage">
+                    </div>
+                    <div style="text-align:right" id="page3">
+                        <input type="button" value="Previous" class="btn btn-primary ks-previous" id="thirdPagePrevious">
+                        <input type="button" value="Next" class="btn btn-primary ks-next" id="thirdPage">
+                    </div>
+                    <div style="text-align:right" id="page4">
+                        <input type="button" value="OK" class="btn btn-primary ks-next" id="finalPage">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles {
+    <link rel="stylesheet" href="~/ApplicationTheme/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
+}
+@section scripts{
+    <script src="~/ApplicationTheme/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+    <script src="~/ApplicationTheme/webcamjs/webcam.js"></script>
+    <script type="text/javascript">
+        var classCustomerRegistration = function () {
+            var formId = "stepProcessRegisterCustomer";
+            var init = function () {
+                ApplicationCommon.initialStep(formId, 4);
+                eventInitializer();
+               //// $('#webcampicurl').hide();
+               ////// $('#webCam').show();
+               // $('#btnCapture').show();
+                Webcam.set({
+                    width: 150,
+                    height: 120,
+                    image_format: 'jpeg',
+                    jpeg_quality: 90
+                });
+                Webcam.attach('#webCam');
+                $('#page1').show();
+                Webcam.on('error', function (err) {
+                    ApplicationCommon.showNotification("2", "WebCam not Running. Please Check.");
+                    $('#page1').hide();
+                });
+
+
+
+                validation(formId);
+                $('.input-group.date').datepicker({
+                    todayBtn: "linked",
+                    keyboardNavigation: false,
+                    forceParse: false,
+                    calendarWeeks: true,
+                    autoclose: true,
+                    format: 'd/m/yyyy',
+                });
+            };
+            var eventInitializer = function () {
+                $('#firstPage').click(customerSubmit);
+                $('#secondPage').click(nextMove);
+                $('#secondPagePrevious').click(previousMove);
+                $('#thirdPage').click(next2Move);
+                $('#thirdPagePrevious').click(previous2Move);
+                $('#btnCapture').click(captureWebcamPhoto);
+                $('#finalPage').click(finalSubmit);
+                $('#btnCheck').click(getFingerEnrollStatus);
+                $('#btnReSendOtp').click(reSendOtp);
+                $('#btnGenerate').click(reGenerateFingurePrintStatus);
+                $('#btnSearch').click(function () {
+                    ApplicationCommon.showCustomerModal('customer_no', 'classCustomerRegistration.getCustomerInfo');
+                });
+            };
+            var customerSubmit = function () {
+                if (ApplicationCommon.isValidForm(formId)) {
+                    var customer = ApplicationCommon.getData('form-element');
+                    var url = '/Customer/CustomerRegistrationInitialization';
+                    ApplicationCommon.request(url, 'POST', customer, false, true, false, function (res) {
+                        if (res.messageType == 1) {
+                            ApplicationCommon.nextForword(formId, 1, true);
+                        } else {
+                            ApplicationCommon.showNotification(res.messageType, res.messageString);
+                        }
+                    });
+                }
+
+            };
+            var getCustomerInfo = function () {
+
+            };
+            var captureWebcamPhoto = function () {
+                Webcam.snap(function (data_uri) {
+                    $('#webcampicurl').attr('src', data_uri);
+
+                    Webcam.upload(data_uri,
+                        '/Customer/PhotoUpload',
+                        function (code, text) {
+                           //// $('#webcampicurl').show();
+                            $('#webcampic').val(text.replace(/\"/g, ""));
+                          ////  $('#webCam').hide();
+                          ////  $('#btnCapture').hide();
+                        });
+                });
+
+            };
+            var reSendOtp = function () {
+                var url = '/Customer/ResendOtp';
+                ApplicationCommon.request(url, 'POST', {}, false, true, false, function (res) {
+                    ApplicationCommon.showNotification(res.messageType, res.messageString);
+
+                });
+            };
+            var next2Move = function () {
+                var captureImagePath = $('#webcampic').val();
+                var olpicUrl = $('#oldpic').val();
+                var formData = new FormData();
+                formData.append("captureImagePath", captureImagePath);
+                formData.append("olpicUrl", olpicUrl);
+
+                var url = '/Customer/FingurePrintAndWebCamImageSave';
+                ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res) {
+                    ApplicationCommon.showNotification(res.message.messageType, res.message.messageString);
+                    if (res.message.messageType == 1) {
+                        ApplicationCommon.nextForword(formId, 3, true);
+                        $('#TransactionId').val(res.transactionID);
+
+                    }
+                });
+            };
+            var nextMove = function () {
+                var otp = $('#otp').val();
+                if (ApplicationCommon.isValidForm(formId)) {
+                    var formData = new FormData();
+                    formData.append("otp", otp);
+                    var url = '/Customer/VerifyOtp';
+                    ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res) {
+                        if (res.message.messageType == 1) {
+                            ApplicationCommon.nextForword(formId, 2, true);
+  
+                            ApplicationCommon.setVData(res, null);
+                            if (res.customerImage) {
+                                $('#custImageVal').attr('src', "\\" + res.customerImage.imageUrl);
+                                $('#oldpic').val(res.customerImage.imageUrl);
+                            }
+
+                        } else {
+                            ApplicationCommon.showNotification(res.message.messageType, res.message.messageString);
+                        }
+                    });
+                }
+            };
+            var previousMove = function () {
+                ApplicationCommon.nextForword(formId, 0, false);
+            };
+            var previous2Move = function () {
+                ApplicationCommon.nextForword(formId, 1, false);
+            };
+            var finalSubmit = function () {
+                ApplicationCommon.clearFields();
+                $('#webcampicurl').attr('src', "/ApplicationTheme/assets/img/no-photo.jpeg");
+                $('#custImageVal').attr('src', "/ApplicationTheme/assets/img/no-photo.jpeg");
+                var url = '/Customer/ClearRegistrationSession';
+                ApplicationCommon.request(url, 'POST', {}, false, true, false, function (res) {
+                    window.location.reload(false);
+                });
+            };
+            var getFingerEnrollStatus = function () {
+                var url = '/Customer/GetFingerEnrollStatus';
+                ApplicationCommon.request(url, 'POST', {}, false, true, false, function (res) {
+                    if (res.pvc_status == "40999") {
+                        if (res.pvc_statusmsg == "S") {
+                            $("#lblOtpStatus").css("color", "Green");
+                            $("#lblOtpStatus").val('Enrolled Successfully');
+                            $("#btnGenerate").hide();
+                            $("#btnGenerate").hide();
+                        }
+                        else if (res.pvc_statusmsg == "E") {
+                            $("#lblOtpStatus").css("color", "Red");
+                            $("#lblOtpStatus").val('Enroll Failed');
+                        } else {
+                            $("#lblOtpStatus").css("color", "Red");
+                            $("#lblOtpStatus").val('Not Yet Enrolled');
+                        }
+                        $("#btnCheck").attr("src", "/ApplicationTheme/assets/img/refresh.gif");
+                    } else {
+                        $("#lblOtpStatus").css("color", "Red");
+                        $("#lblOtpStatus").val('Invalid Registration');
+                    }
+                });
+            }
+            var reGenerateFingurePrintStatus = function () {
+                var url = '/Customer/ReGenerateFingerRequest';
+                ApplicationCommon.request(url, 'POST', {}, false, true, false, function (res) {
+                    ApplicationCommon.showNotification(res.messageType, res.messageString);
+                });
+            };
+            var validation = function (formId) {
+                $('#' + formId).validate({
+                    rules: {
+                        customer_no: {
+                            required: true,
+                            digits: true
+                        },
+                        date_of_birth: {
+                            required: true
+                        },
+                        mobile_number: {
+                            required: true,
+                            digits: true,
+                            maxlength: 11,
+                            minlength: 11
+                        },
+                        otp: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        customer_no: {
+                            required: "Enter customer no to continue",
+                            digits: "Customer no must be numeric"
+                        },
+                        date_of_birth: {
+                            required: "Enter valid birth date to continue"
+                        },
+                        mobile_number: {
+                            required: "Enter customer mobile to continue",
+                            digits: "Customer mobile must be numeric",
+                            maxlength: "Customer mobile must be 11 digits",
+                            minlength: "Customer mobile must be 11 digits"
+                        },
+                        otp: {
+                            required: "Enter sms otp to continue"
+                        }
+                    }
+
+                });
+            };
+            return { init: init, getCustomerInfo: getCustomerInfo };
+        }();
+
+        classCustomerRegistration.init();
+
+    </script>
+}
+
+
+
+

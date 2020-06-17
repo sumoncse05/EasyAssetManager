@@ -1,0 +1,377 @@
+﻿
+@{
+    ViewData["Title"] = " Bill Payment in Cash";
+}
+<style>
+    .wizard-big.wizard > .content {
+        min-height: 380px !important;
+    }
+</style>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox-title">
+                <h5>Bill Payment in Cash</h5>
+            </div>
+            <div class="ibox">
+                <div class="ibox-content">
+                    <form id="stepProcessBillPayment" action="#" class="wizard-big">
+                        <h1>Transaction</h1>
+                        <fieldset>
+                            <legend>Transaction Details</legend>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Select A Biller: <span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <select id="biller_id" name="biller_id" class="form-control form-element required"></select>
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Customer Name:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" class="form-control form-element" id="customerName" name="customerName">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Customer Gender:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <select id="sex" name="sex" class="form-control form-element"></select>
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Customer Type: <span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <select id="customerType" name="customerType" class="form-control form-element required"></select>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Customer Account in EBL: </label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="customerAccount" name="customerAccount" class="form-control form-element" />
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Customer Mobile:<span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="customerMobile" name="customerMobile" class="form-control form-element required" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Card No:<span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="bill_ref_no" name="bill_ref_no" class="form-control form-element required" />
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Bill Details: </label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="billDetails" name="billDetails" class="form-control form-element" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Bill Date:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <div class="input-group date">
+                                                <input class="form-control form-element" type="text" id="transactionDate" name="transactionDate" placeholder="dd/mm/yyyy" data-mask="99/99/9999">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Bill Amount: <span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="transactionAmount" name="transactionAmount" class="form-control form-element required" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <h1>Confirm</h1>
+                        <fieldset>
+                            <legend>Confirm Transaction</legend>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Customer Name:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="VcustomerName" name="VcustomerName" class="form-control form-element" readonly="readonly" />
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Customer Mobile:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="VcustomerMobile" name="VcustomerMobile" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Biller:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="Vbiller_desc" name="Vbiller_desc" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Card No:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="Vbill_ref_no" name="Vbill_ref_no" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Card Name:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="VcardName" name="VcardName" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Card Product:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="VproductName" name="VproductName" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Bill Details:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="VbillDetails" name="VbillDetails" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Bill Date:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="VtransactionDate" name="VtransactionDate" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Amount:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="VtransactionAmount" name="VtransactionAmount" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Service Charge:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="VtransactionCharge" name="VtransactionCharge" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Vat on Service Charge:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="VtransactionChargeVat" name="VtransactionChargeVat" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Customer Amount:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="VtransactionTotalAmount" name="VtransactionTotalAmount" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <h1>Status</h1>
+                        <fieldset>
+                            <legend>Complete Status</legend>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-xl-3">
+                                            <label class="col-form-label">Registration Ref. No.</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="transactionId" name="transactionId" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-3">
+                                            <label class="col-form-label">Print Receipt</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <a href="/Common/PrintTransactionSlip" target="_blank" class="btn btn-default btnPrint">Click here to print receipt</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <div style="text-align:right" id="page1">
+                        <input type="button" value="Submit" class="btn btn-primary ks-next" id="firstPage">
+                    </div>
+                    <div style="text-align:right" id="page2">
+                        <input type="button" value="Previous" class="btn btn-primary ks-previous" id="secondPagePrevious">
+                        <input type="button" value="Next" class="btn btn-primary ks-next" id="secondPage">
+                    </div>
+                    <div style="text-align:right" id="page3">
+                        <input type="button" value="OK" class="btn btn-primary ks-next" id="finalPage">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/ApplicationTheme/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
+}
+@section scripts{
+   
+    <script src="~/ApplicationTheme/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript">
+        var classBillPayCash = function () {
+            var formId = "stepProcessBillPayment";
+            var init = function () {
+                ApplicationCommon.initialStep(formId, 3);
+                eventInitializer();
+                validation(formId);
+
+                $('.input-group.date').datepicker({
+                    todayBtn: "linked",
+                    keyboardNavigation: false,
+                    forceParse: false,
+                    calendarWeeks: true,
+                    autoclose: true,
+                    format: 'd/m/yyyy',
+                });
+            };
+            var eventInitializer = function () {
+                $('#firstPage').click(initiateTransaction);
+                $('#secondPage').click(nextMove);
+                $('#secondPagePrevious').click(previousMove);
+                $('#finalPage').click(finalSubmit);
+                $(".btnPrint").printPage();
+                combo.getBillers('biller_id', '/Common/GetBillers', null, true);
+                combo.getSex('sex', true);
+                combo.getCustomerType('customerType', true);
+            };
+            var initiateTransaction = function () {
+                if (ApplicationCommon.isValidForm(formId)) {
+                    var billPayCash = ApplicationCommon.getData('form-element');
+                    var url = '/BillPayCash/InitiateTransaction';
+                    ApplicationCommon.request(url, 'POST', billPayCash, false, true, false, function (res) {
+                        if (res.message.messageType == 1) {
+                            ApplicationCommon.setVData(res, null);
+                            ApplicationCommon.nextForword(formId, 1, true);
+                            $('#Vbiller_desc').val($('#biller_id option:selected').text());
+                        } else {
+                            ApplicationCommon.showNotification(res.message.messageType, res.message.messageString);
+                        }
+                    });
+                }
+
+            };
+            var nextMove = function () {
+                var url = '/BillPayCash/CompleteTransaction';
+                ApplicationCommon.request(url, 'POST', {}, false, true, false, function (res) {
+                    ApplicationCommon.showNotification(res.message.messageType, res.message.messageString);
+                    if (res.message.messageType == 1) {
+                        ApplicationCommon.nextForword(formId, 2, true);
+                        $('#transactionId').val(res.transactionID);
+                    }
+                });
+            };
+            var previousMove = function () {
+                ApplicationCommon.nextForword(formId, 0, false);
+            };
+            var finalSubmit = function () {
+                ApplicationCommon.clearFields();
+                var url = '/BillPayCash/ClearRegistrationSession';
+                ApplicationCommon.request(url, 'POST', {}, false, true, false, function (res) {
+                    window.location.reload(false);
+                });
+            };
+            var validation = function (formId) {
+                $('#' + formId).validate({
+                    rules: {
+                        biller_id: {
+                            required: true
+                        },
+                        customerType: {
+                            required: true
+                        },
+                        customerMobile: {
+                            required: true,
+                            digits: true,
+                            maxlength: 11,
+                            minlength: 11
+                        },
+                        bill_ref_no: {
+                            required: true
+                        },
+                        transactionAmount: {
+                            required: true,
+                            number: true
+                        }
+                    },
+                    messages: {
+                        biller_id: {
+                            required: "Select biller type to continue"
+                        },
+                        customerType: {
+                            required: "Select customer type to continue"
+                        },
+                        customerMobile: {
+                            required: "Enter customer mobile to continue",
+                            digits: "Customer mobile must be numeric",
+                            maxlength: "Customer mobile must be 11 digits",
+                            minlength: "Customer mobile must be 11 digits"
+                        },
+                        bill_ref_no: {
+                            required: "Enter account with Biller to continue"
+                        },
+                        transactionAmount: {
+                            required: "Enter amount no to continue",
+                            number: "Amount must be numeric"
+                        }
+                    }
+
+                });
+            };
+            return { init: init };
+        }();
+
+        classBillPayCash.init();
+
+    </script>
+}
+
+
+
+

@@ -1,0 +1,210 @@
+﻿@{
+    ViewData["Title"] = "Agent Setup";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Agent Details Setup</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form id="agentSetup">
+                                <div class="col-lg-12">
+                                    <h3 class="col-form-label">Agent Information</h3>
+                                </div>
+                                <div class="form-group hr-line-dashed"> </div>
+                                <div class="col-lg-12">
+                                    <div class="row form-group">
+                                        <div class="col-lg-5">
+                                            <div class="form-group row">
+                                                <input type="hidden" id="AGENT_ID" name="AGENT_ID" class="form-control form-element" />
+                                                <div class="col-xl-5">
+                                                    <label class="col-form-label">Agent ID:<span class="required">*</span></label>
+                                                </div>
+                                                <div class="col-xl-7">
+                                                    <input type="text" id="AGENT_USR_ID" name="AGENT_USR_ID" class="form-control form-element required" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-xl-5">
+                                                    <label class="col-form-label">Agent Gender:<span class="required">*</span></label>
+                                                </div>
+                                                <div class="col-xl-7">
+                                                    <select id="SEX" name="SEX" class="form-control form-element required"></select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-xl-5">
+                                                    <label class="col-form-label">Phone No:</label>
+                                                </div>
+                                                <div class="col-xl-7">
+                                                    <input type="text" id="PHONE" name="PHONE" class="form-control form-element" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-xl-5">
+                                                    <label class="col-form-label">Email Address:<span class="required">*</span></label>
+                                                </div>
+                                                <div class="col-xl-7">
+                                                    <input class="form-control form-element required" type="text" id="EMAIL" name="EMAIL">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-xl-5">
+                                                    <label class="col-form-label">Address:</label>
+                                                </div>
+                                                <div class="col-xl-7">
+                                                    <textarea class="form-control form-element" type="text" id="ADDRESS" name="ADDRESS"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="vertical-line vertical-line-border">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <div class="form-group row">
+                                                <div class="col-xl-5">
+                                                    <label class="col-form-label">Agent Name:<span class="required">*</span></label>
+                                                </div>
+                                                <div class="col-xl-7">
+                                                    <input type="text" id="AGENT_NAME" name="AGENT_NAME" class="form-control form-element required" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-xl-5">
+                                                    <label class="col-form-label">Customer No (UBS-CIF):<span class="required">*</span></label>
+                                                </div>
+                                                <div class="col-xl-7">
+                                                    <input type="text" id="CUSTOMER_NO" name="CUSTOMER_NO" class="form-control form-element required" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-xl-5">
+                                                    <label class="col-form-label">Mobile No:</label>
+                                                </div>
+                                                <div class="col-xl-7">
+                                                    <input type="text" id="MOBILE" name="MOBILE" class="form-control form-element" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-xl-5">
+                                                    <label class="col-form-label">Trade License:</label>
+                                                </div>
+                                                <div class="col-xl-7">
+                                                    <input class="form-control form-element" type="text" id="TRADE_LIC" name="TRADE_LIC">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group hr-line-dashed"> </div>
+                                <div style="text-align:left" id="page1">
+                                    <input type="button" value="Clear Data" class="btn btn-default ks-next" id="btnClear">
+                                    <input type="button" value="Save Data" class="btn btn-primary ks-next" id="btnSave">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        var classAgentSetup = function ()
+        {
+            var formId = "agentSetup";
+            var init = function ()
+            {
+                eventInitializer();
+                validation(formId);
+                var model =@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@ViewBag.Agent));
+                ApplicationCommon.setData(model, null);
+            };
+            var eventInitializer = function ()
+            {
+                $('#btnSave').click(saveAgent);
+                $('#btnClear').click(clear);
+                combo.getSex('SEX', true);
+            };
+            var clear = function ()
+            {
+                ApplicationCommon.clearFields(null, formId);
+
+            };
+            var saveAgent = function ()
+            {
+                if (ApplicationCommon.isValidForm(formId))
+                {
+                    var agent = ApplicationCommon.getData('form-element');
+                    var url = '/Agent/SaveAgent';
+                    ApplicationCommon.request(url, 'POST', agent, false, true, false, function (res)
+                    {
+                        ApplicationCommon.showNotification(res.messageType, res.messageString);
+
+                        if (res.messageType == 1)
+                        {
+                            clear();
+                        }
+                    });
+                }
+            };
+
+            var validation = function (formId)
+            {
+                $('#' + formId).validate({
+                    rules: {
+                        AGENT_USR_ID: {
+                            required: true
+                        },
+                        AGENT_NAME: {
+                            required: true
+                        },
+                        SEX: {
+                            required: true
+                        },
+                        CUSTOMER_NO: {
+                            required: true
+                        },
+                        EMAIL: {
+                            required: true,
+                            email: true
+                        }
+
+                    },
+                    messages: {
+                        AGENT_USR_ID: {
+                            required: "Enter agent ID to continue."
+                        },
+                        AGENT_NAME: {
+                            required: "Enter agent name to continue."
+                        },
+                        SEX: {
+                            required: "Select Agent Gender to continue."
+                        },
+                        CUSTOMER_NO: {
+                            required: "Enter Customer No (CIF) to continue."
+                        },
+                        EMAIL: {
+                            required: "Enter agent email to continue.",
+                            email: "Please enter a valid email address"
+                        }
+                    }
+                });
+            };
+            return { init: init };
+        }();
+
+        classAgentSetup.init();
+    </script>
+}
+

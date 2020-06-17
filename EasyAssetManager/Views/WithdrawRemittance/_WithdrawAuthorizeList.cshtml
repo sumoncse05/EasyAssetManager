@@ -1,0 +1,188 @@
+﻿@model IEnumerable<EasyAssetManagerCore.Models.EntityModel.Remittance>
+@{
+    Layout = null;
+}
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped table-bordered table-hover dataTables-example table-responsive" id="tb-RemittanceAuthorize" width="100%">
+        <thead>
+            <tr>
+                <th>Trans. No.</th>
+                <th>Security Code</th>
+                <th>Remit Receiver</th>
+                <th>Remit Sender</th>
+                <th>Sender Country</th>
+                <th>Amount</th>
+                <th>Remit Company</th>
+                <th>Ins By</th>
+                <th>Ins Date</th>
+                <th>Update Amount</th>
+                <th>Authorize</th>
+                <th>Decline</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var v in Model)
+            {
+            <tr>
+                <td>@v.trans_id</td>
+                <td>@v.remit_sec_code</td>
+                <td>@v.bene_name </td>
+                <td>@v.remit_sender_name</td>
+                <td>@v.remit_sender_country</td>
+                <td>@v.amount</td>
+                <td>@v.remit_comp_name</td>
+                <td>@v.ins_by</td>
+                <td>@v.ins_date</td>
+                @if (v.status_code == "50100")
+                {
+                    <td>
+                        <button type="button" class="btn btn-success gridButton" onclick="updateAmount('@v.trans_id','@v.remit_sec_code','@v.bene_name','@v.remit_sender_name','@v.amount');" data-id="@v.trans_id">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-success gridButton" onclick="authorize('@v.trans_id','@v.agent_id','@v.outlet_id');" data-id="@v.trans_id">
+                            <i class="fa fa-check"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger gridButton" onclick="decline('@v.trans_id','@v.remit_sec_code','@v.bene_name','@v.remit_sender_name','@v.amount');" data-id="@v.trans_id">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                }
+                else
+                {
+                    <td></td><td></td><td></td>
+                }
+
+
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No record found.</p>
+}
+<div class="modal fade" id="updateAmount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> Update Remittance Amount to Exact Amount</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" id="modalUpdateTransaction" name="modalUpdateTransaction" class="form-control form-element" />
+                    <div class="form-group">
+                        <label class="col-form-label">Security Code</label>
+                        <input type="text" id="modalUpdateSecurityCode" name="modalUpdateSecurityCode" class="form-control form-element" readonly />
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Receiver Name:</label>
+                        <input type="text" id="modalUpdateReceiverName" name="modalUpdateReceiverName" class="form-control form-element" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Sender Name:</label>
+                        <input type="text" id="modalUpdateSenderName" name="modalUpdateSenderName" class="form-control form-element" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Current Amount:</label>
+                        <input type="text" id="modalUpdateCurrentAmount" name="modalUpdateCurrentAmount" class="form-control form-element" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">New Amount:<span class="required">*</span></label>
+                        <input type="text" id="modalUpdateNewAmount" name="modalUpdateNewAmount" class="form-control form-element">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <input type="button" value="Update Amount" class="btn btn-primary ks-next" onclick="classRemitanceAuthorize.updateAmountSubmit()">
+                <input type="button" value="Close" class="btn btn-danger ks-next" data-dismiss="modal" id="btnClose">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="declineRemittance" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Decline Remittance request</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" id="modalDeclineTransaction" name="modalDeclineTransaction" class="form-control form-element" />
+                    <div class="form-group">
+                        <label class="col-form-label">Security Code</label>
+                        <input type="text" id="modalDeclineSecurityCode" name="modalDeclineSecurityCode" class="form-control form-element" readonly />
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Receiver Name:</label>
+                        <input type="text" id="modalDeclineReceiverName" name="modalDeclineReceiverName" class="form-control form-element" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Sender Name:</label>
+                        <input type="text" id="modalDeclineSenderName" name="modalDeclineSenderName" class="form-control form-element" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Amount:</label>
+                        <input type="text" id="modalDeclineCurrentAmount" name="modalDeclineCurrentAmount" class="form-control form-element" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Decline Reason:<span class="required">*</span></label>
+                        <input type="text" id="modalDeclineReason" name="modalDeclineReason" class="form-control form-element">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <input type="button" value="Decline" class="btn btn-primary ks-next" onclick="classRemitanceAuthorize.declineTransaction()">
+                <input type="button" value="Close" class="btn btn-danger ks-next" data-dismiss="modal" id="btnClose">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        ApplicationCommon.makePagination('tb-RemittanceAuthorize');
+    });
+
+    function updateAmount(trans_id, remit_sec_code, bene_name, remit_sender_name, amount) {
+        ApplicationCommon.clearFields();
+        $('#updateAmount').modal('show');
+        $("#modalUpdateTransaction").val(trans_id);
+        $("#modalUpdateSecurityCode").val(remit_sec_code);
+        $("#modalUpdateReceiverName").val(bene_name);
+        $("#modalUpdateSenderName").val(remit_sender_name);
+        $("#modalUpdateCurrentAmount").val(amount);
+
+    };
+    function decline(trans_id, remit_sec_code, bene_name, remit_sender_name, amount) {
+        ApplicationCommon.clearFields();
+        $('#declineRemittance').modal('show');
+        $("#modalDeclineTransaction").val(trans_id);
+        $("#modalDeclineSecurityCode").val(remit_sec_code);
+        $("#modalDeclineReceiverName").val(bene_name);
+        $("#modalDeclineSenderName").val(remit_sender_name);
+        $("#modalDeclineCurrentAmount").val(amount);
+
+    };
+    function authorize(trans_id, agent_id, outlet_id) {
+        window.open("/WithdrawRemittance/WithdrawAuthorizePreview?trans_id=" + trans_id, '_blank');
+        // window.location.href = "/WithdrawRemittance/WithdrawAuthorizePreview?trans_id=" + trans_id;
+    };
+
+</script>
+

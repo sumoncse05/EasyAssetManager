@@ -1,0 +1,479 @@
+﻿@{
+    ViewData["Title"] = "Withdraw Cash";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox-title">
+                <h5>Withdraw Cash from Customer Account</h5>
+            </div>
+            <div class="ibox">
+                <div class="ibox-content">
+                    <form id="stepProcessWithdrawCash" action="#" class="wizard-big">
+                        <h1>Transaction</h1>
+                        <fieldset>
+                            <legend>Transaction Details</legend>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Account No: <span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" class="form-control form-element required" id="transactionAccountNo" name="transactionAccountNo">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Amount: <span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="transactionAmount" name="transactionAmount" class="form-control form-element required" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <h1>Confirm</h1>
+                        <fieldset>
+                            <legend>Confirm Transaction</legend>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Account No:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="VtransactionAccountNo" name="VtransactionAccountNo" class="form-control form-element" readonly="readonly" />
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Account Name:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="VtransactionAccountDesc" name="VtransactionAccountDesc" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Customer Amount:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="VtransactionAmount" name="VtransactionAmount" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Service Charge:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="VtransactionCharge" name="VtransactionCharge" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Vat on Service Charge:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="VtransactionChargeVat" name="VtransactionChargeVat" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Total Amount:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="VtransactionTotalAmount" name="VtransactionTotalAmount" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <h1>Verification</h1>
+                        <fieldset>
+                            <legend>Confirm Customer for Verification</legend>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Verification status:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="lblVerificationStatus" name="lblVerificationStatus" class="form-control form-element" readonly="readonly" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Customer:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <select class="form-control form-element required" id="customer_no" name="customer_no"></select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </fieldset>
+                        <h1>Finger</h1>
+                        <fieldset>
+                            <legend>Confirm Transaction and Verify Finger</legend>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Customer Name:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="customer_name" name="customer_name" class="form-control form-element" readonly="readonly" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Finger Enroll Status:</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" class="form-control" id="lblOtpStatus" name="lblOtpStatus" value="Not Yet Verified" style="color:red;" />
+
+                                        </div>
+                                        <div class="col-xl-1">
+                                            <img id="btnCheck" src="~/ApplicationTheme/assets/img/refresh.gif" style="cursor: pointer !important;" alt="EnrollStatus" width="48" height="48" title="Click to Check Status" />
+
+                                        </div>
+                                        <div class="col-xl-1">
+                                            <input type="button" value="Re-Generate Request" class="btn btn-default" id="btnGenerate">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </fieldset>
+                        <h1>OTP</h1>
+                        <fieldset>
+                            <legend>Verify OTP</legend>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-xl-1">
+                                            <label class="col-form-label">OTP <span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <input type="password" id="otpSMS" name="otpSMS" class="form-control form-element" />
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <input type="button" value="Re-Send SMS OTP" class="btn btn-default" id="btnReSendOtp">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <h1>Status</h1>
+                        <fieldset>
+                            <legend>Complete Status</legend>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-xl-3">
+                                            <label class="col-form-label">Registration Ref. No.</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="transactionId" name="transactionId" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-3">
+                                            <label class="col-form-label">Print Receipt</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <a href="/Common/PrintTransactionSlip" target="_blank" class="btn btn-default btnPrint">Click here to print receipt</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <div style="text-align:right" id="page1">
+                        <input type="button" value="Submit" class="btn btn-primary ks-next" id="firstPage">
+                    </div>
+                    <div style="text-align:right" id="page2">
+                        <input type="button" value="Previous" class="btn btn-primary ks-previous" id="secondPagePrevious">
+                        <input type="button" value="Next" class="btn btn-primary ks-next" id="secondPage">
+                    </div>
+                    <div style="text-align:right" id="page3">
+                        <input type="button" value="Previous" class="btn btn-primary ks-previous" id="thirdPagePrevious">
+                        <input type="button" value="Next" class="btn btn-primary ks-next" id="thirdPage">
+                    </div>
+                    <div style="text-align:right" id="page4">
+                        <input type="button" value="Previous" class="btn btn-primary ks-previous" id="fourthPagePrevious">
+                        <input type="button" value="Next" class="btn btn-primary ks-next" id="fourthPage">
+                    </div>
+                    <div style="text-align:right" id="page5">
+                        <input type="button" value="Previous" class="btn btn-primary ks-previous" id="fifthPagePrevious">
+                        <input type="button" value="Next" class="btn btn-primary ks-next" id="fifthPage">
+                    </div>
+                    <div style="text-align:right" id="page6">
+                        <input type="button" value="OK" class="btn btn-primary ks-next" id="finalPage">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        var classDeposit = function ()
+        {
+        var formId = "stepProcessWithdrawCash";
+            var init = function ()
+            {
+                 ApplicationCommon.initialStep(formId, 6);
+                eventInitializer();
+                validation(formId);
+            };
+            var eventInitializer = function ()
+            {
+                $('#firstPage').click(initiateTransaction);
+                $('#secondPage').click(nextMove);
+                $('#secondPagePrevious').click(previousMove);
+                $('#thirdPage').click(next2Move);
+                $('#thirdPagePrevious').click(previous2Move);
+                $('#fourthPage').click(next3Move);
+                $('#fourthPagePrevious').click(previous3Move);
+                $('#fifthPage').click(next4Move);
+                $('#fifthPagePrevious').click(previous4Move);
+                $('#finalPage').click(finalSubmit);
+                $('#btnCheck').click(getFingerVerifyStatus);
+                $('#btnGenerate').click(reGenerateFingerRequest);
+                $('#btnReSendOtp').click(reSendOtp);
+                $(".btnPrint").printPage();
+            };
+            var completeTransaction = function ()
+            {
+                var url = '/WithdrawCash/CompleteTransaction';
+                ApplicationCommon.request(url, 'POST', {}, false, true, false, function (res)
+                {
+                    ApplicationCommon.showNotification(res.message.messageType, res.message.messageString);
+                    if (res.message.messageType == 1)
+                    {
+                       ApplicationCommon.nextForword(formId, 5, true);
+                        $('#transactionId').val(res.transactionID);
+
+                    }
+                });
+            };
+            var initiateTransaction = function ()
+            {
+                if (ApplicationCommon.isValidForm(formId))
+                {
+                    var withdrawCash = ApplicationCommon.getData('form-element');
+                    var url = '/WithdrawCash/InitiateTransaction';
+                    ApplicationCommon.request(url, 'POST', withdrawCash, false, true, false, function (res)
+                    {
+                        if (res.message.messageType == 1)
+                        {
+                             ApplicationCommon.nextForword(formId, 1, true);
+                            ApplicationCommon.setVData(res, null);
+
+                        }else{
+         ApplicationCommon.showNotification(res.message.messageType, res.message.messageString);
+        }
+                    });
+                }
+
+            };
+            var next4Move = function ()
+            {
+                var otp = $('#otpSMS').val();
+                var formData = new FormData();
+                formData.append("otp", otp);
+                var url = '/WithdrawCash/VerifyOtp';
+                ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res)
+                {
+                    if (res.message.messageType == 1)
+                    {
+                     //ApplicationCommon.nextForword(formId, 5, true);
+                        if (res.customerValidated == res.accountOperatingMode)
+                        {
+                            completeTransaction();
+                        }
+                        else
+                        {
+                            ApplicationCommon.nextForword(formId, 3, false);
+                            $("#customer_no option:selected").remove();
+                            $("#lblOtpStatus").css("color", "Red");
+                            $("#lblOtpStatus").val('Not Yet Verified');
+                            $("#btnGenerate").show();
+                            $('#lblVerificationStatus').val(res.status);
+                            $("#btnCheck").attr("src", "/ApplicationTheme/assets/img/refresh.gif");
+                        }
+                    } else
+                    {
+                        ApplicationCommon.showNotification(res.message.messageType, res.message.messageString);
+                    }
+                });
+            };
+            var next3Move = function ()
+            {
+                var url = '/WithdrawCash/RequestOtp';
+                ApplicationCommon.request(url, 'POST', {}, false, true, false, function (res)
+                {
+                    if (res.messageType == 1)
+                    {
+                        ApplicationCommon.nextForword(formId, 4, true);
+                    }else{
+         ApplicationCommon.showNotification(res.messageType, res.messageString);
+        }
+                });
+            };
+            var next2Move = function ()
+            {
+                var customer_no = $('#customer_no').val();
+                var customer_name = $('#customer_no option:selected').text();
+                if (ApplicationCommon.isValidForm(formId))
+                {
+                    var formData = new FormData();
+                    formData.append("customer_no", customer_no);
+                    var url = '/WithdrawCash/GenerateFingerRequest';
+                    ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res)
+                    {
+                        if (res.messageType == 1)
+                        {
+                            ApplicationCommon.nextForword(formId, 3, true);
+                            $('#customer_name').val(customer_name);
+
+                        }else{
+         ApplicationCommon.showNotification(res.messageType, res.messageString);
+        }
+                    });
+                } 
+            };
+            var nextMove = function ()
+            {
+                var url = '/WithdrawCash/CustomerVerification';
+                ApplicationCommon.request(url, 'POST', {}, false, true, false, function (res)
+                {
+                    ApplicationCommon.nextForword(formId, 2, true);
+                    $('#lblVerificationStatus').val(res);
+                    var accountNo = $('#VfromAccountNo').val();
+                    combo.getGetCustomerComboByAccountNo("customer_no", '/Common/GetCustomerCombo', accountNo, true);
+                });
+            };
+            var previous4Move = function ()
+            {
+                ApplicationCommon.nextForword(formId, 3, false);
+            };
+            var previousMove = function ()
+            {
+                 ApplicationCommon.nextForword(formId, 0, false);
+            };
+            var previous3Move = function ()
+            {
+                ApplicationCommon.nextForword(formId, 2, false);
+            };
+            var previous2Move = function ()
+            {
+                 ApplicationCommon.nextForword(formId, 1, false);
+            };
+            var finalSubmit = function ()
+            {
+                ApplicationCommon.clearFields();
+                var url = '/FundTransfer/ClearRegistrationSession';
+                ApplicationCommon.request(url, 'POST', {}, false, true, false, function (res)
+                {
+        window.location.reload(false);
+                });
+            };
+            var getFingerVerifyStatus = function ()
+            {
+                var url = '/WithdrawCash/GetFingerVerifyStatus';
+                ApplicationCommon.request(url, 'GET', {}, false, true, false, function (res)
+                {
+                    if (res.pvc_status == "40999")
+                    {
+                        if (res.pvc_statusmsg == "S")
+                        {
+                            $("#lblOtpStatus").css("color", "Green");
+                            $("#lblOtpStatus").val('Verified Successfully');
+                            $("#btnGenerate").hide();
+                        }
+                        else if (res.pvc_statusmsg == "E")
+                        {
+                            $("#lblOtpStatus").css("color", "Red");
+                            $("#lblOtpStatus").val('Verification Failed');
+                        } else
+                        {
+                            $("#lblOtpStatus").css("color", "Red");
+                            $("#lblOtpStatus").val('Not Yet Enrolled');
+                        }
+                        $("#btnCheck").attr("src", "/ApplicationTheme/assets/img/refresh_stopped.gif");
+                    } else
+                    {
+                        $("#lblOtpStatus").css("color", "Red");
+                        $("#lblOtpStatus").val('Not Yet Verified');
+                    }
+                });
+            }
+            var reGenerateFingerRequest = function ()
+            {
+                var url = '/WithdrawCash/ReGenerateFingerRequest';
+                ApplicationCommon.request(url, 'POST', {}, false, true, false, function (res)
+                {
+                    ApplicationCommon.showNotification(res.messageType, res.messageString);
+                });
+            };
+            var reSendOtp = function ()
+            {
+                var url = '/WithdrawCash/ResendOtp';
+                ApplicationCommon.request(url, 'POST', {}, false, true, false, function (res)
+                {
+                    ApplicationCommon.showNotification(res.messageType, res.messageString);
+                });
+            };
+        var validation = function (formId)
+            {
+                $('#' + formId).validate({
+                    rules: {
+                        transactionAccountNo: {
+                            required: true,
+                            digits: true
+                        },
+                        transactionAmount: {
+                            required: true,
+                            number: true
+                        },
+                        customer_no: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        transactionAccountNo: {
+                            required: "Enter account no to continue",
+                            digits: "Account number must be numeric"
+                        },
+                        transactionAmount: {
+                            required: "Enter amount no to continue",
+                            number: "Amount must be numeric"
+                        },
+                        customer_no: {
+                            required: "Select customer to continue"
+                        }
+                    }
+
+                });
+            };
+            return { init: init };
+        }();
+
+        classDeposit.init();
+
+    </script>
+}
+
+
+
+

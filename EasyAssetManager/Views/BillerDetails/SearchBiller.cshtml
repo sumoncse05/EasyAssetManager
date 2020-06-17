@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewData["Title"] = "Existing Biller List";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="ibox" id="divsidebarCollapse">
+                <div class="ibox-title">
+                    <h5>Search Parameters</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="sidebarCollapse"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="sidebarContent">
+                    <form id="stepProcess" action="#" class="wizard-big">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group row">
+                                        <div class="col-xl-2"></div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Biller ID</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="sc_biller_id" name="sc_biller_id" class="form-control form-element" />
+                                        </div>
+                                        <div class="col-xl-5"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-2"></div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Biller Name</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="sc_biller_name" name="sc_biller_name" class="form-control form-element" />
+                                        </div>
+                                        <div class="col-xl-5"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-5"></div>
+                                        <div class="col-xl-2">
+                                            <button type="button" class="btn btn-primary" id="search">Search</button>
+                                        </div>
+                                        <div class="col-xl-3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox" id="iboxTbl">
+                <div class="ibox-title">
+                    <h5>Existing Biller List</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="iboxTblImg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="iboxContent">
+                    <div id="acc_openingreq"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+
+        var classBillerListSearch = function () {
+            var init = function () {
+                eventInitializer();
+            };
+            var eventInitializer = function () {
+                $('#search').click(searchInitiate);
+            };
+            var searchInitiate = function () {
+                var sc_biller_id = $('#sc_biller_id').val();
+                var sc_biller_name = $('#sc_biller_name').val().replace(/ /g, "+");
+                $('#acc_openingreq').empty();
+                var url = '/BillerDetails/GetBillerList?sc_biller_id=' + sc_biller_id + '&&sc_biller_name=' + sc_biller_name;
+                $('#acc_openingreq').load(url);
+            };
+            return { init: init};
+        }();
+
+        classBillerListSearch.init();
+
+    </script>
+}

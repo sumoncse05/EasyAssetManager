@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewData["Title"] = "Clear Users Session";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox" id="iboxTbl">
+                <div class="ibox-title">
+                    <h5>Clear Users Session</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="iboxTblImg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="iboxContent">
+                    <div id="acc_openingreq">
+
+                    </div>
+                    <div class="form-group hr-line-dashed"> </div>
+                    <div style="text-align:left" id="page1">
+                        <input type="button" value="Refresh" class="btn btn-default ks-next" id="refreshPage">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        var classLoginUserSearch = function () {
+            var init = function () {
+                eventInitializer();
+            };
+            var eventInitializer = function () {
+                searchInitiate();
+                $('#refreshPage').click(refreshPage);
+            };
+            var searchInitiate = function () {
+                $('#acc_openingreq').empty();
+                var url = '/ClearUserSession/GetLoginUserList';
+                $('#acc_openingreq').load(url);
+            };
+            var refreshPage = function () {
+                $('#acc_openingreq').empty();
+                searchInitiate();
+            };
+            return { init: init, searchInitiate: searchInitiate };
+        }();
+
+        classLoginUserSearch.init();
+
+    </script>
+}
+

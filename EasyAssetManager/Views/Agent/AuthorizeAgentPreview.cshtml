@@ -1,0 +1,148 @@
+﻿@model EasyAssetManagerCore.Models.EntityModel.Agent
+@{
+    ViewData["Title"] = "Authorize Agent Preview";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Agent Details</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form id="agentSetup">
+                                <div class="col-lg-12" style="border:solid 1px;">
+                                    <div class="form-group row">
+                                        <div class="col-xl-12 ibox-heading">
+                                            <h4 class="col-form-label">Agent Details</h4>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <input type="hidden" id="AGENT_ID" name="AGENT_ID" class="form-control form-element" value="@Model.AGENT_ID"/>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Agent ID:</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="AGENT_USR_ID" name="AGENT_USR_ID" class="form-control form-element" value="@Model.AGENT_USR_ID" readonly/>
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Agent Name:</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="AGENT_NAME" name="AGENT_NAME" class="form-control form-element" value="@Model.AGENT_NAME" readonly/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Agent CIF:</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="CUSTOMER_NO" name="CUSTOMER_NO" class="form-control form-element" value="@Model.CUSTOMER_NO" readonly/>
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Phone No:</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="PHONE" name="PHONE" class="form-control form-element" value="@Model.PHONE" readonly/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Mobile No:</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="MOBILE" name="MOBILE" class="form-control form-element" value="@Model.MOBILE" readonly/>
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Email Address:</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input class="form-control form-element" type="text" id="EMAIL" name="EMAIL" value="@Model.EMAIL" readonly />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Agent Trade License:</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input class="form-control form-element" type="text" id="TRADE_LIC" name="TRADE_LIC" value="@Model.TRADE_LIC" readonly/>
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Address:</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <textarea class="form-control form-element" type="text" id="ADDRESS" name="ADDRESS" value="@Model.ADDRESS" readonly></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Created By:</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input class="form-control form-element" type="text" id="INS_BY" name="INS_BY" value="@Model.INS_BY" readonly/>
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Created Time:</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input class="form-control form-element" type="text" id="INS_DATE" name="INS_DATE" value="@Model.INS_DATE" readonly/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-8"></div>
+                                        <div class="col-xl-1">
+                                            <input type="button" value="Authorize Agent" class="btn btn-primary ks-next" id="btnConfirm">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        var classAuthorizeAgentPreview = function ()
+        {
+            var init = function ()
+            {
+                eventInitializer();
+            };
+            var eventInitializer = function ()
+            {
+                $('#btnConfirm').click(authorizeAgent);
+            };
+
+            var authorizeAgent = function ()
+            {
+                if ($('#AGENT_ID').val()) {
+                    var formData = new FormData();
+                    formData.append("agentId", $('#AGENT_ID').val());
+                    var url = '/Agent/AuthorizeAgent';
+                    ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res) {
+                        ApplicationCommon.showNotification(res.messageType, res.messageString);
+                        if (res.messageType == 1) {
+                            ApplicationCommon.clearFields();
+                        }
+                    });
+                } else {
+                    ApplicationCommon.showNotification("2", "Agent already authorize.");
+                }
+            };
+            return { init: init };
+        }();
+
+        classAuthorizeAgentPreview.init();
+    </script>
+}
+

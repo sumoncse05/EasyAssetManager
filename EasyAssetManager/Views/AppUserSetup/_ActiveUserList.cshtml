@@ -1,0 +1,139 @@
+﻿@model IEnumerable<EasyAssetManagerCore.Models.EntityModel.SettingsUsers>
+@{
+    Layout = null;
+}
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped table-bordered table-hover dataTables-example table-responsive" id="tb-activeUser" width="100%">
+        <thead>
+            <tr>
+                <th class="collapse">User ID</th>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Created By</th>
+                <th>Created Date</th>
+                <th>Updated By</th>
+                <th>Updated Date</th>
+                <th>Authorized By</th>
+                <th>Authorized Date</th>
+                <th>Reset Password</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var v in Model)
+            {
+                <tr>
+                    <td class="collapse">@v.user_id</td>
+                    <td>@v.user_name</td>
+                    <td>@v.email </td>
+                    <td>@v.phone</td>
+                    <td>@v.ins_by</td>
+                    <td>@v.ins_date</td>
+                    <td>@v.upd_by</td>
+                    <td>@v.upd_date</td>
+                    <td>@v.auth_by</td>
+                    <td>@v.auth_date</td>
+                    <td>
+                        <button type="button" class="btn btn-success" onclick="showResetdata('@v.user_desc','@v.user_id','@v.user_name');" data-id="@v.user_id">
+                            <i class="fa fa-registered"></i>
+                        </button>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No record found.</p>
+}
+<div class="modal fade" id="resetData" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> Reset User Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label class="col-form-label">User Type:</label>
+                        <input type="text" id="modalUserType" name="modalUserType" class="form-control form-element" readonly />
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">User ID:</label>
+                        <input type="text" id="modalUserId" name="modalUserId" class="form-control form-element" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">User Name:</label>
+                        <input type="text" id="modalUserName" name="modalUserName" class="form-control form-element" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Reset Reason:<span class="required">*</span></label>
+                        <textarea id="modalrestReason" name="modalrestReason" class="form-control form-element"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <input type="button" value="Request Reset" class="btn btn-primary ks-next" onclick="reset()">
+                <input type="button" value="Close" class="btn btn-danger ks-next" data-dismiss="modal" id="btnClose">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+     ApplicationCommon.makePagination('tb-activeUser');
+    });
+
+    function reset() {
+        var reason = $("#modalrestReason").val();
+        var userId = $("#modalUserId").val();
+        if (reason) {
+            swal({
+                title: "Are you sure?",
+                text: "Do you really want to reset password for this user?(Yes/No)",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes",
+                closeOnConfirm: false
+            }, function () {
+
+                var formData = new FormData();
+                formData.append("userId", userId);
+                formData.append("reason", reason);
+                var url = '/AppUserSetup/ResetPassword';
+                ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res) {
+                    ApplicationCommon.showNotification(res.messageType, res.messageString);
+                    swal.close();
+                    if (res.messageType == 1) {
+                         $(".modal-backdrop").remove();
+                       classResetPassword.searchInitiate();
+                    }
+                });
+
+            });
+        }
+        else {
+            ApplicationCommon.showNotification("Error", "Enter Reset reason to continue.");
+        }
+
+    }
+    function showResetdata(user_desc, user_id, user_name) {
+        $('#resetData').modal('show');
+        $("#modalUserType").val(user_desc);
+        $("#modalUserId").val(user_id);
+        $("#modalUserName").val(user_name);
+
+    };
+
+</script>
+

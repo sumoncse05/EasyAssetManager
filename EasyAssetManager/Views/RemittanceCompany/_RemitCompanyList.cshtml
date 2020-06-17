@@ -1,0 +1,70 @@
+﻿@model IEnumerable<EasyAssetManagerCore.Models.EntityModel.Remittance>
+@{
+    Layout = null;
+}
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped table-bordered table-hover dataTables-example" id="tb-actremitcompany" width="100%">
+        <thead>
+            <tr>
+                <th>Remittance Company ID</th>
+                <th>Remittance Company Name</th>
+                <th>Account</th>
+                <th>Status</th>
+                <th>Ins By</th>
+                <th>Ins Date</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var v in Model)
+            {
+                <tr>
+                    <td>@v.remit_comp_id</td>
+                    <td>@v.remit_comp_name</td>
+                    <td>@v.cust_ac_no </td>
+                    <td>
+                        @{
+                            if (v.status == "Y")
+                            { <span>Yes</span> }
+                            else
+                            { <span>No</span> }
+                        }
+                    </td>
+                    <td>@v.ins_by</td>
+                    <td>@v.ins_date</td>
+                    @if (v.auth_date == null)
+                    {
+                        <td>
+                            <a href="/RemittanceCompany/Index?remit_id=@v.remit_comp_id" class="btn btn-success gridButton" data-id="@v.remit_comp_id"><i class="fa fa-edit"></i></a>
+
+                        </td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No record found.</p>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        ApplicationCommon.makePagination("tb-actremitcompany");
+
+        var rowCount = $('#tb-actremitcompany >tbody >tr').length;
+        if (rowCount > 0) {
+            $("#sidebarCollapse").addClass('fa-chevron-down').removeClass('fa-chevron-up');
+            $("#divsidebarCollapse").addClass('border-bottom');
+            $('#sidebarContent').css('display', 'none');
+        }
+    });
+
+</script>
+

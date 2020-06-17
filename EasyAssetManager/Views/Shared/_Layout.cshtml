@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - EBL Agent Banking</title>
+    <link href="~/favicon.ico" rel="shortcut icon">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Add local styles, mostly for plugins css file -->
+    @if (IsSectionDefined("Styles"))
+    {@RenderSection("Styles", required: false)}
+    <environment names="Development">
+        <link rel="stylesheet" href="~/ApplicationTheme/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/ApplicationTheme/lib/font-awesome/css/font-awesome.css" />
+        <link rel="stylesheet" href="~/ApplicationTheme/css/animate.css" />
+        <link href="~/ApplicationTheme/lib/toastr/toastr.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/ApplicationTheme/css/style.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/ApplicationTheme/lib/iCheck/custom.css" />
+        <link rel="stylesheet" href="~/ApplicationTheme/lib/steps/jquery.steps.css" />
+        <link rel="stylesheet" href="~/ApplicationTheme/lib/dataTables/datatables.min.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/ApplicationTheme/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/ApplicationTheme/lib/font-awesome/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="~/ApplicationTheme/css/animate.css" />
+        <link href="~/ApplicationTheme/lib/toastr/toastr.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/ApplicationTheme/css/style.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/ApplicationTheme/lib/iCheck/custom.css" />
+        <link rel="stylesheet" href="~/ApplicationTheme/lib/steps/jquery.steps.css" />
+        <link rel="stylesheet" href="~/ApplicationTheme/lib/dataTables/datatables.min.css" />
+    </environment>
+    <style>
+        span.required {
+            color: red !important;
+        }
+
+        .wizard > .steps > ul > li {
+            width: 16% !important;
+        }
+
+        .table > thead > tr > th.removeSorting.sorting:after, .dataTables-example > thead > tr > th.removeSorting.sorting_asc:after, .dataTables-example > thead > tr > th.removeSorting.sorting_desc::after {
+            content: none;
+        }
+
+        .table > thead > tr > th {
+            white-space: nowrap !important;
+        }
+
+        .table > tbody > tr > td {
+            white-space: nowrap !important;
+        }
+
+        .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+            border-top: 1px solid #e7eaec;
+            line-height: 0.6;
+            padding: 8px;
+            vertical-align: top;
+        }
+
+        .gridButton {
+            padding: .03rem .5rem!important;
+            line-height:0.6!important;
+        }
+        .vertical-line {
+            width: 0px; /* Use only border style */
+            height: 100%;
+            float: left;
+            border: solid 1px #E5E6E7; /* This is default border style for <hr> tag */
+        }
+
+        .vertical-line-border {
+            margin-left: 5px;
+            margin-right: 5px
+        }
+    </style>
+</head>
+<body>
+    <!-- Skin configuration box -->
+    <!-- <partial name="_SkinConfig" /> -->
+    <!-- Wrapper-->
+    <div id="wrapper" class="@Html.PageClass()">
+        <!-- Top Navbar -->
+        <partial name="_TopLayout" />
+        <!-- Navigation -->
+        <partial name="_LeftLayout" />
+        <!-- Page wraper -->
+        <div id="page-wrapper" class="gray-bg @ViewBag.SpecialClass">
+            <!-- Main view  -->
+            @RenderBody()
+            <!-- Footer -->
+            <partial name="_Footer" />
+        </div>
+        <!-- End page wrapper-->
+        <!-- Right Sidebar -->
+        @*<partial name="_RightSidebar" />*@
+    </div>
+    <!-- End wrapper-->
+    <environment names="Development">
+        <script src="~/ApplicationTheme/lib/jquery/dist/jquery.js"></script>
+        <script src="~/ApplicationTheme/lib/Popper/popper.min.js"></script>
+        <script src="~/ApplicationTheme/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/ApplicationTheme/lib/metisMenu/dist/jquery.metisMenu.js"></script>
+        <script src="~/ApplicationTheme/lib/slimScroll/jquery.slimscroll.js"></script>
+        <script src="~/ApplicationTheme/lib/pace/pace.js"></script>
+        <script src="~/ApplicationTheme/js/script.js" asp-append-version="true"></script>
+        <script src="~/ApplicationTheme/js/skin.config.js"></script>
+        <script src="~/ApplicationTheme/lib/dataTables/datatables.min.js"></script>
+        <script src="~/ApplicationTheme/lib/dataTables/dataTables.bootstrap4.min.js"></script>
+        <script src="~/PageJs/ApplicationCommon.js"></script>
+        <script src="~/PageJs/CommonComboLoder.js"></script>
+        <script src="~/ApplicationTheme/jquery.printPage.js"></script>
+        <script src="~/ApplicationTheme/lib/toastr/toastr.js"></script>
+        <script src="~/ApplicationTheme/lib/iCheck/icheck.min.js"></script>
+        <script src="~/ApplicationTheme/lib/steps/jquery.steps.min.js"></script>
+        <script src="~/ApplicationTheme/lib/validate/jquery.validate.min.js"></script>
+        <script src="~/ApplicationTheme/jquery.printPage.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/ApplicationTheme/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/ApplicationTheme/lib/Popper/popper.min.js"></script>
+        <script src="~/ApplicationTheme/lib/jasny-bootstrap/dist/js/jasny-bootstrap.js"></script>
+        <script src="~/ApplicationTheme/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="~/ApplicationTheme/lib/metisMenu/dist/jquery.metisMenu.js"></script>
+        <script src="~/ApplicationTheme/lib/pace/pace.min.js"></script>
+        <script src="~/ApplicationTheme/lib/slimScroll/jquery.slimscroll.min.js"></script>
+        <script src="~/ApplicationTheme/lib/toastr/toastr.js"></script>
+        <script src="~/ApplicationTheme/lib/iCheck/icheck.min.js"></script>
+        <script src="~/ApplicationTheme/lib/steps/jquery.steps.min.js"></script>
+        <script src="~/ApplicationTheme/lib/validate/jquery.validate.min.js"></script>
+        <script src="~/ApplicationTheme/jquery.printPage.js"></script>
+        <script src="~/ApplicationTheme/lib/dataTables/datatables.min.js"></script>
+        <script src="~/ApplicationTheme/lib/dataTables/dataTables.bootstrap4.min.js"></script>
+        <script src="~/PageJs/ApplicationCommon.js"></script>
+        <script src="~/PageJs/CommonComboLoder.js"></script>
+        <script src="~/ApplicationTheme/js/script.js" asp-append-version="true"></script>
+    </environment>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        menuCheckActive();
+        $('.menuAction').click(function () {
+            localStorage.setItem("screenId", $(this).attr('id'));
+            localStorage.setItem("firstParentId", $(this).parents().attr('id'));
+            localStorage.setItem("rootParentId", $(this).parents().parents().attr('id'));
+
+        })
+
+        function menuCheckActive() {
+            if (localStorage.getItem("screenId") != null)
+                $('#' + localStorage.getItem("screenId")).addClass('active');
+            if (localStorage.getItem("firstParentId") != null)
+                $('#' + localStorage.getItem("firstParentId")).addClass('in');
+            if (localStorage.getItem("rootParentId") != null)
+                $('#' + localStorage.getItem("rootParentId")).addClass('active');
+        }
+    });
+</script>
+
+<partial name="_AccountSearchModal" />

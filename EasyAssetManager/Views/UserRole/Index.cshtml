@@ -1,0 +1,438 @@
+﻿@model EasyAssetManagerCore.Models.EntityModel.UserRole
+@{
+    ViewData["Title"] = "User Role";
+    string update = "";
+    string delete = "";
+    string view = "";
+
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Role Setup</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <form id="userRole">
+                                        <div class="form-group row">
+                                            <div class="col-xl-5">
+                                                <label class="col-form-label">Role Name:<span class="required">*</span></label>
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <input type="text" id="rolE_ID" name="rolE_ID" class="form-control form-element required" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-xl-5">
+                                                <label class="col-form-label">Role Description:<span class="required">*</span></label>
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <input type="text" id="rolE_DESC" name="rolE_DESC" class="form-control form-element required" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="tabs-container">
+                                    <ul class="nav nav-tabs">
+                                        <li><a class="nav-link active" data-toggle="tab" href="#Deposit"> Deposit</a></li>
+                                        <li><a class="nav-link" data-toggle="tab" href="#Withdraw">Withdraw</a></li>
+                                        <li><a class="nav-link" data-toggle="tab" href="#Billpay">Billpay</a></li>
+                                        <li><a class="nav-link" data-toggle="tab" href="#FundTransfer">FundTransfer</a></li>
+                                        <li><a class="nav-link" data-toggle="tab" href="#Limit">Limit</a></li>
+                                        <li><a class="nav-link" data-toggle="tab" href="#Personnel">Personnel</a></li>
+                                        <li><a class="nav-link" data-toggle="tab" href="#Security">Security</a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div id="Deposit" class="tab-pane active">
+                                            <div class="panel-body">
+                                                <table class="table table-striped table-bordered table-hover dataTables-example table-responsive tableScrool" id="tblDeposit">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="collapse">SCR_ID</th>
+                                                            <th>Interface Title</th>
+                                                            <th>New/Edit</th>
+                                                            <th>Delete</th>
+                                                            <th>View</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div id="Withdraw" class="tab-pane">
+                                            <div class="panel-body">
+                                                <table class="table table-striped table-bordered table-hover dataTables-example table-responsive tableScrool" id="tblWithdraw">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="collapse">SCR_ID</th>
+                                                            <th>Interface Title</th>
+                                                            <th>New/Edit</th>
+                                                            <th>Delete</th>
+                                                            <th>View</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div id="Billpay" class="tab-pane">
+                                            <div class="panel-body">
+                                                <table class="table table-striped table-bordered table-hover dataTables-example table-responsive tableScrool" id="tblBillpay">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="collapse">SCR_ID</th>
+                                                            <th>Interface Title</th>
+                                                            <th>New/Edit</th>
+                                                            <th>Delete</th>
+                                                            <th>View</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div id="FundTransfer" class="tab-pane">
+                                            <div class="panel-body">
+                                                <table class="table table-striped table-bordered table-hover dataTables-example table-responsive tableScrool" id="tblFundTransfer">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="collapse">SCR_ID</th>
+                                                            <th>Interface Title</th>
+                                                            <th>New/Edit</th>
+                                                            <th>Delete</th>
+                                                            <th>View</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div id="Limit" class="tab-pane">
+                                            <div class="panel-body">
+                                                <table class="table table-striped table-bordered table-hover dataTables-example table-responsive tableScrool" id="tblLimit">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="collapse">SCR_ID</th>
+                                                            <th>Interface Title</th>
+                                                            <th>New/Edit</th>
+                                                            <th>Delete</th>
+                                                            <th>View</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div id="Personnel" class="tab-pane">
+                                            <div class="panel-body">
+                                                <table class="table table-striped table-bordered table-hover dataTables-example table-responsive tableScrool" id="tblPersonal">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="collapse">SCR_ID</th>
+                                                            <th>Interface Title</th>
+                                                            <th>New/Edit</th>
+                                                            <th>Delete</th>
+                                                            <th>View</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div id="Security" class="tab-pane">
+                                            <div class="panel-body">
+                                                <table class="table table-striped table-bordered table-hover dataTables-example table-responsive tableScrool" id="tblSecurity">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="collapse">SCR_ID</th>
+                                                            <th>Interface Title</th>
+                                                            <th>New/Edit</th>
+                                                            <th>Delete</th>
+                                                            <th>View</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:10px;">
+                                <div style="text-align:left">
+                                    <input type="button" class="btn btn-default ks-light" id="btnRefresh" value="Refresh">
+                                    <input type="button" value="Save" class="btn btn-primary ks-next" id="btnSave">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Role List</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div id="divrolelist">
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" href="~/ApplicationTheme/lib/sweetalert/dist/sweetalert.css" />
+<style>
+    .tableScrool {
+        height: 230px !important;
+    }
+</style>
+@section Scripts {
+    <script src="~/ApplicationTheme/lib/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        var classRoleSetup = function ()
+        {
+            var accessList = [];
+            var formId = "userRole";
+            var init = function ()
+            {
+                eventInitializer();
+                validation(formId);
+                roleListLoad();
+                loadScreenAccessPermission();
+            };
+            var eventInitializer = function ()
+            {
+                $('#btnSave').click(saveRole);
+                $('#btnRefresh').click(refresh);
+                $('#rolE_ID').on('change', loadRoleWisePermission);
+                $(document).on('click', '.udateClass', function ()
+                {
+                    var screenId = $(this).attr("data-id");
+                    for (var i = 0; i < accessList.length; i++)
+                    {
+                        if (accessList[i].scR_ID === screenId)
+                        {
+                            accessList[i].can_update = accessList[i].can_update === "Y" ? "N" : "Y";
+                            break;
+                        }
+                    }
+                });
+                $(document).on('click', '.deleteClass', function ()
+                {
+                    var screenId = $(this).attr("data-id");
+                    for (var i = 0; i < accessList.length; i++)
+                    {
+                        if (accessList[i].scR_ID == screenId)
+                        {
+                            accessList[i].can_delete = accessList[i].can_delete == "Y" ? "N" : "Y";
+                            break;
+                        }
+                    }
+                });
+                $(document).on('click', '.viewClass', function ()
+                {
+                    var screenId = $(this).attr("data-id");
+                    for (var i = 0; i < accessList.length; i++)
+                    {
+                        if (accessList[i].scR_ID == screenId)
+                        {
+                            accessList[i].can_view = accessList[i].can_view == "Y" ? "N" : "Y";
+                            break;
+                        }
+                    }
+                });
+            };
+
+            var saveRole = function ()
+            {
+                if (ApplicationCommon.isValidForm(formId))
+                {
+                    var userRole = new Object();
+                    userRole.rolE_ID = $('#rolE_ID').val();
+                    userRole.rolE_DESC = $('#rolE_DESC').val();
+                    userRole.ScreenAccessPermissions = accessList;
+                   // userRole = JSON.stringify({ 'userRole': userRole });
+                    var url = '/UserRole/SaveRole';
+                    ApplicationCommon.post(url, userRole, function (res)
+                    {
+                        ApplicationCommon.showNotification(res.messageType, res.messageString);
+
+                        if (res.messageType == 1)
+                        {
+                            ApplicationCommon.clearFields();
+                            roleListLoad();
+                            loadScreenAccessPermission();
+                        }
+                    });
+                }
+            };
+            var loadScreenAccessPermission = function ()
+            {
+                var url = "/UserRole/UserScreenAccessPermission";
+                ApplicationCommon.request(url, 'GET', {}, false, true, false, function (res)
+                {
+                    accessList = res;
+                    loaddatableData();
+                });
+            };
+            var loadRoleWisePermission = function ()
+            {
+                var roleId = $('#rolE_ID').val().toUpperCase();
+                var url = "/UserRole/RoleScreenAccessPermission";
+                ApplicationCommon.request(url, 'GET', { roleId: roleId }, false, true, false, function (res)
+                {
+                    if (res != null) {
+                        ApplicationCommon.setData(res, null);
+                        var permission = res.screenAccessPermissions;
+                      //  console.log(permission.length);
+                        for (var i = 0; i < permission.length;i++) {
+                          //  console.log(permission[i]);
+                            for (var j = 0; j < accessList.length;j++) {
+                                if (accessList[j].scR_ID === permission[i].scR_ID) {
+                                    accessList[j].can_update = permission[i].can_update;
+                                    accessList[j].can_delete = permission[i].can_delete;
+                                    accessList[j].can_view = permission[i].can_view;
+                                    //console.log(permission[i].scR_ID);
+                                    break; //Stop this loop, we found it!
+                                }
+                            }
+                           // accessList = res.screenAccessPermissions;
+                        }
+                    }
+                    
+                    loaddatableData();
+                });
+            };
+            var roleListLoad = function ()
+            {
+                var url = "/UserRole/Rolelist";
+                $('#divrolelist').empty().load(url);
+            };
+            var validation = function (formId)
+            {
+                $('#' + formId).validate({
+                    rules: {
+                        rolE_ID: {
+                            required: true
+                        },
+                        rolE_DESC: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        rolE_ID: {
+                            required: "Enter role name to continue"
+                        },
+                        rolE_DESC: {
+                            required: "Enter role description to continue"
+                        }
+                    }
+
+                });
+            };
+            var deleteData = function (roleId, roleDesc)
+            {
+
+                swal({
+                    title: "Are you sure?",
+                    text: "Are you sure you want to delete role:" + roleDesc,
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, delete it!",
+                    closeOnConfirm: false
+                }, function ()
+                    {
+                        var formData = new FormData();
+                        formData.append("roleId", roleId);
+                        var url = '/UserRole/DeleteRole';
+                        ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res)
+                        {
+
+                            ApplicationCommon.showNotification(res.messageType, res.messageString);
+                            swal.close();
+                            if (res.messageType == 1) {
+                                roleListLoad();
+                            }
+                        });
+                    });
+            };
+            var edit = function (roleId)
+            {
+                $('#rolE_ID').val(roleId);
+                $('#rolE_ID').change();
+            };
+            var search = function (nameKey) {
+                var simpleList = [];
+                for (var i = 0; i < accessList.length; i++) {
+                    if (accessList[i].mod_id === nameKey && (accessList[i].scR_TYPE === 'F' || accessList[i].scR_TYPE==='R')) {
+                        simpleList.push(accessList[i]);
+                    }
+                }
+                return simpleList;
+            };
+            var loaddatableData = function ()
+            {
+                loadsingledatableData('tblDeposit', search("PAY"));
+                loadsingledatableData('tblWithdraw', search("REC"));
+                loadsingledatableData('tblBillpay', search("BPM"));
+                loadsingledatableData('tblFundTransfer', search("FTR"));
+                loadsingledatableData('tblLimit', search("LMT"));
+                loadsingledatableData('tblPersonal', search("PMS"));
+                loadsingledatableData('tblSecurity', search("SEC"));
+                
+            };
+            var loadsingledatableData = function (tableId, simpleList)
+            {
+                var updateV = "", viewV = "", deleteV = "";
+                $("#" + tableId).find("tr:gt(0)").remove();
+                $.each(simpleList, function (index, item)
+                {
+                    if (item.can_update == "Y")
+                    { updateV = "checked=checked"; }
+                    else { updateV = ""; }
+                    if (item.can_delete == "Y")
+                    { deleteV = "checked=checked"; }
+                    else { deleteV = ""; }
+                    if (item.can_view == "Y")
+                    { viewV = "checked=checked"; }
+                    else { viewV = ""; }
+                    
+                   
+
+                    $('#' + tableId + '  tr:last').after('<tr><td class="collapse">' + item.scR_ID + '</td><td>' + item.scR_NAME + '</td><td><input type="checkbox" ' + updateV + ' class="udateClass" data-id=' + item.scR_ID + ' /></td><td><input type="checkbox" ' + deleteV + ' class="deleteClass" data-id=' + item.scR_ID + ' /></td><td><input type="checkbox" ' + viewV + ' class="viewClass" data-id=' + item.scR_ID + ' /></td></tr>');
+                });
+            };
+            var refresh = function () {
+                ApplicationCommon.clearFields(null, formId);
+                loadScreenAccessPermission();
+            };
+            return { init: init, deleteData: deleteData, edit: edit };
+        }();
+
+        classRoleSetup.init();
+    </script>
+}

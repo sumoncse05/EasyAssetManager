@@ -1,0 +1,206 @@
+﻿
+@{
+    ViewData["Title"] = "Remittance Company Details Setup";
+}
+<style>
+    .wizard-big.wizard > .content {
+        min-height: 530px !important;
+    }
+</style>
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="form-group row">
+        <div class="col-lg-12">
+            <div class="ibox-title">
+                <h5>Remittance Company Details Setup</h5>
+            </div>
+            <div class="ibox">
+                <div class="ibox-content">
+                    <form id="stepProcess" action="#" class="wizard-big">
+                        <div class="form-group row">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-xl-2"></div>
+                                    <div class="col-xl-2">
+                                        <label class="col-form-label">RemitCompany ID</label>
+                                    </div>
+                                    <div class="col-xl-3">
+                                        <div class="input-group">
+                                            <input type="text" id="remit_comp_id" name="remit_comp_id" class="form-control form-element" />
+                                            @*<button type="button" class="btn btn-outline-secondary btn-small" id="editPage">
+                                    <i class="fa fa-edit" id="edit"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary btn-small float-sm-right" id="searchPage">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <input type="hidden" id="hf_remit_comp_id" class="form-element" />*@
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-2"></div>
+                                    <div class="col-xl-5">
+                                        <hr />
+                                    </div>
+                                    <div class="col-xl-4"></div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-xl-2"></div>
+                                    <div class="col-xl-2">
+                                        <label class="col-form-label">RemitCompany Name<span class="required">*</span></label>
+                                    </div>
+                                    <div class="col-xl-3">
+                                        <input type="text" id="remit_comp_name" name="remit_comp_name" class="form-control form-element required" />
+                                    </div>
+                                    <div class="col-xl-4"></div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-xl-2"></div>
+                                    <div class="col-xl-2">
+                                        <label class="col-form-label">RemitCompany Account<span class="required">*</span></label>
+                                    </div>
+                                    <div class="col-xl-3">
+                                        <input type="text" id="cust_ac_no" name="cust_ac_no" class="form-control form-element required" />
+                                    </div>
+                                    <div class="col-xl-4"></div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-xl-2"></div>
+                                    <div class="col-xl-2">
+                                        <label class="col-form-label">Status<span class="required">*</span></label>
+                                    </div>
+                                    <div class="col-xl-3">
+                                        <select id="status" name="status" class="form-control form-element required"></select>
+                                    </div>
+                                    <div class="col-xl-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="form-group hr-line-dashed"> </div>
+                    <div id="page1">
+                        <div class="form-group row">
+                            <div class="col-xl-4"></div>
+                            <div class="col-xl-8" style="text-align:left">
+                                <input type="button" value="Clear Data" class="btn btn-default ks-next" id="clearPage">
+                                <input type="button" value="Save Data" class="btn btn-primary ks-next" id="submitPage">
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        var classRemitCompanySetup = function () {
+            var formId = "stepProcess";
+            var init = function () {
+                eventInitializer();
+                validation(formId);
+            };
+            var eventInitializer = function () {
+                $('#submitPage').click(submitPage);
+                $('#searchPage').click(checkSearch);
+                $('#editPage').click(checkEdit);
+                $('#clearPage').click(clearPage);
+                combo.getUserActiveStatus('status', true);
+                $('#searchPage').css('visibility', 'hidden');
+                $("#remit_comp_id").prop("disabled", true);
+
+                if ('@ViewBag.RemitCompany.remit_comp_id' != "") {
+                    var RemitCompany =@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@ViewBag.RemitCompany));
+                    ApplicationCommon.setData(RemitCompany, null);
+                }
+            };
+            var submitPage = function () {
+                if (ApplicationCommon.isValidForm(formId)) {
+                    var accountOpen = ApplicationCommon.getData('form-element');
+                    var url = '/RemittanceCompany/SetRemitCompanyDetails';
+                    ApplicationCommon.request(url, 'POST', accountOpen, false, true, false, function (res) {
+                        if (res.messageType == 1) {
+                            clearPage();
+                        }
+                        ApplicationCommon.showNotification(res.messageType, res.messageString);
+                    });
+                }
+            };
+            var checkSearch = function () {
+                var remit_id = $('#remit_comp_id').val();
+                if (remit_id != '') {
+                    var formData = new FormData();
+                    formData.append("remit_id", remit_id);
+                    var url = '/RemittanceCompany/Index';
+                    ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res) {
+                        if ('@ViewBag.RemitCompany.remit_comp_id' == null) {
+                            ApplicationCommon.showNotification("2", "Invalid Biller Id");
+                        }
+                        else {
+                            $('#remit_comp_id').val('');
+                            $('#searchPage').css('visibility', 'hidden');
+                            $('#edit').removeClass('fa-close').addClass('fa-edit');
+                            $("#remit_comp_id").prop("disabled", true);
+                             var RemitCompany =@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@ViewBag.RemitCompany));
+                            ApplicationCommon.setData(RemitCompany, null);
+                        }
+                    });
+                }
+                else {
+                    ApplicationCommon.showNotification("2","Please Enter Biller Id");
+                }
+            };
+            var checkEdit = function () {
+                if ($('#edit').hasClass('fa-edit')) {
+                    $('#searchPage').css('visibility', 'visible');
+                    $("#remit_comp_id").prop("disabled", false);
+                    $('#edit').removeClass('fa-edit').addClass('fa-close');
+                }
+                else
+                {
+                    $("#remit_comp_id").val('');
+                    $('#searchPage').css('visibility', 'hidden');
+                    $('#edit').removeClass('fa-close').addClass('fa-edit');
+                    $("#remit_comp_id").prop("disabled", true);
+                }
+            };
+
+            var clearPage = function () {
+                ApplicationCommon.clearFields(null, formId);
+            };
+
+            var validation = function (formId) {
+                $('#' + formId).validate({
+                    rules: {
+                        remit_comp_name: {
+                            required: true
+                        },
+                        cust_ac_no: {
+                            required: true
+                        },
+                        status: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        remit_comp_name: {
+                            required: "Enter RemitCompany Name to continue"
+                        },
+                        cust_ac_no: {
+                            required: "Enter Biller Account to continue"
+                        },
+                        status: {
+                            required: "Select Status to continue"
+                        }
+                    }
+                });
+            }
+            return { init: init };
+        }();
+
+        classRemitCompanySetup.init();
+
+    </script>
+}

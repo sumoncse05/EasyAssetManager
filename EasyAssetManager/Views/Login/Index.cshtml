@@ -1,0 +1,141 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - EBL Agent Banking</title>
+    <link href="~/favicon.ico" rel="shortcut icon">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/ApplicationTheme/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/ApplicationTheme/lib/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/ApplicationTheme/css/animate.css" />
+    <link href="~/ApplicationTheme/lib/toastr/toastr.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/ApplicationTheme/css/style.css" asp-append-version="true" />    
+    <style>
+        .errorTxt {
+           color:red;
+        }
+    </style>
+</head>
+<body style="background-image: url('/ApplicationTheme/assets/img/bg.gif');">    
+    @*<div class="row">
+        <nav class="navbar navbar-static-top loginscreen  animated fadeInDown" role="navigation">
+            <div class="middle-box mx-auto order-0" style="padding:20px">
+                <h3> AGENT BANKING </h3>
+            </div>         
+        </nav>
+    </div>*@
+    <div class="middle-box text-center loginscreen  animated fadeInDown">
+        <div>
+
+            <div>
+                <h1 class="logo-name">
+                    <img src="~/ApplicationTheme/assets/img/eastern-bank-ltd.gif" />
+                </h1>
+            </div>
+            <h3>Welcome to EBL RM Management</h3>
+            <p>Log In to Connect</p>
+            <form class="m-t" role="form" action="#" id="userLogin">
+                <div class="form-group">
+                    <div class="input-group m-b">
+                        <div class="input-group-prepend">
+                            <span class="input-group-addon"> <span class="fa fa-user"></span></span>
+                        </div>
+                        <input type="text" class="form-control form-element required" id="user_id" name="user_id" placeholder="UserId">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group m-b">
+                        <div class="input-group-prepend">
+                            <span class="input-group-addon">
+                                <span class="fa fa-key"></span>
+                            </span>
+                        </div>
+                        <input type="password" class="form-control form-element required" id="Password" name="Password" placeholder="Password">
+                    </div>
+
+                </div>
+                <div class="errorTxt"></div>
+                <button type="button" id="btnLogin" class="btn btn-primary block full-width m-b">Log In</button>
+
+            </form>
+        </div>
+    </div>
+    <script src="~/ApplicationTheme/lib/jquery/dist/jquery.js"></script>
+    <script src="~/ApplicationTheme/lib/toastr/toastr.js"></script>
+    <script src="~/ApplicationTheme/lib/validate/jquery.validate.min.js"></script>
+    <script src="~/PageJs/ApplicationCommon.js"></script>
+</body>
+</html>
+
+<script type="text/javascript">
+        var classlogin = function ()
+        {
+            var formId = 'userLogin';
+            var init = function ()
+            {
+                eventInitializer();
+                validation(formId);
+                localStorage.setItem("screenId", null);
+                localStorage.setItem("firstParentId", null);
+                localStorage.setItem("rootParentId", null);
+            };
+            var eventInitializer = function ()
+            {
+                $('#btnLogin').click(userLogin);
+            };
+            var userLogin = function ()
+            {
+                if (ApplicationCommon.isValidForm(formId))
+                {
+                    var pUser = ApplicationCommon.getData('form-element');
+                var url = '/Login/Login';
+                ApplicationCommon.request(url, 'POST', pUser, false, true, false, function (res)
+                {
+                    ApplicationCommon.showNotification(res.message.messageType, res.message.messageString);
+                    if (res.message.messageType == 1)
+                    {
+                        clear();
+                        window.location.href = '@Url.Action("Index","Home")';
+                    }
+                });
+                }
+
+            };
+            var clear = function ()
+            {
+                ApplicationCommon.clearFields();
+            };
+            var validation = function (formId)
+            {
+                $('#' + formId).validate({
+                    rules: {
+                        user_id: {
+                            required: true
+                        },
+                        Password: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        user_id: {
+                            required: "User Id has to be an alphanumeric value"
+                        },
+                        Password: {
+                            required: "Password Required"
+                        }
+                    },
+                    errorElement: 'div',
+                    errorLabelContainer: '.errorTxt'
+
+                });
+            }
+            return { init: init};
+        }();
+        classlogin.init();
+</script>

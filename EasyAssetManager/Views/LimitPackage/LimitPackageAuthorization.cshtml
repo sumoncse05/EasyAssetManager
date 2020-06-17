@@ -1,0 +1,133 @@
+﻿@{
+    ViewData["Title"] = "Limit Package Authorization";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox " id="iboxTbl">
+                <div class="ibox-title">
+                    <h5> Limit Package Management</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="iboxTblImg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="iboxContent">
+                    <div id="div_limitPackageAuthorize">
+
+                    </div>
+                    <div class="form-group hr-line-dashed"> </div>
+                    <div style="text-align:left" id="page1">
+                        <button type="button" class="btn btn-default" id="btnRefresh">Refresh</button>
+                        <button type="button" class="btn btn-primary" id="btnAuthorize">Authorize</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <environment names="Development,Staging,Production">
+        <link rel="stylesheet" href="~/ApplicationTheme/lib/sweetalert/dist/sweetalert.css" />
+    </environment>
+}
+@section scripts{
+    <script src="~/ApplicationTheme/lib/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        var classLimitPackageAuthorize = function ()
+        {
+            var init = function ()
+            {
+                eventInitializer();
+            };
+            var eventInitializer = function ()
+            {
+                $('#btnAuthorize').click(authorise);
+                $('#btnRefresh').click(refresh);
+                searchInitiate();
+
+            };
+            var authorise = function ()
+            {
+                var limitIds = getAllData();
+                if (limitIds.length < 1)
+                {
+                    ApplicationCommon.showNotification("2", "Select atleast one Package to authorize.");
+                } else
+                {
+                    var url = '/LimitPackage/AuthorizationLimitPackage';
+                    ApplicationCommon.post(url, { "limitIds": limitIds }, function (res)
+                    {
+                        ApplicationCommon.showNotification(res.messageType, res.messageString);
+                        if (res.messageType == 1)
+                        {
+                            searchInitiate();
+                        }
+                    });
+                }
+            };
+        var viewdata=function(limit_id){
+        window.location.href = "/LimitPackage/LimitPackageView?limitId="+limit_id;
+        };
+         var deletedata=function(limit_id){
+            swal({
+                title: "Are you sure?",
+                text: "Do you really want to delete this package?(Yes/No)",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes",
+                closeOnConfirm: false
+            }, function () {
+
+                var formData = new FormData();
+                formData.append("limitId", limit_id);
+                var url = '/LimitPackage/DeletLimitPackage';
+                ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res) {
+                    ApplicationCommon.showNotification(res.messageType, res.messageString);
+                    swal.close();
+                    if (res.messageType == 1)
+                    {
+                        searchInitiate();
+                    }
+                });
+ 
+            });
+        
+            };
+            var searchInitiate = function ()
+            {
+                $('#div_limitPackageAuthorize').empty();
+                var url = '/LimitPackage/LimitPackageAuthorizationList';
+                $('#div_limitPackageAuthorize').load(url);
+            };
+            var refresh = function ()
+            {
+                searchInitiate();
+            };
+            var getAllData=function()
+            {
+                var limitIds = [];
+                $('#tb-limitPackageAuthorize').find('tr').each(function (index)
+                {
+                    if (index > 0) {
+                        var row = $(this);
+                        if (row.find('input[type="checkbox"]').is(':checked')) {
+                           var limitId = row.find('td:eq(1)').text();
+                            limitIds.push(limitId);
+                        }
+                    }
+                });
+                return limitIds;
+            };
+
+            return { init: init,viewdata:viewdata,deletedata:deletedata};
+        }();
+
+        classLimitPackageAuthorize.init();
+
+    </script>
+}
+

@@ -1,0 +1,132 @@
+﻿@model EasyAssetManagerCore.Models.EntityModel.Agent
+@{
+    ViewData["Title"] = "Agent Account Setup";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="ibox" id="divsidebarCollapse">
+                <div class="ibox-title">
+                    <h5>Import Agent Account from UBS</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="sidebarCollapse"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="sidebarCollapse2">
+                    <form id="agentAccountSetup" action="#" class="wizard-big">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group row">
+                                        <div class="col-xl-12 ibox-heading">
+                                            <h4 class="col-form-label">Agent Details</h4>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Agent ID:</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="AGENT_USR_ID" name="AGENT_USR_ID" class="form-control form-element" value="@Model.AGENT_USR_ID" readonly />
+                                            <input type="hidden" id="AGENT_ID" name="AGENT_ID" class="form-control form-element" value="@Model.AGENT_ID"/>
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Agent Name:</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="AGENT_NAME" name="AGENT_NAME" class="form-control form-element" readonly value="@Model.AGENT_NAME"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Agent CIF:</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="CUSTOMER_NO" name="CUSTOMER_NO" class="form-control form-element" readonly value="@Model.CUSTOMER_NO"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Existing Agent Account Details</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div id="div_agentAccountSetup"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+
+        var classAgentAccount = function () {
+            var init = function () {
+                eventInitializer();
+            };
+            var eventInitializer = function () {
+                searchInitiate();
+            };
+            var searchInitiate = function () {
+
+                var agentId = $('#AGENT_ID').val();
+                var cust_ac_no = $('#CUSTOMER_NO').val();
+                if (agentId) {
+                    $('#div_agentAccountSetup').empty();
+                    var url = '/Agent/SearchAgentAccount';
+                    $('#div_agentAccountSetup').load(url + '?agentId=' + agentId + '&&cust_ac_no=' + cust_ac_no);
+                }
+
+            };
+            var updateStatusSubmit = function () {
+                var cust_ac_no = $("#modalUpdatecust_ac_no").val();
+                var agentId = $("#modalUpdateagent_id").val();
+               var status = $("#modalUpdatestatus").val();
+                if (status) {
+                    var formData = new FormData();
+                    formData.append("agentId", agentId);
+                    formData.append("cust_ac_no", cust_ac_no);
+                   formData.append("status", status);
+                    var url = '/Agent/UpdateAccount';
+                    ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res) {
+                        ApplicationCommon.showNotification(res.messageType, res.messageString);
+                        if (res.messageType == 1) {
+                            $(".modal-backdrop").remove();
+                            searchInitiate();
+                        }
+                    });
+                 
+                }
+                else {
+                    ApplicationCommon.showNotification("Error", "Select status to continue!");
+                }
+
+            };
+            
+            return { init: init,updateStatusSubmit: updateStatusSubmit };
+        }();
+
+        classAgentAccount.init();
+
+    </script>
+}
+

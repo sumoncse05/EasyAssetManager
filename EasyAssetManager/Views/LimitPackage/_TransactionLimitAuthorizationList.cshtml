@@ -1,0 +1,103 @@
+﻿@model IEnumerable<EasyAssetManagerCore.Models.EntityModel.LimitPackage>
+@{
+    Layout = null;
+}
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped table-bordered table-hover dataTables-example table-responsive" id="tb-transactionlimitAuthorize" width="100%">
+        <thead>
+            <tr>
+                <th class="removeSorting"><input type="checkbox" id="LimitChkAll" name="LimitChkAll" /></th>
+                <th class="collapse">SL</th>
+                <th>Limit Scope</th>
+                <th>Frequency(Days)</th>
+                <th>Agent ID/ Account No</th>
+                <th>Agent Name/ Account Desc</th>
+                <th>Limit ID</th>
+                <th>Limit Desc</th>
+                <th>Account Type</th>
+                <th>Effect Date</th>
+                <th>Expired Date</th>
+                <th>Authorized By</th>
+                <th>Authorized Date</th>
+                <th>Action</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var v in Model)
+            {
+                <tr>
+
+                    @if (string.IsNullOrEmpty(v.auth_date))
+                    {
+                        <td><input type="checkbox" id="LimitChk" name="LimitChk" class="innerCheck" /></td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    <td class="collapse">@v.limit_slno</td>
+                    <td>@v.limit_scope</td>
+                    <td>@v.limit_frequency</td>
+                    <td>@v.user_ref_no</td>
+                    <td>@v.user_name</td>
+                    <td>@v.limit_id</td>
+                    <td>@v.limit_desc</td>
+                    <td>@v.ac_type_desc</td>
+                    <td>@v.eff_date</td>
+                    <td>@v.exp_date</td>
+                    <td>@v.auth_by</td>
+                    <td>@v.auth_date</td>
+                    <td>
+
+                        <button type="button" class="btn btn-success gridButton" onclick="classTransactionLimitAuthorize.viewdata('@v.limit_id');" data-id="@v.limit_slno">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                    </td>
+
+                    @if (string.IsNullOrEmpty(v.auth_date))
+                    {
+                        <td>
+                            <button type="button" class="btn btn-danger gridButton" onclick="classTransactionLimitAuthorize.deletedata('@v.limit_slno');" data-id="@v.limit_slno">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No record found.</p>
+}
+
+
+<script type="text/javascript">
+      $(document).ready(function () {
+       ApplicationCommon.makePagination('tb-transactionlimitAuthorize');
+    $("#LimitChkAll").click(function () {
+                var checkAll = $("#LimitChkAll").prop('checked');
+                    if (checkAll) {
+                        $(".innerCheck").prop("checked", true);
+                    } else {
+                        $(".innerCheck").prop("checked", false);
+                    }
+                });
+    $(".innerCheck").click(function(){
+                if($(".innerCheck").length == $(".innerCheck:checked").length) {
+                    $("#LimitChkAll").prop("checked", true);
+                } else {
+                    $("#LimitChkAll").prop("checked", false);
+                }
+
+            });
+    });
+
+</script>

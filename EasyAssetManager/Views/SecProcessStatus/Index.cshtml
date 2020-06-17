@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewData["Title"] = "Process Running Status";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="ibox" id="divsidebarCollapse">
+                <div class="ibox-title">
+                    <h5>Search Parameters</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="sidebarCollapse"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="sidebarContent">
+                    <form id="stepProcess" action="#" class="wizard-big">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group row">
+                                        <div class="col-xl-3"></div>
+                                        <div class="col-xl-1">
+                                            <label class="col-form-label">Run ID</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="sc_run_id" name="sc_run_id" class="form-control form-element" />
+                                        </div>
+                                        <div class="col-xl-5"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-5"></div>
+                                        <div class="col-xl-2">
+                                            <button type="button" class="btn btn-primary" id="refresh">Refresh</button>
+                                        </div>
+                                        <div class="col-xl-3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox " id="iboxTbl">
+                <div class="ibox-title">
+                    <h5>Running Process List</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="iboxTblImg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="iboxContent">
+                    <div id="acc_openingreq"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script type="text/javascript">
+
+
+        var classInactiveUserSearch = function () {
+            var init = function () {
+                eventInitializer();
+
+            };
+            var eventInitializer = function () {
+                $('#refresh').click(searchInitiate);
+                searchInitiate();
+            };
+            var searchInitiate = function () {
+
+                var sc_run_id = $('#sc_run_id').val();                
+               //var ac_name = $('#sc_user_name').val().replace(/ /g, "+");
+                $('#acc_openingreq').empty();
+                var url = '/SecProcessStatus/GetProcessList?run_id=' + sc_run_id;
+                 $('#acc_openingreq').load(url);
+
+            };
+            
+            return { init: init };
+        }();
+
+        classInactiveUserSearch.init();
+
+    </script>
+}

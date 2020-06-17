@@ -1,0 +1,96 @@
+﻿@model IEnumerable<EasyAssetManagerCore.Models.EntityModel.BatchProcess>
+@{
+    Layout = null;
+}
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped table-bordered table-hover dataTables-example table-responsive" id="tb-batchProcess">
+        <thead>
+            <tr>
+                <th>Run ID</th>
+                <th>Status</th>
+                <th>Program</th>
+                <th>Completed</th>
+                <th>Error Msg</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var v in Model)
+            {
+                <tr>
+                    <td>@v.RUN_ID</td>
+                    <td>@v.STATUS_TEXT</td>
+                    <td>@v.PROGRAM_NAME </td>
+                    <td>@v.COMPLETED</td>
+                    <td>
+                        <button type="button" class="btn btn-danger" onclick="showErrorMessage('@v.RUN_ID');" data-id="@v.RUN_ID">
+                            <i class="fa fa-eraser"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No record found.</p>
+}
+<div class="modal fade" id="errorMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Error Message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label class="col-form-label">Error Code:</label>
+                        <input type="text" id="err_code" name="err_code" class="form-control form-element" readonly="readonly" />
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Error Message:</label>
+                        <textarea id="err_desc" name="err_desc" class="form-control form-element" readonly="readonly"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <input type="button" value="Close" class="btn btn-danger ks-next" data-dismiss="modal" id="btnClose">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function ()
+    {
+        ApplicationCommon.makePagination("tb-batchProcess");
+    });
+
+    function showErrorMessage(runId)
+    {
+        var runId = $("#runId").val();
+        if (runId != '')
+        {
+            var url = '/BatchProcess/GetErrorMessage';
+            ApplicationCommon.request(url, 'POST', { runId: runId }, false, true, false, function (res)
+            {
+                $('#errorMessage').modal('show');
+                if (res) {
+                    $('#err_code').val(res.err_code);
+                    $('#err_desc').val(res.err_desc);
+                }
+            });
+        }
+        else
+        {
+            ApplicationCommon.showNotification("Error", "Submitt process to view status.");
+        }
+    }
+
+</script>
+

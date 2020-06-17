@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewData["Title"] = "Existing Remmittance Company";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="ibox" id="divsidebarCollapse">
+                <div class="ibox-title">
+                    <h5>Search Parameters</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="sidebarCollapse"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="sidebarContent">
+                    <form id="stepProcess" action="#" class="wizard-big">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group row">
+                                        <div class="col-xl-1"></div>
+                                        <div class="col-xl-3">
+                                            <label class="col-form-label">Remmittance Company ID</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="sc_remit_id" name="sc_remit_id" class="form-control form-element" />
+                                        </div>
+                                        <div class="col-xl-4"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-1"></div>
+                                        <div class="col-xl-3">
+                                            <label class="col-form-label">Remmittance Company Name</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="sc_remit_name" name="sc_remit_name" class="form-control form-element" />
+                                        </div>
+                                        <div class="col-xl-4"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-5"></div>
+                                        <div class="col-xl-2">
+                                            <button type="button" class="btn btn-primary" id="search">Search</button>
+                                        </div>
+                                        <div class="col-xl-3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox" id="iboxTbl">
+                <div class="ibox-title">
+                    <h5>Existing Remmittance Company List</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="iboxTblImg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="iboxContent">
+                    <div id="acc_openingreq"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+
+        var classRemitCompanySearch = function () {
+            var init = function () {
+                eventInitializer();
+            };
+            var eventInitializer = function () {
+                $('#search').click(searchInitiate);
+            };
+            var searchInitiate = function () {
+                var sc_remit_id = $('#sc_remit_id').val();
+                var sc_remit_name = $('#sc_remit_name').val().replace(/ /g, "+");
+                $('#acc_openingreq').empty();
+                var url = '/RemittanceCompany/GetRemitCompanyDetailsSearch';
+                $('#acc_openingreq').load(url + '?sc_remit_id=' + sc_remit_id + '&&sc_remit_name=' + sc_remit_name);
+            };
+            return { init: init};
+        }();
+
+        classRemitCompanySearch.init();
+
+    </script>
+}

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<EasyAssetManagerCore.Models.EntityModel.User>
+    @{
+        Layout = null;
+    }
+    @if (Model != null && Model.Any())
+    {
+        <table class="table table-striped table-bordered table-hover dataTables-example" id="tb-passemail">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Station IP</th>
+                    <th>Last Login</th>
+                    <th>Session ID</th>
+                    <th>Clear</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var v in Model)
+                {
+                    <tr>
+                        <td>@v.USER_ID</td>
+                        <td>@v.STATION_IP </td>
+                        <td>@v.LOGIN_TIME</td>
+                        <td>@v.SESSION_ID</td>
+                        <td>
+                            <button type="button" class="btn btn-success gridButton" onclick="clearSession('@v.USER_ID','@v.STATION_IP');" data-id="@v.USER_ID">
+                                <i class="fa fa-close"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No record found.</p>
+    }
+    <script type="text/javascript">
+    $(document).ready(function () {
+        ApplicationCommon.makePagination("tb-passemail");
+    });
+        function clearSession(user_id, station_ip) {
+            if (confirm("Do you want to clear this session?(Yes/No)")) {
+            var formData = new FormData();
+            formData.append("user_id", user_id);
+            formData.append("station_ip", station_ip);
+                var url = '/ClearUserSession/ClearSession';
+            ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res) {
+                ApplicationCommon.showNotification(res.messageType, res.messageString);
+                if (res.messageType == 1) {
+                    classLoginUserSearch.searchInitiate();
+                }
+            });
+        }
+    }
+    
+    </script>
+

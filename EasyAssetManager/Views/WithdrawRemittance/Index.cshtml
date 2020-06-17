@@ -1,0 +1,448 @@
+﻿
+@{
+    ViewData["Title"] = "Withdraw Remittance";
+}
+<style>
+    .wizard-big.wizard > .content {
+        min-height: 480px !important;
+    }
+</style>
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox-title">
+                <h5>Withdraw Remittance in Cash</h5>
+            </div>
+            <div class="ibox">
+                <div class="ibox-content">
+                    <form id="stepProcessWithdrawRemittance" action="#" class="wizard-big">
+                        <h1>Transaction</h1>
+                        <fieldset>
+                            <legend>Transaction Details</legend>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Security Code:<span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" class="form-control form-element required" id="remit_sec_code" name="remit_sec_code">
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Receiver Name:<span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" class="form-control form-element required" id="remit_receiver_name" name="remit_receiver_name">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Receiver Gender:<span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <select id="remit_sex" name="remit_sex" class="form-control form-element required"></select>
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Receiver Address:<span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="remit_receiver_address" name="remit_receiver_address" class="form-control form-element required" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Receiver Mobile:<span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="remit_receiver_mobile" name="remit_receiver_mobile" class="form-control form-element required" />
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Receiver Type:<span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <select id="remit_receiver_type" name="remit_receiver_type" class="form-control form-element required" ></select>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Receiver Account EBL:</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="remit_receiver_accountno" name="remit_receiver_accountno" class="form-control form-element" />
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Sender Name:<span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="remit_sender_name" name="remit_sender_name" class="form-control form-element required" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Sender Country:<span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="remit_sender_country" name="remit_sender_country" class="form-control form-element required" />
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Amount:<span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="amount" name="amount" class="form-control form-element required" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Remittance Company:<span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <select id="remit_comp_id" name="remit_comp_id" class="form-control form-element required" ></select>
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Remarks: </label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="remarks" name="remarks" class="form-control form-element" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Photo:</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <div id="webCam"></div>
+                                        </div>
+                                        <div class="col-xl-1">
+                                            <input type="button" value="Capture" class="btn btn-default" id="btnCapture">
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <img src="~/ApplicationTheme/assets/img/no-photo.jpeg" id="webcampicurl" name="webcampicurl" height="120" width="150" />
+                                            <input type="hidden" id="customer_image_path" name="customer_image_path" class="form-control form-element" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <h1>Confirm</h1>
+                        <fieldset>
+                            <legend>Confirm Transaction</legend>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Security Code:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="Vremit_sec_code" name="Vremit_sec_code" class="form-control form-element" readonly="readonly" />
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Receiver Name:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="Vremit_receiver_name" name="Vremit_receiver_name" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Receiver Address:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="Vremit_receiver_address" name="Vremit_receiver_address" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Receiver Mobile:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="Vremit_receiver_mobile" name="Vremit_receiver_mobile" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Sender Name:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="Vremit_sender_name" name="Vremit_sender_name" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Sender Country:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="Vremit_sender_country" name="Vremit_sender_country" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Amount:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="Vamount" name="Vamount" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Remittance Company:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="Vremit_comp_id" name="Vremit_comp_id" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Remarks:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="Vremarks" name="Vremarks" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Photo:</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <img src="~/ApplicationTheme/assets/img/no-photo.jpeg" id="Vcustomer_image_path" name="Vcustomer_image_path" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <h1>Status</h1>
+                        <fieldset>
+                            <legend>Complete Status</legend>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-xl-3">
+                                            <label class="col-form-label">Registration Ref. No.</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="transactionId" name="transactionId" class="form-control form-element" readonly="readonly" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <div style="text-align:right" id="page1">
+                        <input type="button" value="Submit" class="btn btn-primary ks-next" id="firstPage">
+                    </div>
+                    <div style="text-align:right" id="page2">
+                        <input type="button" value="Previous" class="btn btn-primary ks-previous" id="secondPagePrevious">
+                        <input type="button" value="Next" class="btn btn-primary ks-next" id="secondPage">
+                    </div>
+                    <div style="text-align:right" id="page3">
+                        <input type="button" value="OK" class="btn btn-primary ks-next" id="finalPage">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/ApplicationTheme/webcamjs/webcam.js"></script>
+    <script type="text/javascript">
+        var classDeposit = function ()
+        {
+            var formId = "stepProcessWithdrawRemittance";
+            var init = function ()
+            {
+                ApplicationCommon.initialStep(formId, 3);
+                eventInitializer();
+                validation(formId);
+             //   $('#webcampicurl').hide();
+               // $('#webCam').show();
+               // $('#btnCapture').show();
+                Webcam.set({
+                    width: 150,
+                    height: 120,
+                    image_format: 'jpeg',
+                    jpeg_quality: 90
+                });
+                Webcam.attach('#webCam');
+                $('#page1').show();
+                Webcam.on('error', function (err) {
+                    ApplicationCommon.showNotification("2", "WebCam not Running. Please Check.");
+                    $('#page1').hide();
+                });
+               
+            };
+            var eventInitializer = function ()
+            {
+                $('#btnCapture').click(captureWebcamPhoto);
+                $('#firstPage').click(comfirmTransaction);
+                $('#secondPage').click(nextMove);
+                $('#secondPagePrevious').click(previousMove);
+                $('#finalPage').click(finalSubmit);
+                combo.getRemittanceCompany('remit_comp_id', '/Common/GetRemittanceCompany', null, true);
+                combo.getSex('remit_sex', true);
+                combo.getCustomerType('remit_receiver_type', true);
+            };
+            var captureWebcamPhoto = function ()
+            {
+                Webcam.snap(function (data_uri)
+                {
+                    $('#webcampicurl').attr('src', data_uri);
+
+                    Webcam.upload(data_uri,
+                        '/WithdrawRemittance/PhotoUpload',
+                        function (code, text)
+                        {
+                           // $('#webcampicurl').show();
+                            $('#customer_image_path').val(text.replace(/\"/g, ""));
+                          //  $('#webCam').hide();
+                           // $('#btnCapture').hide();
+                        });
+                });
+
+            };
+            var comfirmTransaction = function ()
+            {
+                if (ApplicationCommon.isValidForm(formId))
+                {
+                    var remittance = ApplicationCommon.getData('form-element');
+                    var url = '/WithdrawRemittance/ComfirmTransaction';
+                    ApplicationCommon.request(url, 'POST', remittance, false, true, false, function (res)
+                    {
+                        if (res.message.messageType == 1)
+                        {
+                            ApplicationCommon.nextForword(formId, 1, true);
+                            ApplicationCommon.setVData(res, null);
+                            $('#Vremit_comp_id').val($('#remit_comp_id option:selected').text());
+                            $('#Vcustomer_image_path').attr('src', '/' + res.customer_image_path);
+
+                        }else{
+         ApplicationCommon.showNotification(res.message.messageType, res.message.messageString);
+        }
+                    });
+                }
+
+            };
+            var nextMove = function ()
+            {
+                var remittance = ApplicationCommon.getData('form-element');
+                var url = '/WithdrawRemittance/InitiateTransaction';
+                ApplicationCommon.request(url, 'POST', remittance, false, true, false, function (res)
+                {
+                    ApplicationCommon.showNotification(res.message.messageType, res.message.messageString);
+                    if (res.message.messageType == 1)
+                    {
+                        ApplicationCommon.nextForword(formId, 2, true);
+                        $('#transactionId').val(res.transactionID);
+                    }
+                });
+
+            };
+            var previousMove = function ()
+            {
+                ApplicationCommon.nextForword(formId, 0, false);
+            };
+            var finalSubmit = function ()
+            {
+                ApplicationCommon.clearFields();
+                var url = '/WithdrawRemittance/ClearRegistrationSession';
+                ApplicationCommon.request(url, 'POST', {}, false, true, false, function (res)
+                {
+                    window.location.reload(false);
+                });
+            };
+            var validation = function (formId)
+            {
+                $('#' + formId).validate({
+                    rules: {
+                        remit_sec_code: {
+                            required: true
+                        },
+                        remit_receiver_name: {
+                            required: true
+                        },
+                        remit_receiver_mobile: {
+                            required: true,
+                            digits: true,
+                            maxlength: 11,
+                            minlength: 11
+                        },
+                        remit_sex: {
+                            required: true
+                        },
+                        remit_receiver_address: {
+                            required: true
+                        },
+                        remit_receiver_type: {
+                            required: true
+                        },
+                        remit_sender_name: {
+                            required: true
+                        },
+                        remit_sender_country: {
+                            required: true
+                        },
+                        amount: {
+                            required: true,
+                            number: true
+                        },
+                        remit_comp_id: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        remit_sec_code: {
+                            required: "Enter security code to continue"
+                        },
+                        remit_receiver_name: {
+                            required: "Enter receiver name to continue"
+                        },
+                        remit_receiver_mobile: {
+                            required: "Enter receiver mobile to continue",
+                            digits: "Receiver mobile must be numeric",
+                            maxlength: "Receiver mobile must be 11 digits",
+                            minlength: "Receiver mobile must be 11 digits"
+                        },
+                        remit_sex: {
+                            required: "Select receiver Gender to continue"
+                        },
+                        remit_receiver_address: {
+                            required: "Enter receiver address to continue"
+                        },
+                        remit_receiver_type: {
+                            required: "Select receiver type to continue"
+                        },
+                        remit_sender_name: {
+                            required: "Enter sender name to continue"
+                        },
+                        remit_sender_country: {
+                            required: "Enter sender country to continue"
+                        },
+                        amount: {
+                            required: "Enter amount no to continue",
+                            number: "Amount must be numeric"
+                        },
+                        remit_comp_id: {
+                            required: "Select remittance company to continue"
+                        }
+                    }
+
+                });
+            };
+            return { init: init };
+        }();
+
+        classDeposit.init();
+
+    </script>
+}
+
+
+
+

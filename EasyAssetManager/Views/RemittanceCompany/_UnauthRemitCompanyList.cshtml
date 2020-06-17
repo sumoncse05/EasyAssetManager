@@ -1,0 +1,66 @@
+﻿@model IEnumerable<EasyAssetManagerCore.Models.EntityModel.Remittance>
+@{
+    Layout = null;
+}
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped table-bordered table-hover dataTables-example" id="tb-accunathremitcom">
+        <thead>
+            <tr>
+                @*<th><input name="select_all" value="1" id="select-all" type="checkbox" /></th>*@
+                <th><input type="checkbox" id="UserChkAll" name="UserChkAll" /></th>
+                <th>Remittance Company ID</th>
+                <th>Company Name</th>
+                <th>Branch</th>
+                <th>Biller Account</th>
+                <th>Created By</th>
+                <th>Created Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var v in Model)
+            {
+            <tr>
+                @*<td><input name="select" value="@v.remit_comp_id" class="select-item" type="checkbox" /></td>*@
+                <td><input type="checkbox" value="@v.remit_comp_id" id="UserChk" name="UserChk" class="innerCheck" /></td>
+                <td>@v.remit_comp_id</td>
+                <td>@v.remit_comp_name</td>
+                <td>@v.branch_code</td>
+                <td>@v.cust_ac_no </td>
+                <td>@v.ins_by</td>
+                <td>@v.ins_date</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No record found.</p>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        ApplicationCommon.makePagination("tb-accunathremitcom");
+        $("#UserChkAll").click(function () {
+            var checkAll = $("#UserChkAll").prop('checked');
+            if (checkAll) {
+                $(".innerCheck").prop("checked", true);
+            } else {
+                $(".innerCheck").prop("checked", false);
+            }
+        });
+        $(".innerCheck").click(function () {
+            if ($(".innerCheck").length == $(".innerCheck:checked").length) {
+                $("#UserChkAll").prop("checked", true);
+            } else {
+                $("#UserChkAll").prop("checked", false);
+            }
+
+        });
+    });
+
+    //$('#select-all').on('click', function () {
+    //    $('input:checkbox').not(this).prop('checked', this.checked);
+    //});
+</script>
+

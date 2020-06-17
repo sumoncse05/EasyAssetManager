@@ -1,0 +1,337 @@
+﻿
+@{
+    ViewData["Title"] = "Service Request";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox-title">
+                <h5>Service Request</h5>
+            </div>
+            <div class="ibox">
+                <div class="ibox-content">
+                    <form id="stepProcess" action="#" class="wizard-big">
+                        <h1>Details</h1>
+                        <fieldset>
+                            <legend>Service Request Details</legend>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Service Type<span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <select class="form-control form-element required" id="wf_type" name="wf_desc"></select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Account No<span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input type="text" id="cust_ac_no" name="cust_ac_no" class="form-control form-element required" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Request Details</label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <textarea id="remarks" name="remarks" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <h1>Verification</h1>
+                        <fieldset>
+                            <legend>Confirm Customer for Verification</legend>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Customer<span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <select class="form-control form-element required" id="customer_no" name="customer_name"></select>
+                                        </div>
+                                        <div class="col-xl-6">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <h1>VerifyFinger</h1>
+                        <fieldset>
+                            <legend>Confirm Customer details and Verify Finger</legend>
+                            <div class="row">
+                                <div class="col-xl-2">
+                                    <label class="col-form-label">Customer No(CIF):</label>
+                                </div>
+                                <div class="col-xl-4">
+                                    <input type="text" id="Vcust_no" name="Vcust_no" class="form-control" readonly="readonly" />
+                                </div>
+                                <div class="col-xl-3">
+                                    <label class="col-form-label">Customer Details(CBS):</label>
+                                </div>
+                                <div class="col-xl-3 ">
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-2">
+                                    <label class="col-form-label">Account No:</label>
+                                </div>
+                                <div class="col-xl-4">
+                                    <input type="text" id="Vcust_ac_no" name="Vcust_ac_no" class="form-control" readonly="readonly" />
+                                </div>
+                                <div class="col-xl-2">
+                                    <label class="col-form-label">Customer Name:</label>
+                                </div>
+                                <div class="col-xl-4">
+                                    <input type="text" id="Vcust_name" name="Vcust_name" class="form-control" readonly="readonly" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-2">
+                                    <label class="col-form-label">Account Name:</label>
+                                </div>
+                                <div class="col-xl-4">
+                                    <input type="text" id="Vac_desc" name="Vac_desc" class="form-control" readonly="readonly" />
+                                </div>
+                                <div class="col-xl-2">
+                                    <label class="col-form-label">Father Name:</label>
+                                </div>
+                                <div class="col-xl-4">
+                                    <input type="text" id="Vfather_name" name="Vfather_name" class="form-control" readonly="readonly" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-2">
+                                    <label class="col-form-label">Remarks:</label>
+                                </div>
+                                <div class="col-xl-4">
+                                    <input type="text" id="Vremarks" name="Vremarks" class="form-control" readonly="readonly" />
+                                </div>
+                                <div class="col-xl-2">
+                                    <label class="col-form-label">Mother Name:</label>
+                                </div>
+                                <div class="col-xl-4">
+                                    <input type="text" id="Vmother_name" name="Vmother_name" class="form-control" readonly="readonly" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <hr />
+                                </div>
+                                <div class="col-xl-2">
+                                    <label class="col-form-label">Customer Birth Date:</label>
+                                </div>
+                                <div class="col-xl-4">
+                                    <input type="text" id="Vbirth_date" name="Vbirth_date" class="form-control" readonly="readonly" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-2">
+                                    <label class="col-form-label">Finger Verify Status:</label>
+                                </div>
+                                <div class="col-xl-4">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="lblOtpStatus" name="lblOtpStatus" value="Not Yet Verified" style="color:red; width:130px" />
+                                        <img id="btnCheck" src="~/ApplicationTheme/assets/img/refresh.gif" style="cursor: pointer !important;" alt="EnrollStatus" width="30" height="30" title="Click to Check Status" />
+                                        <input type="button" value="Re-Generate" class="btn btn-default" id="btnGenerate">
+                                    </div>
+                                </div>
+                                <div class="col-xl-2">
+                                    <label class="col-form-label">Customer Gender:</label>
+                                </div>
+                                <div class="col-xl-4">
+                                    <input type="text" id="Vsex" name="Vsex" class="form-control" readonly="readonly" />
+                                </div>
+                            </div>
+                            <div class="row"></div>
+                        </fieldset>
+                        <h1>Transaction</h1>
+                        <fieldset>
+                            <legend>Confirm Transaction</legend>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Fixed Deposit Ref No:</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="TransactionID" name="TransactionID" class="form-control" readonly />
+                                        </div>
+                                        <div class="col-xl-7"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <div style="text-align:right" id="page1">
+                        <input type="button" value="Submit" class="btn btn-primary ks-next" id="firstPage">
+                    </div>
+                    <div style="text-align:right" id="page2">
+                        <input type="button" value="Previous" class="btn btn-primary ks-previous" id="secondPagePrevious">
+                        <input type="button" value="Next" class="btn btn-primary ks-next" id="secondPage">
+                    </div>
+                    <div style="text-align:right" id="page3">
+                        <input type="button" value="Previous" class="btn btn-primary ks-previous" id="thirdPagePrevious">
+                        <input type="button" value="Next" class="btn btn-primary ks-next" id="thirdPage">
+                    </div>
+                    <div style="text-align:right" id="page4">
+                        <input type="button" value="OK" class="btn btn-primary ks-next" id="finalPage">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        var classServiceRequest = function () {
+            var formId = "stepProcess";
+            var init = function () {
+                ApplicationCommon.initialStep(formId, 4);
+                eventInitializer();
+                validation(formId);
+            };
+            var eventInitializer = function () {
+                $('#firstPage').click(serviceRequestInitiate);
+                $('#secondPage').click(nextMove);
+                $('#secondPagePrevious').click(previousMove);
+                $('#thirdPage').click(next2Move);
+                $('#thirdPagePrevious').click(previous2Move);
+                $('#finalPage').click(finalSubmit);
+                $('#btnCheck').click(getFingerVerifyStatus);
+                $('#btnGenerate').click(reGenerateFingerRequest);
+                combo.getGetWorkflowType("wf_type", '/Common/GetWorkflowType', true);
+            };
+            var previousMove = function () {
+                ApplicationCommon.nextForword(formId, 0, false);
+            };
+            var previous2Move = function () {
+                ApplicationCommon.nextForword(formId, 1, false);
+            };
+            var serviceRequestInitiate = function () {
+                if (ApplicationCommon.isValidForm(formId)) {
+                    var cust_ac_no = $('#cust_ac_no').val();
+                    var wf_desc = $('#wf_type option:selected').text();
+                    var formData = new FormData();
+                    formData.append("cust_ac_no", cust_ac_no);
+                    formData.append("wf_desc", wf_desc);
+                    var url = '/ServiceRequest/GetAccountDetails';
+                    ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res) {
+                        if (res.message.messageType == 1) {
+                            combo.getGetCustomerComboByAccountNo("customer_no", '/Common/GetCustomerCombo', cust_ac_no, true);
+                            ApplicationCommon.nextForword(formId, 1, true);
+                        }else{
+                               ApplicationCommon.showNotification(res.message.messageType, res.message.messageString);
+                             }
+                    });
+                }
+            };
+            var nextMove = function () {
+                var remarks = $('#remarks').val();
+                var wf_type = $('#wf_type').val();
+                var customer_no = $('#customer_no').val();
+                if (customer_no) {
+                    var formData = new FormData();
+                    formData.append("customer_no", customer_no);
+                    formData.append("wf_type", wf_type);
+                    formData.append("remarks", remarks);
+                    var url = '/ServiceRequest/CustomerVerification';
+                    ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res) {
+                        ApplicationCommon.setVData(res, null);
+                        ApplicationCommon.nextForword(formId, 2, true);
+                    });
+                }
+            };
+            var next2Move = function () {
+                var wf_desc = $('#wf_type option:selected').text();
+                var formData = new FormData();
+                formData.append("wf_desc", wf_desc);
+                var url = '/ServiceRequest/CustomerFingerVerification';
+                ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res) {
+                    //ApplicationCommon.showNotification(res.message.messageType, res.message.messageString);
+                    //if (res.message.messageType == 1) {
+                        ApplicationCommon.nextForword(formId, 3, true);
+                        $('#TransactionID').val(res.transactionID);
+                    //}
+                });
+            };
+            var finalSubmit = function () {
+                ApplicationCommon.clearFields();
+                var url = '/ServiceRequest/ClearRegistrationSession';
+                ApplicationCommon.request(url, 'POST', {}, false, true, false, function (res) {
+                    window.location.reload(false);
+                });
+
+            };
+            var getFingerVerifyStatus = function () {
+                var url = '/ServiceRequest/GetFingerVerifyStatus';
+                ApplicationCommon.request(url, 'POST', {}, false, true, false, function (res) {
+                    if (res.pvc_status == "40999") {
+                        if (res.pvc_statusmsg == "S") {
+                            $("#lblOtpStatus").css("color", "Green");
+                            $("#lblOtpStatus").val('Verified Successfully');
+                            $("#btnGenerate").hide();
+                            $("#btnGenerate").hide();
+                        }
+                        else if (res.pvc_statusmsg == "E") {
+                            $("#lblOtpStatus").css("color", "Red");
+                            $("#lblOtpStatus").val('Verification Failed');
+                        } else {
+                            $("#lblOtpStatus").css("color", "Red");
+                            $("#lblOtpStatus").val('Not Yet Enrolled');
+                        }
+                        $("#btnCheck").attr("src", "/ApplicationTheme/assets/img/refresh_stopped.gif");
+                    } else {
+                        $("#lblOtpStatus").css("color", "Red");
+                        $("#lblOtpStatus").val('Not Yet Verified');
+                    }
+                });
+            }
+            var reGenerateFingerRequest = function () {
+                var url = '/ServiceRequest/ReGenerateFingerRequest';
+                ApplicationCommon.request(url, 'POST', {}, false, true, false, function (res) {
+                    ApplicationCommon.showNotification(res.messageType, res.messageString);
+                });
+            };
+            var validation = function (formId) {
+                $('#' + formId).validate({
+                    rules: {
+                        wf_type: {
+                            required: true
+                        },
+                        cust_ac_no: {
+                            required: true
+                        },
+                        customer_no: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        wf_type: {
+                            required: "Select Service Type to continue"
+                        },
+                        cust_ac_no: {
+                            required: "Enter Account No to continue"
+                        },
+                        customer_no: {
+                            required: "Select Customer to verify Finger."
+                        }
+                    }
+
+                });
+            }
+            return { init: init };
+        }();
+
+        classServiceRequest.init();
+
+    </script>
+}

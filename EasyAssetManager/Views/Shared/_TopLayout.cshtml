@@ -1,0 +1,47 @@
+﻿@{
+    var appSession = ViewBag.Session as EasyAssetManagerCore.Model.CommonModel.AppSession;
+}
+
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header" >
+            <span class="logo">
+                <a title="Home" href="~/Home"></a>
+            </span>
+                @*<img alt="image" class="logo" style="margin-left: 15px" src="~/ApplicationTheme/Images/eastern-bank-ltd-new.gif" />*@
+                @*<a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+        <form role="search" class="navbar-form-custom" method="post" action="">
+            <div class="form-group">
+                <input type="text" placeholder="AGENT BANKING" class="form-control" name="top-search" id="top-search">
+            </div>
+        </form>
+        <div style="margin-top:10px;">
+            Branch: <b>@appSession.User.address</b> | Agent: <b>@appSession.User.agent_name</b> | Outlet: <b>@appSession.User.outlet_name</b> | Date: <b>@System.DateTime.Now.ToString("dd-MMM-yyyy")</b>
+        </div>*@
+        </div>
+        <div class="app-name">
+            <span>AGENT BANKING</span>
+        </div>
+        <div>
+            <div class="user-dtl text-muted ">
+                Branch: <b>@appSession.User.branch_name</b> | Agent: <b>@appSession.User.agent_name</b> | Outlet: <b>@appSession.User.outlet_name</b> | Date: <b>@System.DateTime.Now.ToString("dd-MMM-yyyy")</b>
+            </div>
+            <div class="welcome">
+                <span class="m-r-sm text-muted welcome-message">Welcome:  <b>@appSession.User.user_name</b></span>
+            </div>
+            <div class="logout text-muted">
+                <a href="@Url.Action("Index", "Login")">
+                    <i class="fa fa-sign-out"></i> Log out
+                </a>
+            </div>
+            @*<ul class="nav navbar-top-links navbar-right">
+                <li>
+                    
+                </li>
+                <li>
+                    
+                </li>
+            </ul>*@
+        </div>
+    </nav>
+</div>
