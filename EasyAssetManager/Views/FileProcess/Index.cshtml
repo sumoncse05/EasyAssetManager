@@ -30,7 +30,7 @@
                                         <div class="col-xl-4">
                                             <div class="custom-file">
                                                 <input id="logo" type="file" class="custom-file-input form-element">
-                                                <label for="logo" class="custom-file-label ">Choose file...</label>
+                                                <label for="logo" class="custom-file-label">Choose file...</label>
                                             </div>
                                         </div>
                                     </div>
@@ -70,7 +70,7 @@
             var clear = function ()
             {
                 ApplicationCommon.clearFields(null, formId);
-
+                $('.custom-file-label').html('Choose file...');
             };
             var uploadFile = function ()
             {

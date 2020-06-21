@@ -54,7 +54,9 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\EasyAssetManagerCore\EasyAssetManagerCore.csproj" />
+    <Reference Include="EasyAssetManagerCore">
+      <HintPath>..\EasyAssetManagerCore\bin\Debug\netcoreapp2.2\EasyAssetManagerCore.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 

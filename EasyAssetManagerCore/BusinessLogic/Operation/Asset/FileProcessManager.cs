@@ -43,7 +43,8 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                 if (Connection.State != ConnectionState.Open)
                     Connection.Open();
                 fileProcessRepository.DeleteTable(tableName, session.User.user_id);
-                var fileProcessID = 1;
+                var random = new Random();
+                var fileProcessID = random.Next(10000);
                 //cmd = new OracleCommand();
                 //cmd.CommandType = CommandType.StoredProcedure;
                 //cmd.CommandText = "dpg_pay_manager.dpd_get_sess_id";
@@ -83,7 +84,9 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                                     Branch_Name = wooksheet.Cells[i, 4].Text.Trim(),
                                     ID_of_RM = wooksheet.Cells[i, 5].Text.Trim(),
                                     Name_of_RM = wooksheet.Cells[i, 6].Text.Trim(),
-                                    Loan_Acct_No = wooksheet.Cells[i, 7].Text.Trim()
+                                    Loan_Acct_No = wooksheet.Cells[i, 7].Text.Trim(),
+                                    INS_BY=session.User.user_id,
+                                    INS_DATE=DateTime.Now
                                 };
                                 //for (var j = 1; j <= columnCount; j++)
                                 //{
@@ -93,6 +96,13 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                                 //    }
                                 //}
                                 portFolios.Add(portFolio);
+                            }
+                            if (portFolios.Count > 0)
+                            {
+                                var row = fileProcessRepository.Process_LOAN_PORTFOLIO(portFolios);                          }
+                            else
+                            {
+                                MessageHelper.Error(Message, "No rows found this excel file.");
                             }
                         }
                         else

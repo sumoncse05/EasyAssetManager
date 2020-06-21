@@ -8,7 +8,7 @@ using System.Data;
 
 namespace EasyAssetManagerCore.Repository.Operation.Asset
 {
-    public class FileProcessRepository:BaseRepository, IFileProcessRepository
+    public class FileProcessRepository : BaseRepository, IFileProcessRepository
     {
         public FileProcessRepository(OracleConnection connection) : base(connection)
         {
@@ -17,11 +17,12 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
 
         public int DeleteTable(string tableName, string user_id)
         {
-            var result= Connection.ExecuteScalar<int>("DELETE FROM @TableName WHERE INS_BY=@UserId",new { TableName=tableName, UserId=user_id });
+            var sql = "DELETE FROM ERMP."+tableName+" WHERE INS_BY='"+user_id+"'";
+            var result = Connection.Execute(sql);
             return result;
         }
 
-        public IEnumerable<Account> GeAccountDetails(string customerAccountNo,string userId)
+        public IEnumerable<Account> GeAccountDetails(string customerAccountNo, string userId)
         {
             var dyParam = new OracleDynamicParameters();
             dyParam.Add("pvc_custacno", customerAccountNo, OracleMappingType.Varchar2, ParameterDirection.Input);
@@ -61,6 +62,14 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
             return Connection.Query<Thana>("pkg_lov_manager.dpd_get_thanalist", dyParam, commandType: CommandType.StoredProcedure);
 
         }
+
+        public int Process_LOAN_PORTFOLIO(List<AST_LOAN_PORTFOLIO_TMP> portFolios)
+        {
+            var sql = @"insert into ERMP.AST_LOAN_PORTFOLIO_TMP (File_Process_ID,ID_of_Area,Name_of_Area,Brn_Code,Branch_Name,ID_of_RM,Name_of_RM,Loan_Acct_No,INS_BY,INS_DATE)
+                      values (:File_Process_ID,:ID_of_Area,:Name_of_Area,:Brn_Code,:Branch_Name,:ID_of_RM,:Name_of_RM,:Loan_Acct_No,:INS_BY,:INS_DATE)";
+            var affectedRows = Connection.Execute(sql, portFolios);
+            return affectedRows;
+        }
     }
 
     #region Interface
@@ -71,6 +80,7 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
         IEnumerable<District> GetDistrictList(string div_code, string pvc_appuser);
         IEnumerable<Thana> GetThanaList(string div_code, string dist_code, string pvc_appuser);
         int DeleteTable(string tableName, string user_id);
+        int Process_LOAN_PORTFOLIO(List<AST_LOAN_PORTFOLIO_TMP> portFolios);
     }
 
     #endregion

@@ -23,7 +23,7 @@ namespace EasyAssetManager
                   .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                   .AddEnvironmentVariables();
             Configuration = builder.Build();
-            //var x = new Encription().Encrypt("123");
+            //var x = new Encription().Encrypt("ermp");
             ApplicationConstant.ApplicationMode = Convert.ToBoolean(Configuration["Data:ApplicationModeIsLive"]);
             string dataSource, userId, password;
             if (ApplicationConstant.ApplicationMode)
@@ -143,7 +143,7 @@ namespace EasyAssetManager
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<ISettingsUsersService, SettingsUsersService>();
             services.AddScoped<ICommonManager, CommonManager>();
-            services.AddScoped<IFileProcessManager, IFileProcessManager>();
+            services.AddScoped<IFileProcessManager, FileProcessManager>();
             services.AddScoped<ICustomerManager, CustomerManager>();
             services.AddScoped<IDepositManager, DepositManager>();
             services.AddScoped<IWithdrawCashManager, WithdrawCashManager>();

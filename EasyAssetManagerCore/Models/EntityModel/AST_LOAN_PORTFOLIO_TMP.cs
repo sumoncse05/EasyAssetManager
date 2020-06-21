@@ -1,4 +1,6 @@
-﻿namespace EasyAssetManagerCore.Models.EntityModel
+﻿using System;
+
+namespace EasyAssetManagerCore.Models.EntityModel
 {
     public class AST_LOAN_PORTFOLIO_TMP
     {
@@ -11,7 +13,7 @@
         public string Name_of_RM { get; set; }
         public string Loan_Acct_No { get; set; }
         public string INS_BY { get; set; }
-        public string INS_DATE { get; set; }
+        public DateTime INS_DATE { get; set; }
     }
 
     public class AST_LOAN_CL_TMP
