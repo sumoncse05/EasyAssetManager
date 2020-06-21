@@ -6,10 +6,24 @@
     <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="wwwroot\photo\**" />
+    <Compile Remove="wwwroot\RemittancePhoto\**" />
+    <Content Remove="wwwroot\photo\**" />
+    <Content Remove="wwwroot\RemittancePhoto\**" />
+    <EmbeddedResource Remove="wwwroot\photo\**" />
+    <EmbeddedResource Remove="wwwroot\RemittancePhoto\**" />
+    <None Remove="wwwroot\photo\**" />
+    <None Remove="wwwroot\RemittancePhoto\**" />
+    <TypeScriptCompile Remove="wwwroot\photo\**" />
+    <TypeScriptCompile Remove="wwwroot\RemittancePhoto\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.35" />
     <PackageReference Include="Dapper.Oracle.NetCore" Version="1.0.1" />
+    <PackageReference Include="EPPlus.Core" Version="1.5.4" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
@@ -29,9 +43,6 @@
   <ItemGroup>
     <Folder Include="Connected Services\" />
     <Folder Include="Log\" />
-    <Folder Include="wwwroot\RemittancePhoto\" />
-    <Folder Include="wwwroot\photo\archive\" />
-    <Folder Include="wwwroot\photo\" />
     <Folder Include="wwwroot\UserSpace\" />
   </ItemGroup>
 

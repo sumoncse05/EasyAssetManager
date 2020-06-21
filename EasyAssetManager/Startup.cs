@@ -1,5 +1,6 @@
 ﻿using System;
 using EasyAssetManagerCore.BusinessLogic.Operation;
+using EasyAssetManagerCore.BusinessLogic.Operation.Asset;
 using EasyAssetManagerCore.BusinessLogic.Security;
 using EasyAssetManagerCore.Model.CommonModel;
 using EasyAssetManagerCore.Models.EntityModel;
@@ -142,7 +143,7 @@ namespace EasyAssetManager
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<ISettingsUsersService, SettingsUsersService>();
             services.AddScoped<ICommonManager, CommonManager>();
-            services.AddScoped<IAccountManager, AccountManager>();
+            services.AddScoped<IFileProcessManager, IFileProcessManager>();
             services.AddScoped<ICustomerManager, CustomerManager>();
             services.AddScoped<IDepositManager, DepositManager>();
             services.AddScoped<IWithdrawCashManager, WithdrawCashManager>();
@@ -152,7 +153,6 @@ namespace EasyAssetManager
             services.AddScoped<IBillPayCashPalliBuddyutManager, BillPayCashPalliBuddyutManager>();
             services.AddScoped<IAccountOpeningManager, AccountOpeningManager>();
             services.AddScoped<IServiceRequestManager, ServiceRequestManager>();
-            services.AddScoped<IAccountOpeningReqManager, AccountOpeningReqManager>();
             services.AddScoped<ISearchAgentTransactionManager, SearchAgentTransactionManager>();
             services.AddScoped<IBalanceEnquiryManager, BalanceEnquiryManager>(); 
             services.AddScoped<ISearchAccountWorkFlowReqManager, SearchAccountWorkFlowReqManager>();

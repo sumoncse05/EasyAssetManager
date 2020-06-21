@@ -4,6 +4,7 @@ using EasyAssetManagerCore.Model.CommonModel;
 using EasyAssetManagerCore.Models.CommonModel;
 using EasyAssetManagerCore.Models.EntityModel;
 using EasyAssetManagerCore.Repository.Operation;
+using EasyAssetManagerCore.Repository.Operation.Asset;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -13,38 +14,42 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
 {
     public class AppUserSetupManager : BaseService, IAppUserSetupManager
     {
-        private readonly IAccountOpeningRepository accountOpeningRepository;
+        private readonly IFileProcessRepository accountOpeningRepository;
         private readonly ICommonManager commonManager;
         private readonly ICbsDataConnectionManager cbsDataConnectionManager;
         public AppUserSetupManager() : base((int)ConnectionStringEnum.EbankConnectionString)
         {
-            accountOpeningRepository = new AccountOpeningRepository(Connection);
+            accountOpeningRepository = new FileProcessRepository(Connection);
             commonManager = new CommonManager();
             cbsDataConnectionManager = new CbsDataConnectionManager();
         }
         public IEnumerable<Module> GetModiuleList(string pvc_appuser)
         {
-            return accountOpeningRepository.GetModiuleList(pvc_appuser);
+            return null; // return accountOpeningRepository.GetModiuleList(pvc_appuser);
         }
         public IEnumerable<UserType> GetUserTypeList(string pvc_appuser)
         {
-            return accountOpeningRepository.GetUserTypeList(pvc_appuser);
+            return null;//return accountOpeningRepository.GetUserTypeList(pvc_appuser);
         }
         public IEnumerable<Branch> GetBranchList(string pvc_appuser)
         {
-            return accountOpeningRepository.GetBranchList(pvc_appuser);
+            return null;
+           // return accountOpeningRepository.GetBranchList(pvc_appuser);
         }
         public IEnumerable<Department> GetDepartmentList(string pvc_appuser)
         {
-            return accountOpeningRepository.GetDepartmentList(pvc_appuser);
+            return null;
+            // return accountOpeningRepository.GetDepartmentList(pvc_appuser);
         }
         public IEnumerable<Agent> GetAgentList(string pvc_appuser)
         {
-            return accountOpeningRepository.GetAgentList("", pvc_appuser);
+            return null;
+            // return accountOpeningRepository.GetAgentList("", pvc_appuser);
         }
         public IEnumerable<AgentOutlet> GetAgentOutletList(string pvc_agentid, string pvc_appuser)
         {
-            return accountOpeningRepository.GetAgentOutletList(pvc_agentid, pvc_appuser);
+            return null;
+            //return accountOpeningRepository.GetAgentOutletList(pvc_agentid, pvc_appuser);
         }
         public Message CreateUser(User user, AppSession session, IHttpContextAccessor contextAccessor)
         {
@@ -117,9 +122,9 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
                     string password = RandomPassword.Generate(8);
                     if (Connection.State != ConnectionState.Open)
                         Connection.Open();
-                    var msg = accountOpeningRepository.SetUserDtl(user.USER_ID, new Encription().Encrypt(password), user.USER_NAME, user.EMAIL, user.PHONE, user.USER_TYPE,
-                                                                  user.OTP_REQ == "true" ? "Y" : "N", session.User.StationIp, user.BIND_IP == "true" ? "Y" : "N",
-                                                                  user.MOD_ID, user.EMP_ID, user.BRANCH_CODE, user.DEPT_CODE, user.AGENT_ID, user.OUTLET_ID, session.User.user_id);
+                    var msg = new ResponseMessage();// accountOpeningRepository.SetUserDtl(user.USER_ID, new Encription().Encrypt(password), user.USER_NAME, user.EMAIL, user.PHONE, user.USER_TYPE,
+                                                                 // user.OTP_REQ == "true" ? "Y" : "N", session.User.StationIp, user.BIND_IP == "true" ? "Y" : "N",
+                                                                 // user.MOD_ID, user.EMP_ID, user.BRANCH_CODE, user.DEPT_CODE, user.AGENT_ID, user.OUTLET_ID, session.User.user_id);
                     if (msg.pvc_status == "40999")
                     {
                         MessageHelper.Success(Message, "User Creation Successfull. " + msg.pvc_statusmsg);
@@ -161,7 +166,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
                 {
                     if (Connection.State != ConnectionState.Open)
                         Connection.Open();
-                    var msg = accountOpeningRepository.CheckUserName(user_id);
+                    var msg = 1;//accountOpeningRepository.CheckUserName(user_id);
                     if (msg == 0)
                     {
                         //session.TransactionSession.TransactionID = msg.pvc_acregslno;

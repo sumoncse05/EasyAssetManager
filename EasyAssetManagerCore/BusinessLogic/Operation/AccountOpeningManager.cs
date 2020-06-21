@@ -14,18 +14,18 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
 {
     public class AccountOpeningManager : BaseService, IAccountOpeningManager
     {
-        private readonly IAccountOpeningRepository accountOpeningRepository;
+        //private readonly IAccountOpeningRepository accountOpeningRepository;
         private readonly ICommonManager commonManager;
         private readonly ICbsDataConnectionManager cbsDataConnectionManager;
         private readonly ICustomerRepository customerRepository;
-        private readonly IAccountRepository accountRepository;
+       // private readonly IAccountRepository accountRepository;
         public AccountOpeningManager() : base((int)ConnectionStringEnum.EbankConnectionString)
         {
-            accountOpeningRepository = new AccountOpeningRepository(Connection);
+          //  accountOpeningRepository = new AccountOpeningRepository(Connection);
             commonManager = new CommonManager();
             cbsDataConnectionManager = new CbsDataConnectionManager();
             customerRepository = new CustomerRepository(Connection);
-            accountRepository = new AccountRepository(Connection);
+           // accountRepository = new FileProcessRepository(Connection);
         }
         public Message NewAccountOpening(AccountOpening accountOpening, AppSession session, IHttpContextAccessor contextAccessor)
         {
@@ -43,9 +43,9 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
                 {
                     if (Connection.State != ConnectionState.Open)
                         Connection.Open();
-                    var msg = accountOpeningRepository.CmdInitiateAccountOpening(accountOpening.ac_reg_slno, accountOpening.ac_customer_type, accountOpening.joint_ac_indicator
-                                                                            , accountOpening.no_of_customer.ToString(), accountOpening.ac_name, (accountOpening.cheque_book == "Yes" ? "Y" : "N"), (accountOpening.debit_card == "Yes" ? "Y" : "N")
-                                                                            , accountOpening.remarks, session.User.user_id, session.User.agent_id, session.User.StationIp);
+                    var msg = new ResponseMessage(); //accountOpeningRepository.CmdInitiateAccountOpening(accountOpening.ac_reg_slno, accountOpening.ac_customer_type, accountOpening.joint_ac_indicator
+                                                                         //   , accountOpening.no_of_customer.ToString(), accountOpening.ac_name, (accountOpening.cheque_book == "Yes" ? "Y" : "N"), (accountOpening.debit_card == "Yes" ? "Y" : "N")
+                                                                         //   , accountOpening.remarks, session.User.user_id, session.User.agent_id, session.User.StationIp);
                     if (msg.pvc_status == "40999")
                     {
                         session.TransactionSession.TransactionID = msg.pvc_acregslno;
@@ -71,17 +71,17 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
         }
         public IEnumerable<WorkFlowType> GetWorkflowType(string pvc_appuser)
         {
-            return accountOpeningRepository.GetWorkflowType(pvc_appuser);
+            return null;//accountOpeningRepository.GetWorkflowType(pvc_appuser);
         }
 
         public IEnumerable<Branch> GetUserBranchList(string pvc_appuser)
         {
-            return accountOpeningRepository.GetUserBranchList(pvc_appuser);
+            return null; //accountOpeningRepository.GetUserBranchList(pvc_appuser);
         }
 
         public IEnumerable<AccountOpeningReq> GetAccountOpeningRequest(string pvc_branch, string pvc_acregslno, string pvc_appuser)
         {
-            return accountOpeningRepository.GetAccountOpeningRequest(pvc_branch, pvc_acregslno, pvc_appuser);
+            return null; //accountOpeningRepository.GetAccountOpeningRequest(pvc_branch, pvc_acregslno, pvc_appuser);
         }
 
         public Message AuthorizeAccountOpeningRequest(string pvc_acregslno, string pvc_custacno, string pvc_acdesc, string pvc_acopendate, AppSession session)
@@ -90,7 +90,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
             {
                 if (Connection.State != ConnectionState.Open)
                     Connection.Open();
-                var msg = accountOpeningRepository.AuthorizeAccountOpeningRequest(pvc_acregslno,pvc_custacno,pvc_acdesc,pvc_acopendate, session.User.user_id);
+                var msg = new ResponseMessage();  //accountOpeningRepository.AuthorizeAccountOpeningRequest(pvc_acregslno,pvc_custacno,pvc_acdesc,pvc_acopendate, session.User.user_id);
                 if (msg.pvc_status == "40999")
                 {
                     var customers = customerRepository.GetCustomersByAccountNumber(pvc_custacno, session.User.user_id);
@@ -119,7 +119,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
 
         public IEnumerable<Account> GeAccountDetails(string customerAccountNo, string userId)
         {
-            return accountRepository.GeAccountDetails(customerAccountNo, userId);
+            return null;//accountRepository.GeAccountDetails(customerAccountNo, userId);
         }
     }
     public interface IAccountOpeningManager

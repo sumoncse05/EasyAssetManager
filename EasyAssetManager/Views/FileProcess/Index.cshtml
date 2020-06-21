@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewData["Title"] = "Excel File Process";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Excel File Process</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form id="agentSetup">
+                                <div class="col-lg-12">
+                                    <h3 class="col-form-label">File Upload</h3>
+                                </div>
+                                <div class="form-group hr-line-dashed"> </div>
+                                <div class="col-lg-12">
+                                    <div class="row form-group">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">File Type:<span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <select id="file_Type" name="file_Type" class="form-control form-element required"></select>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <div class="custom-file">
+                                                <input id="logo" type="file" class="custom-file-input form-element">
+                                                <label for="logo" class="custom-file-label ">Choose file...</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group hr-line-dashed"> </div>
+                                <div style="text-align:left" id="page1">
+                                    <input type="button" value="Upload File" class="btn btn-primary ks-next" id="btnSave">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        var classExcelFileProcess = function ()
+        {
+            var formId = "agentSetup";
+            var init = function ()
+            {
+                eventInitializer();
+                $('.custom-file-input').on('change', function ()
+                {
+                    let fileName = $(this).val().split('\\').pop();
+                    $(this).next('.custom-file-label').addClass("selected").html(fileName);
+                }); 
+            };
+            var eventInitializer = function ()
+            {
+                $('#btnSave').click(uploadFile);
+                combo.getExcelFiletype('file_Type', true);
+            };
+            var clear = function ()
+            {
+                ApplicationCommon.clearFields(null, formId);
+
+            };
+            var uploadFile = function ()
+            {
+                if ($('#file_Type').val())
+                {
+                    var formData = new FormData();
+                    formData.append('file_Type', $('#file_Type').val());
+                    formData.append('file', $('#logo')[0].files[0]);
+                    var url = '/FileProcess/UploadFile';
+                    ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res)
+                    {
+                        ApplicationCommon.showNotification(res.messageType, res.messageString);
+
+                        if (res.messageType == 1)
+                        {
+                            clear();
+                        }
+                    });
+                } else
+                {
+                    ApplicationCommon.showNotification("2", "Please select file_Type to continue the process.");
+                }
+                
+            };
+            return { init: init };
+        }();
+
+        classExcelFileProcess.init();
+    </script>
+}
+
+
+
+

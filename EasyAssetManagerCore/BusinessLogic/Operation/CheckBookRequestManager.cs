@@ -16,14 +16,14 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
         private readonly ICommonManager commonManager;
         private readonly ICbsDataConnectionManager cbsDataConnectionManager;
         private readonly ICustomerRepository customerRepository;
-        private readonly IAccountOpeningRepository accountOpeningRepository;
+        //private readonly IAccountOpeningRepository accountOpeningRepository;
         public CheckBookRequestManager() : base((int)ConnectionStringEnum.EbankConnectionString)
         {
             checkBookRequestRepository = new CheckBookRequestRepository(Connection);
             commonManager = new CommonManager();
             cbsDataConnectionManager = new CbsDataConnectionManager();
             customerRepository = new CustomerRepository(Connection);
-            accountOpeningRepository = new AccountOpeningRepository(Connection);
+            //accountOpeningRepository = new AccountOpeningRepository(Connection);
         }
 
         public WorkflowDetail CustomerVerification(WorkflowDetail workflowdetail, AppSession session, IHttpContextAccessor contextAccessor)
@@ -191,7 +191,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
                     Connection.Open();
                 if (session.TransactionSession.FingerVerifyStatus == "S")
                 {
-                    var AccountStatus = accountOpeningRepository.SetWorkflowStatus(session.TransactionSession.TransactionID, "50999", session.User.agent_id);
+                    var AccountStatus = new ResponseMessage();//accountOpeningRepository.SetWorkflowStatus(session.TransactionSession.TransactionID, "50999", session.User.agent_id);
 
                     if (AccountStatus.pvc_status == "40999")
                     {

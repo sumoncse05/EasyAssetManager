@@ -14,16 +14,16 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
     {
         private readonly ICbsDataConnectionManager cbsDataConnectionManager;
         private readonly ILimitRepository limitRepository;
-        private readonly IAccountRepository accountRepository;
-        private readonly IAccountOpeningRepository accountOpeningRepository;
+       // private readonly IAccountRepository accountRepository;
+       // private readonly IAccountOpeningRepository accountOpeningRepository;
         private readonly ICommonManager commonManager;
         public LimitManager() : base((int)ConnectionStringEnum.EbankConnectionString)
         {
             cbsDataConnectionManager = new CbsDataConnectionManager();
             limitRepository = new LimitRepository(Connection);
             commonManager = new CommonManager();
-            accountRepository = new AccountRepository(Connection);
-            accountOpeningRepository = new AccountOpeningRepository(Connection);
+           // accountRepository = new FileProcessRepository(Connection);
+           // accountOpeningRepository = new AccountOpeningRepository(Connection);
         }
 
         public Message AuthorizeLimitPackage(List<string> pvc_limitid, AppSession session)
@@ -289,10 +289,10 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
                 {
                     if (limitPackage.usertype == "04")
                     {
-                        var dtCustomerDtl = accountRepository.GeAccountDetails(limitPackage.user_ref_no, session.User.user_id).FirstOrDefault();
+                        var dtCustomerDtl = "";//accountRepository.GeAccountDetails(limitPackage.user_ref_no, session.User.user_id).FirstOrDefault();
                         if (dtCustomerDtl != null)
                         {
-                            limitPackage.user_name = " - " + dtCustomerDtl.ac_desc;
+                            //limitPackage.user_name = " - " + dtCustomerDtl.ac_desc;
                             MessageHelper.Success(Message, "Success");
                         }
                         else
@@ -302,10 +302,10 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
                     }
                     else if (limitPackage.usertype == "03")
                     {
-                        var dtCustomerDtl = accountOpeningRepository.GetAgentList(limitPackage.user_ref_no, session.User.user_id).FirstOrDefault();
+                        var dtCustomerDtl = ""; //accountOpeningRepository.GetAgentList(limitPackage.user_ref_no, session.User.user_id).FirstOrDefault();
                         if (dtCustomerDtl != null)
                         {
-                            limitPackage.user_name = dtCustomerDtl.AGENT_NAME;
+                            // limitPackage.user_name = dtCustomerDtl.AGENT_NAME;
                             MessageHelper.Success(Message, "Success");
                         }
                         else

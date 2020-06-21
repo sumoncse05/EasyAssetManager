@@ -17,7 +17,7 @@ namespace EasyAssetManager.Controllers
             if (Session == null)
             {
                 // Fake implementation of session for development
-                // FakeImplementationOfSession();
+                 FakeImplementationOfSession();
 
                 //if (isAjaxRequest)
                 //{
@@ -25,8 +25,8 @@ namespace EasyAssetManager.Controllers
                 //}
                 //else
                 //{
-                string redirectTo = string.Format("/Login/Index"); // Redirect to login page
-                context.Result = new RedirectResult(redirectTo);
+              //  string redirectTo = string.Format("/Login/Index"); // Redirect to login page
+               // context.Result = new RedirectResult(redirectTo);
                 //}
             }
 

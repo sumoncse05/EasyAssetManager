@@ -6,14 +6,21 @@ using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
 using System.Data;
 
-namespace EasyAssetManagerCore.Repository.Operation
+namespace EasyAssetManagerCore.Repository.Operation.Asset
 {
-    public class AccountRepository:BaseRepository, IAccountRepository
+    public class FileProcessRepository:BaseRepository, IFileProcessRepository
     {
-        public AccountRepository(OracleConnection connection) : base(connection)
+        public FileProcessRepository(OracleConnection connection) : base(connection)
         {
 
         }
+
+        public int DeleteTable(string tableName, string user_id)
+        {
+            var result= Connection.ExecuteScalar<int>("DELETE FROM @TableName WHERE INS_BY=@UserId",new { TableName=tableName, UserId=user_id });
+            return result;
+        }
+
         public IEnumerable<Account> GeAccountDetails(string customerAccountNo,string userId)
         {
             var dyParam = new OracleDynamicParameters();
@@ -57,12 +64,13 @@ namespace EasyAssetManagerCore.Repository.Operation
     }
 
     #region Interface
-    public interface IAccountRepository
+    public interface IFileProcessRepository
     {
         IEnumerable<Account> GeAccountDetails(string customerAccountNo, string userId);
         IEnumerable<Division> GetDivisionList(string pvc_appuser);
         IEnumerable<District> GetDistrictList(string div_code, string pvc_appuser);
         IEnumerable<Thana> GetThanaList(string div_code, string dist_code, string pvc_appuser);
+        int DeleteTable(string tableName, string user_id);
     }
 
     #endregion

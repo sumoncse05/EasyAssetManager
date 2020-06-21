@@ -15,13 +15,13 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
 {
     public class BalanceEnquiryManager : BaseService, IBalanceEnquiryManager
     {
-        private readonly IAccountOpeningRepository accountOpeningRepository;
+        //private readonly IAccountOpeningRepository accountOpeningRepository;
         private readonly ITransactionRepository transactionRepository;
         private readonly ICommonManager commonManager;
         private readonly ICbsDataConnectionManager cbsDataConnectionManager;
         public BalanceEnquiryManager() : base((int)ConnectionStringEnum.EbankConnectionString)
         {
-            accountOpeningRepository = new AccountOpeningRepository(Connection);
+           // accountOpeningRepository = new AccountOpeningRepository(Connection);
             transactionRepository = new TransactionRepository(Connection);
             commonManager = new CommonManager();
             cbsDataConnectionManager = new CbsDataConnectionManager();

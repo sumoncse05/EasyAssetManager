@@ -15,12 +15,12 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
 {
     public class ServiceRequestManager : BaseService, IServiceRequestManager
     {
-        private readonly IAccountOpeningRepository accountOpeningRepository;
+       // private readonly IAccountOpeningRepository accountOpeningRepository;
         private readonly ICommonManager commonManager;
         private readonly ICbsDataConnectionManager cbsDataConnectionManager;
         public ServiceRequestManager() : base((int)ConnectionStringEnum.EbankConnectionString)
         {
-            accountOpeningRepository = new AccountOpeningRepository(Connection);
+            //accountOpeningRepository = new AccountOpeningRepository(Connection);
             commonManager = new CommonManager();
             cbsDataConnectionManager = new CbsDataConnectionManager();
         }
@@ -53,10 +53,10 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
                     workflowdetail.nid = session.TransactionSession.CustomerNID = customer.nid;
                     workflowdetail.remarks = remarks;
 
-                    var accountStatus = accountOpeningRepository.InitWorkflowDtl("", wf_type, customer.customer_no, session.TransactionSession.TransactionAccountNo,
-                                               "", session.TransactionSession.TransactionAccountDesc, customer.customer_name, customer.father_name,
-                                               customer.mother_name, customer.date_of_birth.ToString(), customer.sex, customer.nid, customer.mobile_number, "",
-                                               "", remarks, session.User.user_id, session.User.agent_id, session.User.StationIp);
+                    var accountStatus = new ResponseMessage(); //accountOpeningRepository.InitWorkflowDtl("", wf_type, customer.customer_no, session.TransactionSession.TransactionAccountNo,
+                                              // "", session.TransactionSession.TransactionAccountDesc, customer.customer_name, customer.father_name,
+                                             //  customer.mother_name, customer.date_of_birth.ToString(), customer.sex, customer.nid, customer.mobile_number, "",
+                                            //   "", remarks, session.User.user_id, session.User.agent_id, session.User.StationIp);
 
                     if (accountStatus.pvc_status == "40999")
                     {
@@ -103,7 +103,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
                     Connection.Open();
                 if (session.TransactionSession.FingerVerifyStatus == "S")
                 {
-                    var AccountStatus = accountOpeningRepository.SetWorkflowStatus(session.TransactionSession.TransactionID, "50999", session.User.agent_id);
+                    var AccountStatus = new ResponseMessage(); //accountOpeningRepository.SetWorkflowStatus(session.TransactionSession.TransactionID, "50999", session.User.agent_id);
 
                     if (AccountStatus.pvc_status == "40999")
                     {
@@ -190,7 +190,8 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
 
         public IEnumerable<WorkflowDetail> GetUnauthWorkflowRequest(string wfslno, string wftype, string user_id)
         {
-            return accountOpeningRepository.GetUnauthWorkflowRequest(wfslno, wftype, user_id);
+            //return accountOpeningRepository.GetUnauthWorkflowRequest(wfslno, wftype, user_id);
+            return null;
         }
 
         public Message AuthorizeServiceRequest(string wfslno, string wf_ref_no, string wf_type, string wf_resp_dtl, string user_id)
@@ -200,7 +201,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
                 if (Connection.State != ConnectionState.Open)
                     Connection.Open();
 
-                var AccountStatus = accountOpeningRepository.AuthorizeServiceRequest(wfslno, wf_ref_no, wf_type, wf_resp_dtl, user_id);
+                var AccountStatus = new ResponseMessage(); //accountOpeningRepository.AuthorizeServiceRequest(wfslno, wf_ref_no, wf_type, wf_resp_dtl, user_id);
 
                 if (AccountStatus.pvc_status == "40999")
                 {

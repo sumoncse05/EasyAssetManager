@@ -12,7 +12,7 @@ namespace EasyAssetManager.Controllers
     {
         private readonly IAccountOpeningManager accountOpeningManager;
         private readonly ISettingsUsersService settingsUsersService;
-        private readonly IAccountManager accountManager;
+      //  private readonly IAccountManager accountManager;
         private readonly ICustomerManager customerManager;
         private readonly IAppUserSetupManager appUserSetupManager;
         private readonly IWithdrawRemittanceManager withdrawRemittanceManager;
@@ -20,10 +20,9 @@ namespace EasyAssetManager.Controllers
         //private readonly ISettingsUsersService settingsUsersService;
         private readonly ILimitManager limitManager;
         private readonly IAgentManager agentManager;
-        public CommonController(IAccountOpeningManager accountOpeningManager, IAccountManager accountManager, ICustomerManager customerManager, IAppUserSetupManager appUserSetupManager, IWithdrawRemittanceManager withdrawRemittanceManager, IBillPayCashManager billPayCashManager, ISettingsUsersService settingsUsersService, ILimitManager limitManager, IAgentManager agentManager)
+        public CommonController(IAccountOpeningManager accountOpeningManager, ICustomerManager customerManager, IAppUserSetupManager appUserSetupManager, IWithdrawRemittanceManager withdrawRemittanceManager, IBillPayCashManager billPayCashManager, ISettingsUsersService settingsUsersService, ILimitManager limitManager, IAgentManager agentManager)
         {
             this.accountOpeningManager = accountOpeningManager;
-            this.accountManager = accountManager;
             this.customerManager = customerManager;
             this.appUserSetupManager = appUserSetupManager;
             this.settingsUsersService = settingsUsersService;
@@ -39,29 +38,7 @@ namespace EasyAssetManager.Controllers
             return PartialView("_CustomerSearch", customerAccounts);
         }
 
-        public IActionResult GetAccount(string accountNo)
-        {
-            var message = new Message();
-            try
-            {
-                var accounts = accountManager.GeAccountDetails(accountNo, Session.User.user_id);
-
-                if (accounts != null && accounts.Any())
-                {
-                    MessageHelper.Success(message, "Account Found");
-                }
-                else
-                {
-                    MessageHelper.Error(message, "Invalid account no. Please try again.");
-                }
-            }
-            catch
-            {
-                MessageHelper.Error(message, "Invalid account no. Please try again.");
-            }
-
-            return Json(message);
-        }
+        
 
         [HttpGet]
         public IActionResult GetCustomerCombo()
@@ -250,17 +227,7 @@ namespace EasyAssetManager.Controllers
             return Json(null);
         }
 
-        [HttpGet]
-        public IActionResult GetDivisionList()
-        {
-            var userTypes = accountManager.GetDivisionList(Session.User.user_id);
-            if (userTypes != null && userTypes.Any())
-            {
-                var selectList = userTypes.Select(x => new SelectListItem() { Text = x.div_name, Value = x.div_code });
-                return Json(selectList);
-            }
-            return Json(null);
-        }
+ 
         [HttpGet]
         public IActionResult GetLimitPackageList()
         {
@@ -273,29 +240,8 @@ namespace EasyAssetManager.Controllers
             return Json(null);
         }
 
-        [HttpGet]
-        public IActionResult GetDistrictList(string div_code)
-        {
-            var userTypes = accountManager.GetDistrictList(div_code, Session.User.user_id);
-            if (userTypes != null && userTypes.Any())
-            {
-                var selectList = userTypes.Select(x => new SelectListItem() { Text = x.dist_name, Value = x.dist_code });
-                return Json(selectList);
-            }
-            return Json(null);
-        }
+     
 
-        [HttpGet]
-        public IActionResult GetThanaList(string div_code,string dist_code)
-        {
-            var userTypes = accountManager.GetThanaList(div_code,dist_code, Session.User.user_id);
-            if (userTypes != null && userTypes.Any())
-            {
-                var selectList = userTypes.Select(x => new SelectListItem() { Text = x.thana_name, Value = x.thana_code });
-                return Json(selectList);
-            }
-            return Json(null);
-        }
 
     }
 

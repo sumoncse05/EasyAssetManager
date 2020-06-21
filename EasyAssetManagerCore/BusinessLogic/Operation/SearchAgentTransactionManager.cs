@@ -15,18 +15,18 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
 {
     public class SearchAgentTransactionManager : BaseService, ISearchAgentTransactionManager
     {
-        private readonly IAccountOpeningRepository accountOpeningRepository;
+        //private readonly IAccountOpeningRepository accountOpeningRepository;
         private readonly ICommonManager commonManager;
         private readonly ICbsDataConnectionManager cbsDataConnectionManager;
         public SearchAgentTransactionManager() : base((int)ConnectionStringEnum.EbankConnectionString)
         {
-            accountOpeningRepository = new AccountOpeningRepository(Connection);
+           // accountOpeningRepository = new AccountOpeningRepository(Connection);
             commonManager = new CommonManager();
             cbsDataConnectionManager = new CbsDataConnectionManager();
         }
         public IEnumerable<TransactionDetails> GetAccountOpenRequest(string pvc_transid, string pvc_custno, string pvc_custacno, AppSession session)
         {
-            return accountOpeningRepository.GetTransactionDetails(pvc_transid, pvc_custno, pvc_custacno, session.User.user_id);
+            return null;//accountOpeningRepository.GetTransactionDetails(pvc_transid, pvc_custno, pvc_custacno, session.User.user_id);
         }
         public TransactionDetails GetTransactionDetails(string trans_id, AppSession session, IHttpContextAccessor contextAccessor)
         {
@@ -36,7 +36,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
                 if (Connection.State != ConnectionState.Open)
                     Connection.Open();
 
-                transDetails = accountOpeningRepository.GetTransactionDetails(trans_id, "", "", session.User.user_id).FirstOrDefault();
+                transDetails = null;//accountOpeningRepository.GetTransactionDetails(trans_id, "", "", session.User.user_id).FirstOrDefault();
 
                 if (transDetails != null)
                 {                    

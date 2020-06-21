@@ -15,18 +15,19 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation
 {
     public class SearchAccountWorkFlowReqManager:BaseService, ISearchAccountWorkFlowReqManager
     {
-        private readonly IAccountOpeningRepository accountOpeningRepository;
+       // private readonly IAccountOpeningRepository accountOpeningRepository;
         private readonly ICommonManager commonManager;
         private readonly ICbsDataConnectionManager cbsDataConnectionManager;
         public SearchAccountWorkFlowReqManager() : base((int)ConnectionStringEnum.EbankConnectionString)
         {
-            accountOpeningRepository = new AccountOpeningRepository(Connection);
+           // accountOpeningRepository = new AccountOpeningRepository(Connection);
             commonManager = new CommonManager();
             cbsDataConnectionManager = new CbsDataConnectionManager();
         }
         public IEnumerable<WorkflowDetail> GetAccountWorkFowRequest(string pvc_transid, string pvc_custno, AppSession session)
         {
-            return accountOpeningRepository.GetWorkflowRequest(pvc_transid, pvc_custno, session.User.user_id);
+            // return accountOpeningRepository.GetWorkflowRequest(pvc_transid, pvc_custno, session.User.user_id);
+            return null;
         }
     }
     public interface ISearchAccountWorkFlowReqManager
