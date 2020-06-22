@@ -63,12 +63,22 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
 
         }
 
+        public int Process_LOAN_CL(List<AST_LOAN_CL_TMP> portFolios)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public int Process_LOAN_PORTFOLIO(List<AST_LOAN_PORTFOLIO_TMP> portFolios)
         {
             var sql = @"insert into ERMP.AST_LOAN_PORTFOLIO_TMP (File_Process_ID,ID_of_Area,Name_of_Area,Brn_Code,Branch_Name,ID_of_RM,Name_of_RM,Loan_Acct_No,INS_BY,INS_DATE)
                       values (:File_Process_ID,:ID_of_Area,:Name_of_Area,:Brn_Code,:Branch_Name,:ID_of_RM,:Name_of_RM,:Loan_Acct_No,:INS_BY,:INS_DATE)";
             var affectedRows = Connection.Execute(sql, portFolios);
             return affectedRows;
+        }
+
+        public int Process_LOAN_TARGET(List<AST_LOAN_TARGET_TMP> portFolios)
+        {
+            throw new System.NotImplementedException();
         }
     }
 
@@ -81,6 +91,8 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
         IEnumerable<Thana> GetThanaList(string div_code, string dist_code, string pvc_appuser);
         int DeleteTable(string tableName, string user_id);
         int Process_LOAN_PORTFOLIO(List<AST_LOAN_PORTFOLIO_TMP> portFolios);
+        int Process_LOAN_TARGET(List<AST_LOAN_TARGET_TMP> portFolios);
+        int Process_LOAN_CL(List<AST_LOAN_CL_TMP> portFolios);
     }
 
     #endregion

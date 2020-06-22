@@ -45,11 +45,6 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                 fileProcessRepository.DeleteTable(tableName, session.User.user_id);
                 var random = new Random();
                 var fileProcessID = random.Next(10000);
-                //cmd = new OracleCommand();
-                //cmd.CommandType = CommandType.StoredProcedure;
-                //cmd.CommandText = "dpg_pay_manager.dpd_get_sess_id";
-                //cmd.Parameters.Add(CreateParam("pvc_upld_sess_id", OracleDbType.Varchar2, 10, ParameterDirection.Output));
-                //return cmd;
                 using (var package = new ExcelPackage(new FileInfo(@filepath)))
                 {
                     var totalWorkSheet = package.Workbook.Worksheets.Count;
@@ -88,13 +83,6 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                                     INS_BY=session.User.user_id,
                                     INS_DATE=DateTime.Now
                                 };
-                                //for (var j = 1; j <= columnCount; j++)
-                                //{
-                                //    if (wooksheet.Cells[i, j].Text.Trim() != null)
-                                //    {
-                                //        var value = wooksheet.Cells[i, j].Text.Trim();
-                                //    }
-                                //}
                                 portFolios.Add(portFolio);
                             }
                             if (portFolios.Count > 0)
@@ -126,10 +114,162 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
         }
         public Message Process_LOAN_TARGET(string filepath, AppSession session, string tableName)
         {
+            try
+            {
+                if (Connection.State != ConnectionState.Open)
+                    Connection.Open();
+                fileProcessRepository.DeleteTable(tableName, session.User.user_id);
+                var random = new Random();
+                var fileProcessID = random.Next(10000);
+                using (var package = new ExcelPackage(new FileInfo(@filepath)))
+                {
+                    var totalWorkSheet = package.Workbook.Worksheets.Count;
+                    var isProcess = true;
+                    for (var index = 1; index <= totalWorkSheet; index++)
+                    {
+                        var wooksheet = package.Workbook.Worksheets[index];
+                        var xx = wooksheet.Name;
+                        int rowCount = wooksheet.Dimension.Rows;
+                        int columnCount = wooksheet.Dimension.Columns;
+                        for (var i = 1; i <= 1; i++)
+                        {
+                            for (var j = 1; j <= columnCount; j++)
+                            {
+                                if (wooksheet.Cells[i, j].Text.Trim() == null && !ExcelColumn.LOAN_TARGET.Contains(wooksheet.Cells[i, j].Text.Trim()))
+                                {
+                                    isProcess = false;
+                                }
+                            }
+                        }
+                        if (isProcess)
+                        {
+                            var portFolios = new List<AST_LOAN_TARGET_TMP>();
+                            for (var i = 2; i <= rowCount; i++)
+                            {
+                                var portFolio = new AST_LOAN_TARGET_TMP
+                                {
+                                    File_Process_ID = fileProcessID,
+                                    ID_of_Area = wooksheet.Cells[i, 1].Text.Trim(),
+                                    Name_of_Area = wooksheet.Cells[i, 2].Text.Trim(),
+                                    Brn_Code = wooksheet.Cells[i, 3].Text.Trim(),
+                                    Branch_Name = wooksheet.Cells[i, 4].Text.Trim(),
+                                    ID_of_RM = wooksheet.Cells[i, 5].Text.Trim(),
+                                    Name_of_RM = wooksheet.Cells[i, 6].Text.Trim(),
+                                    ID_of_BST = wooksheet.Cells[i, 7].Text.Trim(),
+                                    Name_of_BST = wooksheet.Cells[i, 8].Text.Trim(),
+                                    Out_Standing_Amount = wooksheet.Cells[i, 9].Text.Trim(),
+                                    Disbursed_Amount = wooksheet.Cells[i, 10].Text.Trim(),
+                                    INS_BY = session.User.user_id,
+                                    INS_DATE = DateTime.Now
+                                };
+                                portFolios.Add(portFolio);
+                            }
+                            if (portFolios.Count > 0)
+                            {
+                                var row = fileProcessRepository.Process_LOAN_TARGET(portFolios);
+                            }
+                            else
+                            {
+                                MessageHelper.Error(Message, "No rows found this excel file.");
+                            }
+                        }
+                        else
+                        {
+                            MessageHelper.Error(Message, "File structure is not valid. Invalid Columns.");
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageHelper.Error(Message, ex.Message);
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
             return Message;
         }
         public Message Process_LOAN_CL(string filepath, AppSession session, string tableName)
         {
+            try
+            {
+                if (Connection.State != ConnectionState.Open)
+                    Connection.Open();
+                fileProcessRepository.DeleteTable(tableName, session.User.user_id);
+                var random = new Random();
+                var fileProcessID = random.Next(10000);
+                using (var package = new ExcelPackage(new FileInfo(@filepath)))
+                {
+                    var totalWorkSheet = package.Workbook.Worksheets.Count;
+                    var isProcess = true;
+                    for (var index = 1; index <= totalWorkSheet; index++)
+                    {
+                        var wooksheet = package.Workbook.Worksheets[index];
+                        var xx = wooksheet.Name;
+                        int rowCount = wooksheet.Dimension.Rows;
+                        int columnCount = wooksheet.Dimension.Columns;
+                        for (var i = 1; i <= 1; i++)
+                        {
+                            for (var j = 1; j <= columnCount; j++)
+                            {
+                                if (wooksheet.Cells[i, j].Text.Trim() == null && !ExcelColumn.LOAN_CL.Contains(wooksheet.Cells[i, j].Text.Trim()))
+                                {
+                                    isProcess = false;
+                                }
+                            }
+                        }
+                        if (isProcess)
+                        {
+                            var portFolios = new List<AST_LOAN_CL_TMP>();
+                            for (var i = 2; i <= rowCount; i++)
+                            {
+                                var portFolio = new AST_LOAN_CL_TMP
+                                {
+                                    File_Process_ID = fileProcessID,
+                                    ID_of_Area = wooksheet.Cells[i, 1].Text.Trim(),
+                                    Name_of_Area = wooksheet.Cells[i, 2].Text.Trim(),
+                                    Brn_Code = wooksheet.Cells[i, 3].Text.Trim(),
+                                    Branch_Name = wooksheet.Cells[i, 4].Text.Trim(),
+                                    ID_of_RM = wooksheet.Cells[i, 5].Text.Trim(),
+                                    Name_of_RM = wooksheet.Cells[i, 6].Text.Trim(),
+                                    ID_of_BST = wooksheet.Cells[i, 7].Text.Trim(),
+                                    Name_of_BST = wooksheet.Cells[i, 8].Text.Trim(),
+                                    Loan_Acct_No = wooksheet.Cells[i, 9].Text.Trim(),
+                                    Classification_TYPE = wooksheet.Cells[i, 10].Text.Trim(),
+                                    INS_BY = session.User.user_id,
+                                    INS_DATE = DateTime.Now
+                                };
+                                portFolios.Add(portFolio);
+                            }
+                            if (portFolios.Count > 0)
+                            {
+                                var row = fileProcessRepository.Process_LOAN_CL(portFolios);
+                            }
+                            else
+                            {
+                                MessageHelper.Error(Message, "No rows found this excel file.");
+                            }
+                        }
+                        else
+                        {
+                            MessageHelper.Error(Message, "File structure is not valid. Invalid Columns.");
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageHelper.Error(Message, ex.Message);
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
             return Message;
         }
 

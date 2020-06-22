@@ -30,7 +30,7 @@ namespace EasyAssetManagerCore.Models.EntityModel
         public string Loan_Acct_No { get; set; }
         public string Classification_TYPE { get; set; }
         public string INS_BY { get; set; }
-        public string INS_DATE { get; set; }
+        public DateTime INS_DATE { get; set; }
     }
 
     public class AST_LOAN_TARGET_TMP
@@ -47,6 +47,6 @@ namespace EasyAssetManagerCore.Models.EntityModel
         public string Out_Standing_Amount { get; set; }
         public string Disbursed_Amount { get; set; }
         public string INS_BY { get; set; }
-        public string INS_DATE { get; set; }
+        public DateTime INS_DATE { get; set; }
     }
 }
