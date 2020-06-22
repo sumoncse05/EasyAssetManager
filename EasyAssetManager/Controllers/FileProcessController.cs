@@ -24,7 +24,7 @@ namespace EasyAssetManager.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadFile(int file_Type, IFormFile file)
+        public ActionResult UploadFile(int businessYear, int file_Type, IFormFile file)
         {
             var message = new Message();
             if (file != null)
@@ -38,7 +38,7 @@ namespace EasyAssetManager.Controllers
                     if (!Directory.Exists(directory))
                         Directory.CreateDirectory(directory);
                     StoreInFolder(file, filepath);
-                    fileProcessManager.ProcessFile(file_Type, filepath, Session);
+                    fileProcessManager.ProcessFile(businessYear,file_Type, filepath, Session);
                     MessageHelper.Success(message, "File upload successfully....");
                 }
                 else

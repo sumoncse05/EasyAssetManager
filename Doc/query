@@ -1,0 +1,139 @@
+PROCEDURE dpd_upload_inwarddata( pvc_upld_sess_id   IN varchar2,
+                                 pvc_highvalue      IN varchar2,
+                                 pvc_appuser        IN varchar2, 
+                                 pch_upd_cnt       OUT varchar2,
+                                 pch_ins_cnt       OUT varchar2)     
+AS
+    vvc_instrno     varchar2(10);
+    vvc_status      varchar2(10);
+    vvc_statusmsg   varchar2(100);
+    vnm_tot_row     number:=0;
+BEGIN                
+    dpd_set_currdate(pvc_appuser);
+        
+    INSERT INTO pay_sms_inbox_history
+    SELECT * FROM pay_sms_inbox
+    WHERE ins_date<trunc(sysdate);
+    
+    DELETE FROM pay_sms_inbox
+    WHERE ins_date<trunc(sysdate);
+    
+    INSERT INTO pay_instruction_sms_history
+    SELECT * FROM pay_instruction_sms
+    WHERE ins_date<trunc(sysdate);
+    
+    DELETE FROM pay_instruction_sms
+    WHERE ins_date<trunc(sysdate);
+    
+    INSERT INTO cps_inward_history
+    SELECT * FROM cps_inward_dtl
+    WHERE settlement_date<trunc(sysdate);
+    
+    DELETE FROM cps_inward_dtl
+    WHERE settlement_date<trunc(sysdate);
+    
+    INSERT INTO cps_inward_exception_history
+    SELECT * FROM cps_inward_exception
+    WHERE trunc(ins_date)<trunc(sysdate);
+    
+    DELETE FROM cps_inward_exception
+    WHERE trunc(ins_date)<trunc(sysdate);
+    
+    UPDATE cps_inward_tmp
+       SET account_no = lpad(account_no,13,'0'),
+           cheque_no = lpad(cheque_no,7,'0');
+           
+    UPDATE cps_inward_dtl d
+       SET (batch_no,din_no,tc,customer_type,account_no,ac_desc,cheque_no,ccy,amount,high_value,upd_by,upd_date)=
+           (SELECT to_number(batch_no),to_number(din_no),tc,customer_type,account_no,ac_desc,cheque_no,t.ccy,amount,pvc_highvalue,pvc_appuser,sysdate
+              FROM cps_inward_tmp t,ubsebldbo.sttm_cust_account@UBS_LIVE_LNK a,
+                   ubsebldbo.sttm_customer@UBS_LIVE_LNK c
+             WHERE t.account_no = a.cust_ac_no
+               AND a.cust_no = c.customer_no
+               AND ((c.customer_type='I' AND t.amount>=500000 ) OR
+                    (c.customer_type<>'I' AND t.amount>=100000) OR
+                    (t.ccy <> 'BDT'))
+               AND t.account_no=d.account_no
+               AND t.cheque_no=d.cheque_no)
+    WHERE d.status = 'N'
+      AND (d.account_no,cheque_no) IN (SELECT tt.account_no,tt.cheque_no
+                                         FROM cps_inward_tmp tt);
+    
+    pch_upd_cnt:=to_char(sql%rowcount); 
+                                       
+    INSERT INTO cps_inward_dtl 
+    (SETTLEMENT_DATE,batch_no,din_no,tc,customer_type,account_no,ac_desc,cheque_no,ccy,amount,high_value,INS_BY,INS_DATE)
+    SELECT trunc(sysdate),to_number(batch_no),to_number(din_no),tc,customer_type,account_no,ac_desc,cheque_no,t.ccy,amount,pvc_highvalue,pvc_appuser,sysdate
+      FROM cps_inward_tmp t,ubsebldbo.sttm_cust_account@UBS_LIVE_LNK a,
+           ubsebldbo.sttm_customer@UBS_LIVE_LNK c
+     WHERE t.account_no = a.cust_ac_no
+       AND a.cust_no = c.customer_no
+       AND ((c.customer_type='I' AND t.amount>=500000 ) OR
+            (c.customer_type<>'I' AND t.amount>=100000) OR
+            (t.ccy <> 'BDT'))
+       AND (account_no,cheque_no) IN (SELECT account_no,cheque_no
+                                        FROM cps_inward_tmp
+                                       MINUS
+                                      SELECT account_no,cheque_no
+                                        FROM cps_inward_dtl
+                                      );
+    
+    pch_ins_cnt:=to_char(sql%rowcount); 
+    
+    INSERT INTO cps_inward_exception
+    SELECT sess_id,batch_no,din_no,tc,customer_type,account_no,ac_desc,cheque_no,t.ccy,amount,pvc_highvalue,ins_by,sysdate
+      FROM cps_inward_tmp t,ubsebldbo.sttm_cust_account@UBS_LIVE_LNK a,
+           ubsebldbo.sttm_customer@UBS_LIVE_LNK c
+     WHERE t.account_no = a.cust_ac_no(+)
+       AND a.cust_no = c.customer_no(+)
+       AND (account_no,cheque_no) IN (SELECT account_no,cheque_no
+                                        FROM cps_inward_tmp
+                                       MINUS
+                                      SELECT account_no,cheque_no
+                                        FROM cps_inward_dtl
+                                       WHERE high_value = pvc_highvalue
+                                      );
+    
+    
+    IF to_number(pch_upd_cnt) > 0 OR to_number(pch_ins_cnt) > 0 THEN
+        UPDATE pay_daily_status
+           SET unmatched_data = nvl(unmatched_data,0) + to_number(pch_ins_cnt),
+               recon_status = 'N'
+         WHERE instr_date = trunc(sysdate);
+    END IF;
+    
+    --DELETE FROM cps_inward_tmp;
+            
+    commit;
+    
+EXCEPTION WHEN others THEN
+    rollback;  
+    raise;
+END dpd_upload_inwarddata; 
+
+
+
+
+
+
+
+
+ UPDATE AST_LOAN_WO_STATUS d
+       SET (LOAN_OUTSTANDING,WO_AMOUNT)=
+           (SELECT to_number(LOAN_OUTSTANDING),WO_AMOUNT
+              FROM AST_LOAN_WO_STATUS_TEMP t
+             WHERE FILE_PROCESS_ID=1756)
+    WHERE d.BUSINESS_YEAR=2020 AND (d.AREA_CODE,d.LOAN_NUMBER) IN (SELECT tt.AREA_CODE,tt.LOAN_NUMBER
+                                         FROM AST_LOAN_WO_STATUS_TEMP tt WHERE FILE_PROCESS_ID=1756);
+
+
+ INSERT INTO AST_LOAN_WO_STATUS 
+    (BUSINESS_YEAR,AREA_CODE,LOAN_NUMBER,LOAN_OUTSTANDING,WO_AMOUNT)
+    SELECT to_number(2020),AREA_CODE,to_number(LOAN_NUMBER),to_number(LOAN_OUTSTANDING),WO_AMOUNT
+      FROM AST_LOAN_WO_STATUS_TEMP t  WHERE FILE_PROCESS_ID=1756
+       AND (AREA_CODE,LOAN_NUMBER) IN (SELECT AREA_CODE,to_number(LOAN_NUMBER)
+                                        FROM AST_LOAN_WO_STATUS_TEMP
+                                       MINUS
+                                      SELECT AREA_CODE,LOAN_NUMBER
+                                        FROM AST_LOAN_WO_STATUS
+                                      );

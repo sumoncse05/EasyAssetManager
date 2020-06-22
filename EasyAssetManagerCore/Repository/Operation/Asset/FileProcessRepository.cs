@@ -86,6 +86,13 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
             var affectedRows = Connection.Execute(sql, portFolios);
             return affectedRows;
         }
+
+        public int Process_LOAN_WO(List<AST_LOAN_WO_STATUS_TEMP> portFolios)
+        {
+            var sql = QB<AST_LOAN_WO_STATUS_TEMP>.Insert();
+            var affectedRows = Connection.Execute(sql, portFolios);
+            return affectedRows;
+        }
     }
 
     #region Interface
@@ -94,6 +101,7 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
         IEnumerable<Account> GeAccountDetails(string customerAccountNo, string userId);
         IEnumerable<Division> GetDivisionList(string pvc_appuser);
         IEnumerable<District> GetDistrictList(string div_code, string pvc_appuser);
+        int Process_LOAN_WO(List<AST_LOAN_WO_STATUS_TEMP> portFolios);
         IEnumerable<Thana> GetThanaList(string div_code, string dist_code, string pvc_appuser);
         int DeleteTable(string tableName, string user_id);
         int Process_LOAN_PORTFOLIO(List<AST_LOAN_PORTFOLIO_TMP> portFolios);

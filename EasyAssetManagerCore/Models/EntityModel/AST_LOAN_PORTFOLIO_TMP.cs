@@ -53,4 +53,17 @@ namespace EasyAssetManagerCore.Models.EntityModel
         public string INS_BY { get; set; }
         public DateTime INS_DATE { get; set; }
     }
+
+    [TableAttribute("AST_LOAN_WO_STATUS_TEMP", "ERMP")]
+    public class AST_LOAN_WO_STATUS_TEMP
+    {
+        public int File_Process_ID { get; set; }
+        public string AREA_CODE { get; set; }
+        public string LOAN_NUMBER { get; set; }
+        public string LOAN_OUTSTANDING { get; set; }
+        public string WO_AMOUNT { get; set; }
+        public string AREA_NAME { get; set; }
+        public string INS_BY { get; set; }
+        public DateTime INS_DATE { get; set; }
+    }
 }
