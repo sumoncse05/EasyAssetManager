@@ -68,7 +68,7 @@ namespace EasyAssetManagerCore.Model.CommonModel
             string primaryKey = GetPrimaryKeyColumns().FirstOrDefault();
 
             var columns = string.Join(",", allColumns);
-            var values = "@" + string.Join(",@", allColumns);
+            var values = ":" + string.Join(",:", allColumns);
             query = " INSERT INTO " + tableName;
             if (string.IsNullOrWhiteSpace(columns) || string.IsNullOrWhiteSpace(values))
             {
@@ -78,7 +78,7 @@ namespace EasyAssetManagerCore.Model.CommonModel
             // columns = "( " + primaryKey + "," + columns + " )";
             columns = " ( " + columns + " )";
             values = " VALUES (" + values.TrimStart(',') + " )";
-            return query + columns + values + "; select cast(scope_identity() as int);";
+            return query + columns + values;
         }
 
         public static string InsertWithPrimaryKey()
@@ -390,11 +390,11 @@ namespace EasyAssetManagerCore.Model.CommonModel
             if (modelAttribute == null)
             {
                 Type type = typeof(TSource);
-                return string.Format("dbo.[{0}]", type.Name);
+                return string.Format("dbo.{0}", type.Name);
             }
             else
             {
-                return string.Format("{0}.[{1}]", modelAttribute.Schema, modelAttribute.Name);
+                return string.Format("{0}.{1}", modelAttribute.Schema, modelAttribute.Name);
 
             }
         }

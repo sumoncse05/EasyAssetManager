@@ -1,7 +1,9 @@
-﻿using System;
+﻿using EasyAssetManagerCore.Model.CommonModel;
+using System;
 
 namespace EasyAssetManagerCore.Models.EntityModel
 {
+    [TableAttribute("AST_LOAN_PORTFOLIO_TMP", "ERMP")]
     public class AST_LOAN_PORTFOLIO_TMP
     {
         public int File_Process_ID { get; set; }
@@ -16,6 +18,7 @@ namespace EasyAssetManagerCore.Models.EntityModel
         public DateTime INS_DATE { get; set; }
     }
 
+    [TableAttribute("AST_LOAN_CL_TMP", "ERMP")]
     public class AST_LOAN_CL_TMP
     {
         public int File_Process_ID { get; set; }
@@ -33,6 +36,7 @@ namespace EasyAssetManagerCore.Models.EntityModel
         public DateTime INS_DATE { get; set; }
     }
 
+    [TableAttribute("AST_LOAN_TARGET_TMP", "ERMP")]
     public class AST_LOAN_TARGET_TMP
     {
         public int File_Process_ID { get; set; }

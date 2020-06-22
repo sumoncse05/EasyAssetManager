@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Dapper.Oracle;
+using EasyAssetManagerCore.Model.CommonModel;
 using EasyAssetManagerCore.Models.EntityModel;
 using EasyAssetManagerCore.Repository.Common;
 using Oracle.ManagedDataAccess.Client;
@@ -65,20 +66,25 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
 
         public int Process_LOAN_CL(List<AST_LOAN_CL_TMP> portFolios)
         {
-            throw new System.NotImplementedException();
+            var sql = QB<AST_LOAN_CL_TMP>.Insert();
+            var affectedRows = Connection.Execute(sql, portFolios);
+            return affectedRows;
         }
 
         public int Process_LOAN_PORTFOLIO(List<AST_LOAN_PORTFOLIO_TMP> portFolios)
         {
-            var sql = @"insert into ERMP.AST_LOAN_PORTFOLIO_TMP (File_Process_ID,ID_of_Area,Name_of_Area,Brn_Code,Branch_Name,ID_of_RM,Name_of_RM,Loan_Acct_No,INS_BY,INS_DATE)
-                      values (:File_Process_ID,:ID_of_Area,:Name_of_Area,:Brn_Code,:Branch_Name,:ID_of_RM,:Name_of_RM,:Loan_Acct_No,:INS_BY,:INS_DATE)";
+            //var sql = @"insert into ERMP.AST_LOAN_PORTFOLIO_TMP (File_Process_ID,ID_of_Area,Name_of_Area,Brn_Code,Branch_Name,ID_of_RM,Name_of_RM,Loan_Acct_No,INS_BY,INS_DATE)
+            //          values (:File_Process_ID,:ID_of_Area,:Name_of_Area,:Brn_Code,:Branch_Name,:ID_of_RM,:Name_of_RM,:Loan_Acct_No,:INS_BY,:INS_DATE)";
+            var sql = QB<AST_LOAN_PORTFOLIO_TMP>.Insert();
             var affectedRows = Connection.Execute(sql, portFolios);
             return affectedRows;
         }
 
         public int Process_LOAN_TARGET(List<AST_LOAN_TARGET_TMP> portFolios)
         {
-            throw new System.NotImplementedException();
+            var sql = QB<AST_LOAN_TARGET_TMP>.Insert();
+            var affectedRows = Connection.Execute(sql, portFolios);
+            return affectedRows;
         }
     }
 
