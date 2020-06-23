@@ -38,8 +38,7 @@ namespace EasyAssetManager.Controllers
                     if (!Directory.Exists(directory))
                         Directory.CreateDirectory(directory);
                     StoreInFolder(file, filepath);
-                    fileProcessManager.ProcessFile(businessYear,file_Type, filepath, Session);
-                    MessageHelper.Success(message, "File upload successfully....");
+                    message= fileProcessManager.ProcessFile(businessYear,file_Type, filepath, Session);
                 }
                 else
                 {

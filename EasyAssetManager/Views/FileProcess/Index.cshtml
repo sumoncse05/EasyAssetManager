@@ -82,8 +82,10 @@
             {
                 if ($('#file_Type').val())
                 {
+                    if ($('#business_Year').val()) {
                     var formData = new FormData();
                     formData.append('file_Type', $('#file_Type').val());
+                    formData.append('businessYear', $('#business_Year').val());
                     formData.append('file', $('#logo')[0].files[0]);
                     var url = '/FileProcess/UploadFile';
                     ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res)
@@ -95,6 +97,9 @@
                             clear();
                         }
                     });
+                    } else {
+                        ApplicationCommon.showNotification("2", "Please enter business year to continue the process.");
+                    }
                 } else
                 {
                     ApplicationCommon.showNotification("2", "Please select file_Type to continue the process.");

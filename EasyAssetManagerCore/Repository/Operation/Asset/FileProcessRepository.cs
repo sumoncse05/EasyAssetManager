@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Dapper.Oracle;
 using EasyAssetManagerCore.Model.CommonModel;
+using EasyAssetManagerCore.Models.CommonModel;
 using EasyAssetManagerCore.Models.EntityModel;
 using EasyAssetManagerCore.Repository.Common;
 using Oracle.ManagedDataAccess.Client;
@@ -93,6 +94,60 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
             var affectedRows = Connection.Execute(sql, portFolios);
             return affectedRows;
         }
+
+        public ResponseMessage SetProcess_LOAN_WO(int fileProcessId,int business_year, string pvc_appuser)
+        {
+            var responseMessage = new ResponseMessage();
+            var dyParam = new OracleDynamicParameters();
+            dyParam.Add("pvc_process_id", fileProcessId, OracleMappingType.Int32, ParameterDirection.Input, 20);
+            dyParam.Add("pvc_business_year", business_year, OracleMappingType.Int32, ParameterDirection.Input, 20);
+            dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input, 50);
+            dyParam.Add("pvc_status", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 5);
+            dyParam.Add("pvc_statusmsg", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 255);
+            var res = responseMessage.QueryExecute(Connection, "pkg_asset_manager.dpd_set_process_loan_wo", dyParam);
+            return res;
+        }
+
+        public ResponseMessage SetProcess_LOAN_TARGET(int fileProcessId, int business_year, string pvc_appuser)
+        {
+            var responseMessage = new ResponseMessage();
+            var dyParam = new OracleDynamicParameters();
+            dyParam.Add("pvc_process_id", fileProcessId, OracleMappingType.Int32, ParameterDirection.Input, 20);
+            dyParam.Add("pvc_business_year", business_year, OracleMappingType.Int32, ParameterDirection.Input, 20);
+            dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input, 50);
+            dyParam.Add("pvc_status", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 5);
+            dyParam.Add("pvc_statusmsg", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 255);
+            var res = responseMessage.QueryExecute(Connection, "pkg_asset_manager.dpd_set_process_loan_target", dyParam);
+            return res;
+        }
+
+        public ResponseMessage SetProcess_LOAN_CL(int fileProcessId, int business_year, string pvc_appuser)
+        {
+            var responseMessage = new ResponseMessage();
+            var dyParam = new OracleDynamicParameters();
+            dyParam.Add("pvc_process_id", fileProcessId, OracleMappingType.Int32, ParameterDirection.Input, 20);
+            dyParam.Add("pvc_business_year", business_year, OracleMappingType.Int32, ParameterDirection.Input, 20);
+            dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input, 50);
+            dyParam.Add("pvc_status", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 5);
+            dyParam.Add("pvc_statusmsg", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 255);
+            var res = responseMessage.QueryExecute(Connection, "pkg_asset_manager.dpd_set_process_loan_cl", dyParam);
+            return res;
+        }
+
+        public ResponseMessage SetProcess_LOAN_PORTFOLIO(int fileProcessId, int business_year, string pvc_appuser)
+        {
+            var responseMessage = new ResponseMessage();
+            var dyParam = new OracleDynamicParameters();
+            dyParam.Add("pvc_process_id", fileProcessId, OracleMappingType.Int32, ParameterDirection.Input, 20);
+            dyParam.Add("pvc_business_year", business_year, OracleMappingType.Int32, ParameterDirection.Input, 20);
+            dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input, 50);
+            dyParam.Add("pvc_status", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 5);
+            dyParam.Add("pvc_statusmsg", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 255);
+            var res = responseMessage.QueryExecute(Connection, "pkg_asset_manager.dpd_set_process_loan_portfolio", dyParam);
+            return res;
+        }
+
+
     }
 
     #region Interface
@@ -107,6 +162,10 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
         int Process_LOAN_PORTFOLIO(List<AST_LOAN_PORTFOLIO_TMP> portFolios);
         int Process_LOAN_TARGET(List<AST_LOAN_TARGET_TMP> portFolios);
         int Process_LOAN_CL(List<AST_LOAN_CL_TMP> portFolios);
+        ResponseMessage SetProcess_LOAN_WO(int fileProcessId, int business_year, string pvc_appuser);
+        ResponseMessage SetProcess_LOAN_TARGET(int fileProcessId, int business_year, string pvc_appuser);
+        ResponseMessage SetProcess_LOAN_CL(int fileProcessId, int business_year, string pvc_appuser);
+        ResponseMessage SetProcess_LOAN_PORTFOLIO(int fileProcessId, int business_year, string pvc_appuser);
     }
 
     #endregion

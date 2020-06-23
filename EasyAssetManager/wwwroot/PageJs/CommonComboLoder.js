@@ -58,7 +58,6 @@
             value: "3"
         };
         data.push(item);
-        data.push(item);
         item = {
             text: "LOAN_WO",
             value: "4"

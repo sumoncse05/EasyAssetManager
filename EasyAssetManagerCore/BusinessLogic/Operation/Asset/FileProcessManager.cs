@@ -19,28 +19,28 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
         {
             fileProcessRepository = new FileProcessRepository(Connection);
         }
-        public Message ProcessFile(int businessYear,int file_Type, string filepath, AppSession session)
+        public Message ProcessFile(int businessYear, int file_Type, string filepath, AppSession session)
         {
             Logging.WriteToLog(session.User.StationIp, session.User.user_id, "processExcell", "Excell application created.");
             switch (file_Type)
             {
                 case (int)FileType.AST_LOAN_PORTFOLIO_TMP:
-                    Message = Process_LOAN_PORTFOLIO(filepath, session, FileType.AST_LOAN_PORTFOLIO_TMP.ToString());
+                    Message = Process_LOAN_PORTFOLIO(filepath, session, FileType.AST_LOAN_PORTFOLIO_TMP.ToString(), businessYear);
                     break;
                 case (int)FileType.AST_LOAN_TARGET_TMP:
-                    Message = Process_LOAN_TARGET(filepath, session, FileType.AST_LOAN_TARGET_TMP.ToString());
+                    Message = Process_LOAN_TARGET(filepath, session, FileType.AST_LOAN_TARGET_TMP.ToString(), businessYear);
                     break;
                 case (int)FileType.AST_LOAN_CL_TMP:
-                    Message = Process_LOAN_CL(filepath, session, FileType.AST_LOAN_CL_TMP.ToString());
+                    Message = Process_LOAN_CL(filepath, session, FileType.AST_LOAN_CL_TMP.ToString(), businessYear);
                     break;
                 case (int)FileType.AST_LOAN_WO_STATUS_TEMP:
-                    Message = Process_LOAN_WO(filepath, session, FileType.AST_LOAN_WO_STATUS_TEMP.ToString());
+                    Message = Process_LOAN_WO(filepath, session, FileType.AST_LOAN_WO_STATUS_TEMP.ToString(), businessYear);
                     break;
             }
             return Message;
         }
 
-        private Message Process_LOAN_WO(string filepath, AppSession session, string tableName)
+        private Message Process_LOAN_WO(string filepath, AppSession session, string tableName, int businessYear)
         {
             try
             {
@@ -77,11 +77,11 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                                 var portFolio = new AST_LOAN_WO_STATUS_TEMP
                                 {
                                     File_Process_ID = fileProcessID,
-                                    AREA_CODE = wooksheet.Cells[i, 1].Text.Trim(),
+                                    AREA_CODE = valid(wooksheet.Cells[i, 1].Text.Trim(), "AREA_CODE", "Digit"),
                                     AREA_NAME = wooksheet.Cells[i, 2].Text.Trim(),
-                                    LOAN_NUMBER = wooksheet.Cells[i, 3].Text.Trim(),
-                                    LOAN_OUTSTANDING = wooksheet.Cells[i, 4].Text.Trim(),
-                                    WO_AMOUNT = wooksheet.Cells[i, 5].Text.Trim(),
+                                    LOAN_NUMBER =valid(wooksheet.Cells[i, 3].Text.Trim(), "LOAN_NUMBER", "Number"),
+                                    LOAN_OUTSTANDING = valid(wooksheet.Cells[i, 4].Text.Trim(), "LOAN_OUTSTANDING", "Number"),
+                                    WO_AMOUNT = valid(wooksheet.Cells[i, 5].Text.Trim(), "WO_AMOUNT", "Digit"),
                                     INS_BY = session.User.user_id,
                                     INS_DATE = DateTime.Now
                                 };
@@ -90,6 +90,23 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                             if (portFolios.Count > 0)
                             {
                                 var row = fileProcessRepository.Process_LOAN_WO(portFolios);
+                                if (row > 0)
+                                {
+                                    var response = fileProcessRepository.SetProcess_LOAN_WO(fileProcessID, businessYear, session.User.user_id);
+                                    if (response.pvc_status == "40999")
+                                    {
+                                        MessageHelper.Success(Message, "Data upload and process successfully....");
+                                    }
+                                    else
+                                    {
+                                        MessageHelper.Error(Message, response.pvc_statusmsg);
+                                    }
+
+                                }
+                                else
+                                {
+                                    MessageHelper.Error(Message, "No data process...");
+                                }
                             }
                             else
                             {
@@ -116,7 +133,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             return Message;
         }
 
-        public Message Process_LOAN_PORTFOLIO(string filepath, AppSession session,string tableName)
+        private Message Process_LOAN_PORTFOLIO(string filepath, AppSession session, string tableName, int businessYear)
         {
             try
             {
@@ -153,21 +170,39 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                                 var portFolio = new AST_LOAN_PORTFOLIO_TMP
                                 {
                                     File_Process_ID = fileProcessID,
-                                    ID_of_Area= wooksheet.Cells[i, 1].Text.Trim(),
+                                    ID_of_Area =valid(wooksheet.Cells[i, 1].Text.Trim(), "ID_of_Area", "Digit"),
                                     Name_of_Area = wooksheet.Cells[i, 2].Text.Trim(),
-                                    Brn_Code = wooksheet.Cells[i, 3].Text.Trim(),
+                                    Brn_Code = valid(wooksheet.Cells[i, 3].Text.Trim(), "Brn_Code", "Digit"),
                                     Branch_Name = wooksheet.Cells[i, 4].Text.Trim(),
                                     ID_of_RM = wooksheet.Cells[i, 5].Text.Trim(),
                                     Name_of_RM = wooksheet.Cells[i, 6].Text.Trim(),
-                                    Loan_Acct_No = wooksheet.Cells[i, 7].Text.Trim(),
-                                    INS_BY=session.User.user_id,
-                                    INS_DATE=DateTime.Now
+                                    Loan_Acct_No = valid(wooksheet.Cells[i, 7].Text.Trim(), "Loan_Acct_No", "Number"),
+                                    INS_BY = session.User.user_id,
+                                    INS_DATE = DateTime.Now
                                 };
                                 portFolios.Add(portFolio);
                             }
                             if (portFolios.Count > 0)
                             {
-                                var row = fileProcessRepository.Process_LOAN_PORTFOLIO(portFolios);                          }
+                                var row = fileProcessRepository.Process_LOAN_PORTFOLIO(portFolios);
+                                if (row > 0)
+                                {
+                                    var response = fileProcessRepository.SetProcess_LOAN_PORTFOLIO(fileProcessID, businessYear, session.User.user_id);
+                                    if (response.pvc_status == "40999")
+                                    {
+                                        MessageHelper.Success(Message, "Data upload and process successfully....");
+                                    }
+                                    else
+                                    {
+                                        MessageHelper.Error(Message, response.pvc_statusmsg);
+                                    }
+
+                                }
+                                else
+                                {
+                                    MessageHelper.Error(Message, "No data process...");
+                                }
+                            }
                             else
                             {
                                 MessageHelper.Error(Message, "No rows found this excel file.");
@@ -181,7 +216,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
 
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageHelper.Error(Message, ex.Message);
             }
@@ -189,10 +224,10 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             {
                 Connection.Close();
             }
-            
+
             return Message;
         }
-        public Message Process_LOAN_TARGET(string filepath, AppSession session, string tableName)
+        private Message Process_LOAN_TARGET(string filepath, AppSession session, string tableName, int businessYear)
         {
             try
             {
@@ -229,16 +264,16 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                                 var portFolio = new AST_LOAN_TARGET_TMP
                                 {
                                     File_Process_ID = fileProcessID,
-                                    ID_of_Area = wooksheet.Cells[i, 1].Text.Trim(),
+                                    ID_of_Area = valid(wooksheet.Cells[i, 1].Text.Trim(), "ID_of_Area", "Digit"),
                                     Name_of_Area = wooksheet.Cells[i, 2].Text.Trim(),
-                                    Brn_Code = wooksheet.Cells[i, 3].Text.Trim(),
+                                    Brn_Code = valid(wooksheet.Cells[i, 3].Text.Trim(), "Brn_Code", "Digit"),
                                     Branch_Name = wooksheet.Cells[i, 4].Text.Trim(),
                                     ID_of_RM = wooksheet.Cells[i, 5].Text.Trim(),
                                     Name_of_RM = wooksheet.Cells[i, 6].Text.Trim(),
                                     ID_of_BST = wooksheet.Cells[i, 7].Text.Trim(),
                                     Name_of_BST = wooksheet.Cells[i, 8].Text.Trim(),
-                                    Out_Standing_Amount = wooksheet.Cells[i, 9].Text.Trim(),
-                                    Disbursed_Amount = wooksheet.Cells[i, 10].Text.Trim(),
+                                    Out_Standing_Amount = valid(wooksheet.Cells[i, 9].Text.Trim(), "Out_Standing_Amount", "Number"),
+                                    Disbursed_Amount = valid(wooksheet.Cells[i, 10].Text.Trim(), "Disbursed_Amount", "Number"),
                                     INS_BY = session.User.user_id,
                                     INS_DATE = DateTime.Now
                                 };
@@ -247,6 +282,23 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                             if (portFolios.Count > 0)
                             {
                                 var row = fileProcessRepository.Process_LOAN_TARGET(portFolios);
+                                if (row > 0)
+                                {
+                                    var response = fileProcessRepository.SetProcess_LOAN_TARGET(fileProcessID, businessYear, session.User.user_id);
+                                    if (response.pvc_status == "40999")
+                                    {
+                                        MessageHelper.Success(Message, "Data upload and process successfully....");
+                                    }
+                                    else
+                                    {
+                                        MessageHelper.Error(Message, response.pvc_statusmsg);
+                                    }
+
+                                }
+                                else
+                                {
+                                    MessageHelper.Error(Message, "No data process...");
+                                }
                             }
                             else
                             {
@@ -272,7 +324,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
 
             return Message;
         }
-        public Message Process_LOAN_CL(string filepath, AppSession session, string tableName)
+        private Message Process_LOAN_CL(string filepath, AppSession session, string tableName, int businessYear)
         {
             try
             {
@@ -309,7 +361,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                                 var portFolio = new AST_LOAN_CL_TMP
                                 {
                                     File_Process_ID = fileProcessID,
-                                    ID_of_Area = wooksheet.Cells[i, 1].Text.Trim(),
+                                    ID_of_Area = valid(wooksheet.Cells[i, 1].Text.Trim(), "ID_of_Area", "Digit"),
                                     Name_of_Area = wooksheet.Cells[i, 2].Text.Trim(),
                                     Brn_Code = wooksheet.Cells[i, 3].Text.Trim(),
                                     Branch_Name = wooksheet.Cells[i, 4].Text.Trim(),
@@ -317,8 +369,8 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                                     Name_of_RM = wooksheet.Cells[i, 6].Text.Trim(),
                                     ID_of_BST = wooksheet.Cells[i, 7].Text.Trim(),
                                     Name_of_BST = wooksheet.Cells[i, 8].Text.Trim(),
-                                    Loan_Acct_No = wooksheet.Cells[i, 9].Text.Trim(),
-                                    Classification_TYPE = wooksheet.Cells[i, 10].Text.Trim(),
+                                    Loan_Acct_No = valid(wooksheet.Cells[i, 9].Text.Trim(), "Loan_Acct_No", "Number"),
+                                    Classification_TYPE = valid(wooksheet.Cells[i, 10].Text.Trim(), "Classification_TYPE", "Digit"),
                                     INS_BY = session.User.user_id,
                                     INS_DATE = DateTime.Now
                                 };
@@ -327,6 +379,23 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                             if (portFolios.Count > 0)
                             {
                                 var row = fileProcessRepository.Process_LOAN_CL(portFolios);
+                                if (row > 0)
+                                {
+                                    var response = fileProcessRepository.SetProcess_LOAN_CL(fileProcessID, businessYear, session.User.user_id);
+                                    if (response.pvc_status == "40999")
+                                    {
+                                        MessageHelper.Success(Message, "Data upload and process successfully....");
+                                    }
+                                    else
+                                    {
+                                        MessageHelper.Error(Message, response.pvc_statusmsg);
+                                    }
+
+                                }
+                                else
+                                {
+                                    MessageHelper.Error(Message, "No data process...");
+                                }
                             }
                             else
                             {
@@ -392,6 +461,12 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                     if (canConvert == false)
                         throw new Exception(fieldName + " contains invalid Number: " + strVal);
                     break;
+                case "Digit":
+                    decimal digit = 0;
+                    canConvert = strVal != "" ? strVal.Length<=2 : true;
+                    if (canConvert == false)
+                        throw new Exception(fieldName + " contains invalid Number: " + strVal);
+                    break;
                 default:
                     break;
             }
@@ -411,7 +486,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
     }
     public static class ExcelColumn
     {
-        public static List<string> LOAN_CL  = new List<string> { "ID_of_Area", "Name_of_Area", "Brn_Code", "Branch_Name", "ID_of_RM", "Name_of_RM", "ID_of_BST", "Name_of_BST", "Loan_Acct_No", "Classification_TYPE" };
+        public static List<string> LOAN_CL = new List<string> { "ID_of_Area", "Name_of_Area", "Brn_Code", "Branch_Name", "ID_of_RM", "Name_of_RM", "ID_of_BST", "Name_of_BST", "Loan_Acct_No", "Classification_TYPE" };
         public static List<string> LOAN_PORTFOLIO = new List<string> { "ID_of_Area", "Name_of_Area", "Brn_Code", "Branch_Name", "ID_of_RM", "Name_of_RM", "Loan_Acct_No" };
         public static List<string> LOAN_TARGET = new List<string> { "ID_of_Area", "Name_of_Area", "Brn_Code", "Branch_Name", "ID_of_RM", "Name_of_RM", "ID_of_BST", "Name_of_BST", "Out_Standing_Amount", "Disbursed_Amount" };
         public static List<string> LOAN_WO = new List<string> { "AREA_CODE", "AREA_NAME", "LOAN_NUMBER", "LOAN_OUTSTANDING", "WO_AMOUNT" };
