@@ -115,7 +115,13 @@ END dpd_upload_inwarddata;
 
 
 
-
+UPDATE dest_tab tt
+SET    (tt.code, tt.description) = (SELECT st.code, st.description
+                                    FROM   source_tab st
+                                    WHERE  st.id = tt.id)
+WHERE  EXISTS (SELECT 1
+               FROM   source_tab
+               WHERE  id = tt.id);
 
 
  UPDATE AST_LOAN_WO_STATUS d
