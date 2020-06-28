@@ -47,8 +47,8 @@
         var data = {};
         loadCombo(controlId, url, data, isDefaultRecordRequired);
     };
-    var getLoanProductList = function (controlId, url, isDefaultRecordRequired) {
-        var data = {};
+    var getLoanProductList = function (controlId, url, loanType, isDefaultRecordRequired) {
+        var data = { loanType: loanType};
         loadCombo(controlId, url, data, isDefaultRecordRequired);
     };
    

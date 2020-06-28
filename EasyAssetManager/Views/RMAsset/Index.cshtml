@@ -23,19 +23,19 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group row">
-                                        <div class="col-xl-1"></div>
+                                        <div class="col-xl-2"></div>
                                         <div class="col-xl-2">
                                             <label class="col-form-label">Business Segment</label>
                                         </div>
                                         <div class="col-xl-3">
                                             <select id="loanType" name="loanType" class="form-control form-element"></select>
                                         </div>
-                                        
+
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-xl-2"></div>
                                         <div class="col-xl-2">
-                                            <label class="col-form-label">LoanProduct</label>
+                                            <label class="col-form-label">Loan Product</label>
                                         </div>
                                         <div class="col-xl-3">
                                             <select id="loanProduct" name="loanProduct" class="form-control form-element"></select>
@@ -70,7 +70,7 @@
         <div class="col-lg-12">
             <div class="ibox " id="iboxTbl">
                 <div class="ibox-title">
-                    <h5>Available Loan List to Assign(<label id="lblCustomerCount" name="lblCustomerCount" />)</h5>
+                    <h5>Available Loan List to Assign(<label id="lblLoanCount" name="lblLoanCount" />)</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up" id="iboxTblImg"></i>
@@ -82,13 +82,19 @@
                 </div>
             </div>
         </div>
+        <div class="form-group row">
+            <div class="col-xl-3"></div>
+            <div class="col-xl-2">
+                <input type="button" value="Assign RM" class="btn btn-primary ks-next" id="btnModalOpen">
+            </div>
+        </div>
     </div>
 </div>
 
 
 <div class="modal fade" id="updateData" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content-lg">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Assign RM</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -99,68 +105,137 @@
                 <form>
                     <div class="form-group">
                         <label class="col-form-label">New RM</label>
-                        <select id="newRmCode" name="newRmCode" class="form-control form-element"></select>
-                        <input type="hidden" id="loan_slno" name="loan_slno" class="form-element" />
+                        <select id="newRmCode" name="newRmCode" class="form-control form-element chosen-select">
+                        @*<select data-placeholder="Choose a Country..." class="chosen-select" tabindex="2">*@
+                            @*<option value="">Select</option>
+                            <option value="United States">United States</option>
+                            <option value="United Kingdom">United Kingdom</option>
+                            <option value="Afghanistan">Afghanistan</option>
+                            <option value="Aland Islands">Aland Islands</option>
+                            <option value="Albania">Albania</option>*@
+                        </select>
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">Effect Date</label>
-                        <input type="text" id="user_name" name="user_name" class="form-control form-element" readonly="readonly" />
+                        <div class="input-group date">
+                            <input class="form-control form-element" type="text" id="effectDate" name="effectDate" placeholder="dd/mm/yyyy" data-mask="99/99/9999">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <input type="button" value="Update" class="btn btn-primary ks-next" onclick="classInactiveUserSearch.Updatedata()" id="btnUpdate">
+                <input type="button" value="Assign" class="btn btn-primary ks-next" id="btnAssign">
                 <input type="button" value="Close" class="btn btn-danger ks-next" data-dismiss="modal" id="btnClose">
             </div>
         </div>
     </div>
 </div>
-
+@section Styles {
+    <link rel="stylesheet" href="~/ApplicationTheme/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
+    <link rel="stylesheet" href="~/ApplicationTheme/lib/chosen/bootstrap-chosen.css" />
+}
 @section scripts{
-
+    <script src="~/ApplicationTheme/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+    <script src="~/ApplicationTheme/lib/chosen/chosen.jquery.js"></script>
     <script type="text/javascript">
 
 
-        var classInactiveUserSearch = function () {
-            var init = function () {
+        var classRMLoanAssign = function ()
+        {
+            var loanList = "";
+            var init = function ()
+            {
                 eventInitializer();
 
             };
-            var eventInitializer = function () {
+            var eventInitializer = function ()
+            {
                 $('#search').click(searchInitiate);
-                $('#btnUpdate').click(Updatedata);
-                searchInitiate();
+                $('#btnAssign').click(assignRM);
+                $('#btnModalOpen').click(showModaldata);
+                //searchInitiate();
+                //combo.getRmList('newRmCode', 'Common/GetRmList', true);
+                combo.getLoanType('loanType', true);
+                $('#loanType').on('change', function ()
+                {
+                    var loanType = $('#loanType').val();
+                    // combo.getLoanProductList('loanProduct', loanType, 'Common/GetLoanProductList', true);
+                });
+                $('.input-group.date').datepicker({
+                    todayBtn: "linked",
+                    keyboardNavigation: false,
+                    forceParse: false,
+                    calendarWeeks: true,
+                    autoclose: true,
+                    format: 'dd/mm/yyyy',
+                });
+                $('.chosen-select').chosen({ width: "100%" });
             };
-            var searchInitiate = function () {
+            var showModaldata = function ()
+            {
+                var checkedVals = $('.innerCheck:checkbox:checked').map(function ()
+                {
+                    return this.value;
+                }).get();
+                if (checkedVals == '')
+                {
+                    ApplicationCommon.showNotification("2", "Please Select a Loan.")
+                }
+                else
+                {
+                    loanList = checkedVals.join(",");
+                    $('#effectDate').val('');
+                    $('#newRmCode').val('');
+                    $('#updateData').modal('show');
+                }
+                
+            };
+
+            var searchInitiate = function ()
+            {
                 $('#div-availableLoan').empty();
-                var url = '/AppUserActivation/GetLockedUserList';
-                 $('#div-availableLoan').load(url);
+                var loanType = $('#loanType').val();
+                var loanProduct = $('#loanProduct').val();
+                var rmCode = $('#rmCode').val();
+                var url = '/RMAsset/GetAvailableLoan';
+                $('#div-availableLoan').load(url + '?loanType=' + loanType + '&&loanProduct=' + loanProduct + '&&rmCode=' + rmCode);
 
             };
-            var Updatedata = function () {
-                if ($("#user_status").val() == '') {
-                    ApplicationCommon.showNotification("Error", "Select Status to continue.");
+            var assignRM = function ()
+            {
+                if ($("#newRmCode").val() == '')
+                {
+                    ApplicationCommon.showNotification("Error", "Select RMCode to continue.");
                 }
-                else if ($("#inactive_reason").val() == '') {
-                    ApplicationCommon.showNotification("Error", "Enter reason to continue.");
+                else if ($("#effectDate").val() == '')
+                {
+                    ApplicationCommon.showNotification("Error", "Enter EffevtiveDate to continue.");
                 }
-                else {
-                    var updateAccountOpen = ApplicationCommon.getData('form-element');
-                    var url = '/AppUserActivation/UpdateUserStatus';
-                    ApplicationCommon.request(url, 'POST', updateAccountOpen, false, true, false, function (res) {
+                else
+                {
+                    var formData = new FormData();
+                    formData.append("loanList", loanList);
+                    formData.append("newRmCode", $("#newRmCode").val());
+                    formData.append("effectDate", $("#effectDate").val());
+                    var url = '/RMAsset/SetAssignRM';
+                    ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res)
+                    {
                         ApplicationCommon.showNotification(res.messageType, res.messageString);
-                        if (res.messageType == 1) {
-                            $(".modal-backdrop").remove();
+                        if (res.messageType == 1)
+                        {
+                            ApplicationCommon.forceModalClose();
                             searchInitiate();
                         }
                     });
                 }
             };
-            return { init: init, Updatedata: Updatedata };
+            return { init: init };
         }();
 
-        classInactiveUserSearch.init();
+        classRMLoanAssign.init();
 
     </script>
-} 
+}
 

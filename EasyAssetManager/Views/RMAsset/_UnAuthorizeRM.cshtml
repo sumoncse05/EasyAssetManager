@@ -5,35 +5,45 @@
 }
 @if (Model != null && Model.Any())
 {
-     row = Model.Count();
-    <table class="table table-striped table-bordered table-hover dataTables-example table-responsive" id="tb-abailabilLoan">
+    row = Model.Count();
+    <table class="table table-striped table-bordered table-hover dataTables-example table-responsive" id="tb-unAuthorizeLoan">
         <thead>
             <tr>
                 <th class="removeSorting"><input type="checkbox" id="UserChkAll" name="UserChkAll" /></th>
                 <th class="collapse">Loan SL</th>
+                <th>Branch Code</th>
+                <th>Branch Name</th>
                 <th>Loan Number</th>
                 <th>Loan Name</th>
                 <th>Segment</th>
-                <th>UBS RM code</th>
-                <th>UBS RM Name</th>
+                <th>Old RM code</th>
+                <th>Old RM Name</th>
+                <th>New RM code</th>
+                <th>New RM Name</th>
                 <th>Disburse Amount</th>
                 <th>Outstanding Amount</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var v in Model)
             {
-                <tr>
-                    <td><input type="checkbox" value="@v.loan_slno" id="UserChk" name="UserChk" class="innerCheck" /></td>
-                    <td class="collapse">@v.loan_slno</td>
-                    <td>@v.loan_ac_number</td>
-                    <td>@v.loan_ac_name </td>
-                    <td>@v.seg_desc</td>
-                    <td>@v.old_rm_code</td>
-                    <td>@v.old_rm_name</td>
-                    <td>@v.loan_amount</td>
-                    <td>@v.outstanding_amount</td>
-                </tr>
+            <tr>
+                <td><input type="checkbox" value="@v.loan_slno" id="UserChk" name="UserChk" class="innerCheck" /></td>
+                <td class="collapse">@v.loan_slno</td>
+                <td>@v.branch_code</td>
+                <td>@v.branch_name</td>
+                <td>@v.loan_ac_number</td>
+                <td>@v.loan_ac_name </td>
+                <td>@v.seg_desc</td>
+                <td>@v.old_rm_code</td>
+                <td>@v.old_rm_name</td>
+                <td>@v.new_rm_code</td>
+                <td>@v.new_rm_name</td>
+                <td>@v.loan_amount</td>
+                <td>@v.outstanding_amount</td>
+                <td>@v.status</td>
+            </tr>
             }
         </tbody>
     </table>
@@ -44,8 +54,7 @@ else
 }
 <script type="text/javascript">
     $(document).ready(function () {
-        ApplicationCommon.makePagination('tb-abailabilLoan');
-        $('#lblLoanCount').text(@row);
+        ApplicationCommon.makePagination('tb-unAuthorizeLoan');
         $("#UserChkAll").click(function () {
             var checkAll = $("#UserChkAll").prop('checked');
             if (checkAll) {

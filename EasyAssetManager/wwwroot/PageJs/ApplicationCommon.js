@@ -1389,7 +1389,12 @@ var ApplicationCommon = function ()
             }
         };
     };
-
+    var forceModalClose = function ()
+    {
+        $('body').removeClass('modal-open');
+        $(".modal-backdrop").remove();
+        $('body').removeAttr('style');
+    };
     return {
         init: function ()
         {
@@ -1423,6 +1428,7 @@ var ApplicationCommon = function ()
         chkPass: chkPass,
         showLoder: showLoder,
         initialStep: initialStep,
-        nextForword: nextForword
+        nextForword: nextForword,
+        forceModalClose: forceModalClose
     };
 }();

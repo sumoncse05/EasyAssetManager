@@ -14,6 +14,7 @@ namespace EasyAssetManagerCore.Models.EntityModel
         public string user_id { get; set; }
         public string user_name { get; set; }
         public string branch_name { get; set; }
+        public string branch_code { get; set; }
         public string agent_id { get; set; }
         public string agent_name { get; set; }
         public string Password { get; set; }

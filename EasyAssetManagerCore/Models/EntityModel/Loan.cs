@@ -8,10 +8,10 @@
         public string area_code { get; set; }
         public string branch_code { get; set; }
         public string branch_name { get; set; }
-        public string orig_rm_code { get; set; }
-        public string emp_name { get; set; }
-        public string orig_rm_name { get; set; }
-        public string moni_rm_code { get; set; }
+        public string old_rm_code { get; set; }
+        public string old_rm_name { get; set; }
+        public string new_rm_code { get; set; }
+        public string new_rm_name { get; set; }
         public string loan_ac_number { get; set; }
         public string loan_ac_name { get; set; }
         public string product_code { get; set; }

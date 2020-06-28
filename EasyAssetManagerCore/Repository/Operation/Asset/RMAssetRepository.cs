@@ -37,23 +37,23 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
             var dyParam = new OracleDynamicParameters();
             dyParam.Add("pvc_seg_id", pvc_seg_id, OracleMappingType.Varchar2, ParameterDirection.Input);
             dyParam.Add("pvc_product_code", pvc_product_code, OracleMappingType.Varchar2, ParameterDirection.Input);
-            dyParam.Add("pvc_origrm_code", pvc_origrm_code, OracleMappingType.Varchar2, ParameterDirection.Input);
+            dyParam.Add("pvc_oldrm_code", pvc_origrm_code, OracleMappingType.Varchar2, ParameterDirection.Input);
             dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input);
             dyParam.Add("pcr_availableloan", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
             return Connection.Query<Loan>("pkg_asset_manager.dpd_get_availableloan", dyParam, commandType: CommandType.StoredProcedure);
         }
 
-        public ResponseMessage SetRMAssignWithLoan(string pvc_custlogslno, string pvc_rm_code, string pvc_effdate, string pvc_appuser)
+        public ResponseMessage SetRMAssignWithLoan(string pvc_loanslno, string pvc_rm_code, string pvc_effdate, string pvc_appuser)
         {
             var responseMessage = new ResponseMessage();
             var dyParam = new OracleDynamicParameters();
-            dyParam.Add("pvc_custlogslno", pvc_custlogslno, OracleMappingType.Varchar2, ParameterDirection.Input, 10);
+            dyParam.Add("pvc_loanslno", pvc_loanslno, OracleMappingType.Varchar2, ParameterDirection.Input, 10);
             dyParam.Add("pvc_rm_code", pvc_rm_code, OracleMappingType.Varchar2, ParameterDirection.Input, 200);
             dyParam.Add("pvc_effdate", pvc_effdate, OracleMappingType.Varchar2, ParameterDirection.Input, 200);
             dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input, 50);
             dyParam.Add("pvc_status", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 5);
             dyParam.Add("pvc_statusmsg", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 255);
-            var res = responseMessage.QueryExecute(Connection, "dpg_rmp_map_manager.dpd_set_assaignrm", dyParam);
+            var res = responseMessage.QueryExecute(Connection, "pkg_asset_manager.dpd_set_assaignloantorm", dyParam);
             return res;
 
         }
@@ -66,27 +66,26 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
             return Connection.Query<Branch>("pkg_liability_lov_manager.dpd_get_userbranchlist", dyParam, commandType: CommandType.StoredProcedure);
         }
 
-        public IEnumerable<Loan> GetUnAuthorizeLoanRM(string pvc_brcode, string pvc_cat_id, string pvc_rmcode, string pvc_status_code, string pvc_appuser)
+        public IEnumerable<Loan> GetUnAuthorizeLoanRM(string pvc_seg_id, string pvc_branchCode, string pvc_rmcode, string pvc_appuser)
         {
             var dyParam = new OracleDynamicParameters();
-            dyParam.Add("pvc_brcode", pvc_brcode, OracleMappingType.Varchar2, ParameterDirection.Input);
-            dyParam.Add("pvc_cat_id", pvc_cat_id, OracleMappingType.Varchar2, ParameterDirection.Input);
-            dyParam.Add("pvc_rmcode", pvc_rmcode, OracleMappingType.Varchar2, ParameterDirection.Input);
-            dyParam.Add("pvc_status_code", pvc_status_code, OracleMappingType.Varchar2, ParameterDirection.Input);
+            dyParam.Add("pvc_seg_id", pvc_seg_id, OracleMappingType.Varchar2, ParameterDirection.Input);
+            dyParam.Add("pvc_branch_code", pvc_branchCode, OracleMappingType.Varchar2, ParameterDirection.Input);
+            dyParam.Add("pvc_oldrm_code", pvc_rmcode, OracleMappingType.Varchar2, ParameterDirection.Input);
             dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input);
-            dyParam.Add("pcr_unauthorizecustomer", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
-            return Connection.Query<Loan>("dpg_search_manager.dpd_get_unauthorizecustomer", dyParam, commandType: CommandType.StoredProcedure);
+            dyParam.Add("pcr_authorizeloan", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
+            return Connection.Query<Loan>("pkg_asset_manager.dpd_get_authorizeloan", dyParam, commandType: CommandType.StoredProcedure);
         }
 
         public ResponseMessage SetRMAuthorized(string pvc_custlogslno, string pvc_appuser)
         {
             var responseMessage = new ResponseMessage();
             var dyParam = new OracleDynamicParameters();
-            dyParam.Add("pvc_custlogslno", pvc_custlogslno, OracleMappingType.Varchar2, ParameterDirection.Input, 10);
+            dyParam.Add("pvc_loanslno", pvc_custlogslno, OracleMappingType.Varchar2, ParameterDirection.Input, 10);
             dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input, 50);
             dyParam.Add("pvc_status", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 5);
             dyParam.Add("pvc_statusmsg", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 255);
-            var res = responseMessage.QueryExecute(Connection, "dpg_rmp_map_manager.dpd_set_rmcustomerauthorized", dyParam);
+            var res = responseMessage.QueryExecute(Connection, "pkg_asset_manager.dpd_set_authorizeloantorm", dyParam);
             return res;
         }
 
@@ -96,9 +95,10 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
     {
         IEnumerable<RM> GetRMList(string pvc_branchcode, string pvc_appuser);
         IEnumerable<Loan> GetAvailableLoan(string pvc_seg_id, string pvc_product_code, string pvc_origrm_code, string pvc_appuser);
-        ResponseMessage SetRMAssignWithLoan(string pvc_custlogslno, string pvc_rm_code, string pvc_effdate, string pvc_appuser);
+        ResponseMessage SetRMAssignWithLoan(string pvc_loanlogslno, string pvc_rm_code, string pvc_effdate, string pvc_appuser);
         IEnumerable<Branch> GetBranchList(string pvc_appuser);
-        IEnumerable<Loan> GetUnAuthorizeLoanRM(string pvc_brcode, string pvc_cat_id, string pvc_rmcode, string pvc_status_code, string pvc_appuser);
+        IEnumerable<Loan> GetUnAuthorizeLoanRM(string pvc_seg_id, string pvc_branchCode, string pvc_rmcode, string pvc_appuser);
         IEnumerable<LoanProduct> GetLoanProduct(string pvc_sgid, string pvc_appuser);
+        ResponseMessage SetRMAuthorized(string pvc_loanlogslno, string pvc_appuser);
     }
 }
