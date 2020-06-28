@@ -36,10 +36,18 @@
         }
 
     };
-    var getGetCustomerComboWithSession = function (controlId, url, isDefaultRecordRequired) {
+
+    var getRmList = function (controlId, url, isDefaultRecordRequired)
+    {
         var data = {};
         loadCombo(controlId, url, data, isDefaultRecordRequired);
     };
+    var getBranchList = function (controlId, url, isDefaultRecordRequired)
+    {
+        var data = {};
+        loadCombo(controlId, url, data, isDefaultRecordRequired);
+    };
+   
     
     var getExcelFiletype = function (controlId, isDefaultRecordRequired) {
         var data = [];
@@ -65,11 +73,56 @@
         data.push(item);
         loadComboStatic(controlId, data, isDefaultRecordRequired);
     };
-
+    var getCustomerType = function (controlId, isDefaultRecordRequired)
+    {
+        var data = [];
+        var item = {
+            text: "Consumer",
+            value: "I"
+        };
+        data.push(item);
+        item = {
+            text: "Commercial",
+            value: "C"
+        };
+        data.push(item);
+        loadComboStatic(controlId, data, isDefaultRecordRequired);
+    };
+    var getCustomerCatagory = function (controlId, isDefaultRecordRequired)
+    {
+        var data = [];
+        var item = {
+            text: "General",
+            value: "01"
+        };
+        data.push(item);
+        item = {
+            text: "Priority",
+            value: "02"
+        };
+        data.push(item);
+        
+        loadComboStatic(controlId, data, isDefaultRecordRequired);
+    };
+    var getCustomerStatus = function (controlId, isDefaultRecordRequired)
+    {
+        var data = [];
+        var item = {
+            text: "Portfolio Upgraded",
+            value: "05"
+        };
+        data.push(item);
+        
+        loadComboStatic(controlId, data, isDefaultRecordRequired);
+    };
 
 
     return {
-        getGetCustomerComboWithSession: getGetCustomerComboWithSession,
-        getExcelFiletype: getExcelFiletype
+        getRmList: getRmList,
+        getExcelFiletype: getExcelFiletype,
+        getCustomerType: getCustomerType,
+        getCustomerCatagory: getCustomerCatagory,
+        getCustomerStatus: getCustomerStatus,
+        getBranchList: getBranchList
     };
 }();

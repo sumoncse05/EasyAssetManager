@@ -142,8 +142,6 @@ namespace EasyAssetManager
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<ISettingsUsersService, SettingsUsersService>();
-            services.AddScoped<ICommonManager, CommonManager>();
-            services.AddScoped<IFileProcessManager, FileProcessManager>();
             services.AddScoped<ICustomerManager, CustomerManager>();
             services.AddScoped<IDepositManager, DepositManager>();
             services.AddScoped<IWithdrawCashManager, WithdrawCashManager>();
@@ -161,6 +159,10 @@ namespace EasyAssetManager
             services.AddScoped<IBillerManager, BillerManager>();
             services.AddScoped<IAgentManager, AgentManager>();
             services.AddScoped<IRemmittanceManager, RemmittanceManager>();
+
+            services.AddScoped<IRMAssetManager, RMAssetManager>();
+            services.AddScoped<ICommonManager, CommonManager>();
+            services.AddScoped<IFileProcessManager, FileProcessManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
