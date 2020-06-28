@@ -305,28 +305,181 @@ var ApplicationCommon = function ()
         }
 
     };
-    var makePagination = function (tableId)
+    var makePagination = function (tableId, headerrow)
     {
         $('#' + tableId).DataTable({
             pageLength: 10,
             dom: '<"html5buttons"B>lTfgitp',
+            //buttons: [
+            //    //{ extend: 'copy' },
+            //    //{ extend: 'csv' },
+            //    { extend: 'excel'}
+            //    //{ extend: 'pdf', title: 'ExampleFile' }
+
+            //    //{
+            //    //    extend: 'print',
+            //    //    customize: function (win)
+            //    //    {
+            //    //        $(win.document.body).addClass('white-bg');
+            //    //        $(win.document.body).css('font-size', '10px');
+
+            //    //        $(win.document.body).find('table')
+            //    //            .addClass('compact')
+            //    //            .css('font-size', 'inherit');
+            //    //    }
+            //    //}
+            //]
             buttons: [
-                { extend: 'copy' },
-                { extend: 'csv' },
-                { extend: 'excel', title: 'ExampleFile' },
-                { extend: 'pdf', title: 'ExampleFile' },
-
                 {
-                    extend: 'print',
-                    customize: function (win)
-                    {
-                        $(win.document.body).addClass('white-bg');
-                        $(win.document.body).css('font-size', '10px');
+                    extend: 'excel',
 
-                        $(win.document.body).find('table')
-                            .addClass('compact')
-                            .css('font-size', 'inherit');
+                    customize: function (xlsx)
+                    {
+                        var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                        var mergeCells = $('mergeCells', sheet);
+                        var dt = $('#' + tableId).DataTable();
+                        rowmerge(5, 5,10);
+                        rowmerge(15, 15,6);
+                        rowmerge(21, 21,4);
+                        function rowmerge(columnToStart, frColSpan, srColSpan)
+                        {
+                            //var srColSpan = $(dt.table().header()).find('th:nth-child(' + frColSpan + ')').prop('colspan');
+                            while (columnToStart <= frColSpan)
+                            {
+                                mergeCells[0].appendChild(_createNode(sheet, 'mergeCell', {
+                                    attr: {
+                                        ref: toColumnName(columnToStart) + '2:' + toColumnName((columnToStart - 1) + srColSpan) + '2'
+                                    }
+                                }));
+                                columnToStart = columnToStart + srColSpan;
+                                mergeCells.attr('count', mergeCells.attr('count') + 1);
+                            }
+                        }
+                        function _createNode(doc, nodeName, opts)
+                        {
+                            var tempNode = doc.createElement(nodeName);
+                            if (opts)
+                            {
+                                if (opts.attr)
+                                {
+                                    $(tempNode).attr(opts.attr);
+                                }
+                                if (opts.children)
+                                {
+                                    $.each(opts.children, function (key, value)
+                                    {
+                                        tempNode.appendChild(value);
+                                    });
+                                }
+                                if (opts.text !== null && opts.text !== undefined)
+                                {
+                                    tempNode.appendChild(doc.createTextNode(opts.text));
+                                }
+                            }
+                            return tempNode;
+                        }
+
+                        //Function to fetch the cell name
+                        function toColumnName(num)
+                        {
+                            for (var ret = '', a = 1, b = 26; (num -= a) >= 0; a = b, b *= 26)
+                            {
+                                ret = String.fromCharCode(parseInt((num % b) / a) + 65) + ret;
+                            }
+                            return ret;
+                        }
+                       
+                        $('row c', sheet).attr('s', '25');
+                        for (var i = 1; i <= headerrow + 1; i++)
+                        {
+                            $('row:nth-child(' + i + ') c', sheet).attr('s', 32);
+                        }
                     }
+
+                    //    customize: function (xlsx)
+                    //    {
+                    //        //Apply styles, Center alignment of text and making it bold.
+                    //        var sSh = xlsx.xl['styles.xml'];
+                    //        var lastXfIndex = $('cellXfs xf', sSh).length - 1;
+
+                    //        var n1 = '<numFmt formatCode="##0.0000%" numFmtId="300"/>';
+                    //        var s2 = '<xf numFmtId="0" fontId="2" fillId="0" borderId="0" applyFont="1" applyFill="0" applyBorder="0" xfId="0" applyAlignment="1">' +
+                    //            '<alignment horizontal="center"/></xf>';
+
+                    //        sSh.childNodes[0].childNodes[0].innerHTML += n1;
+                    //        sSh.childNodes[0].childNodes[5].innerHTML += s2;
+
+                    //        var greyBoldCentered = lastXfIndex + 1;
+
+                    //        //Merge cells as per the table's colspan
+                    //        var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    //        var dt = $('#tblReport').DataTable();
+                    //        var frColSpan = $(dt.table().header()).find('th:nth-child(1)').prop('colspan');
+                    //        var srColSpan = $(dt.table().header()).find('th:nth-child(2)').prop('colspan');
+                    //        var columnToStart = 2;
+
+                    //        var mergeCells = $('mergeCells', sheet);
+                    //        mergeCells[0].appendChild(_createNode(sheet, 'mergeCell', {
+                    //            attr: {
+                    //                ref: 'A1:' + toColumnName(frColSpan) + '1'
+                    //            }
+                    //        }));
+
+                    //        mergeCells.attr('count', mergeCells.attr('count') + 1);
+
+
+                    //        while (columnToStart <= frColSpan)
+                    //        {
+                    //            mergeCells[0].appendChild(_createNode(sheet, 'mergeCell', {
+                    //                attr: {
+                    //                    ref: toColumnName(columnToStart) + '2:' + toColumnName((columnToStart - 1) + srColSpan) + '2'
+                    //                }
+                    //            }));
+                    //            columnToStart = columnToStart + srColSpan;
+                    //            mergeCells.attr('count', mergeCells.attr('count') + 1);
+                    //        }
+
+                    //        //Text alignment to center and apply bold
+                    //        $('row:nth-child(1) c:nth-child(1)', sheet).attr('s', greyBoldCentered);
+                    //        for (i = 0; i < frColSpan; i++)
+                    //        {
+                    //            $('row:nth-child(2) c:nth-child(' + i + ')', sheet).attr('s', greyBoldCentered);
+                    //        }
+
+                    //        function _createNode(doc, nodeName, opts)
+                    //        {
+                    //            var tempNode = doc.createElement(nodeName);
+                    //            if (opts)
+                    //            {
+                    //                if (opts.attr)
+                    //                {
+                    //                    $(tempNode).attr(opts.attr);
+                    //                }
+                    //                if (opts.children)
+                    //                {
+                    //                    $.each(opts.children, function (key, value)
+                    //                    {
+                    //                        tempNode.appendChild(value);
+                    //                    });
+                    //                }
+                    //                if (opts.text !== null && opts.text !== undefined)
+                    //                {
+                    //                    tempNode.appendChild(doc.createTextNode(opts.text));
+                    //                }
+                    //            }
+                    //            return tempNode;
+                    //        }
+
+                    //        //Function to fetch the cell name
+                    //        function toColumnName(num)
+                    //        {
+                    //            for (var ret = '', a = 1, b = 26; (num -= a) >= 0; a = b, b *= 26)
+                    //            {
+                    //                ret = String.fromCharCode(parseInt((num % b) / a) + 65) + ret;
+                    //            }
+                    //            return ret;
+                    //        }
+                    //    }
                 }
             ]
 

@@ -17,7 +17,8 @@
         <link rel="stylesheet" href="~/ApplicationTheme/css/style.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/ApplicationTheme/lib/iCheck/custom.css" />
         <link rel="stylesheet" href="~/ApplicationTheme/lib/steps/jquery.steps.css" />
-        <link rel="stylesheet" href="~/ApplicationTheme/lib/dataTables/datatables.min.css" />
+        <link href="~/ApplicationTheme/css/jquery.dataTables.min.css" rel="stylesheet" />
+        @*<link rel="stylesheet" href="~/ApplicationTheme/lib/dataTables/datatables.min.css" />*@
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="~/ApplicationTheme/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -27,7 +28,8 @@
         <link rel="stylesheet" href="~/ApplicationTheme/css/style.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/ApplicationTheme/lib/iCheck/custom.css" />
         <link rel="stylesheet" href="~/ApplicationTheme/lib/steps/jquery.steps.css" />
-        <link rel="stylesheet" href="~/ApplicationTheme/lib/dataTables/datatables.min.css" />
+        <link href="~/ApplicationTheme/css/jquery.dataTables.min.css" rel="stylesheet" />
+        @*<link rel="stylesheet" href="~/ApplicationTheme/lib/dataTables/datatables.min.css" />*@
     </environment>
     <style>
         span.required {
@@ -58,9 +60,10 @@
         }
 
         .gridButton {
-            padding: .03rem .5rem!important;
-            line-height:0.6!important;
+            padding: .03rem .5rem !important;
+            line-height: 0.6 !important;
         }
+
         .vertical-line {
             width: 0px; /* Use only border style */
             height: 100%;
@@ -71,6 +74,10 @@
         .vertical-line-border {
             margin-left: 5px;
             margin-right: 5px
+        }
+
+        .buttons-excel:hover {
+            cursor: pointer !important;
         }
     </style>
 </head>
@@ -104,8 +111,14 @@
         <script src="~/ApplicationTheme/lib/pace/pace.js"></script>
         <script src="~/ApplicationTheme/js/script.js" asp-append-version="true"></script>
         <script src="~/ApplicationTheme/js/skin.config.js"></script>
-        <script src="~/ApplicationTheme/lib/dataTables/datatables.min.js"></script>
-        <script src="~/ApplicationTheme/lib/dataTables/dataTables.bootstrap4.min.js"></script>
+        @*<script src="~/ApplicationTheme/lib/dataTables/datatables.min.js"></script>*@
+        @*<script src="~/ApplicationTheme/lib/dataTables/dataTables.bootstrap4.min.js"></script>*@
+        <script src="~/PageJs/jquery.dataTables.min.js"></script>
+        <script src="~/PageJs/dataTables.buttons.min.js"></script>
+        <script src="~/PageJs/jszip.min.js"></script>
+        <script src="~/PageJs/pdfmake.min.js"></script>
+        <script src="~/PageJs/vfs_fonts.js"></script>
+        <script src="~/PageJs/buttons.html5.js"></script>
         <script src="~/PageJs/ApplicationCommon.js"></script>
         <script src="~/PageJs/CommonComboLoder.js"></script>
         <script src="~/ApplicationTheme/jquery.printPage.js"></script>
@@ -128,8 +141,14 @@
         <script src="~/ApplicationTheme/lib/steps/jquery.steps.min.js"></script>
         <script src="~/ApplicationTheme/lib/validate/jquery.validate.min.js"></script>
         <script src="~/ApplicationTheme/jquery.printPage.js"></script>
-        <script src="~/ApplicationTheme/lib/dataTables/datatables.min.js"></script>
-        <script src="~/ApplicationTheme/lib/dataTables/dataTables.bootstrap4.min.js"></script>
+        @*<script src="~/ApplicationTheme/lib/dataTables/datatables.min.js"></script>*@
+        @*<script src="~/ApplicationTheme/lib/dataTables/dataTables.bootstrap4.min.js"></script>*@
+        <script src="~/PageJs/jquery.dataTables.min.js"></script>
+        <script src="~/PageJs/dataTables.buttons.min.js"></script>
+        <script src="~/PageJs/jszip.min.js"></script>
+        <script src="~/PageJs/pdfmake.min.js"></script>
+        <script src="~/PageJs/vfs_fonts.js"></script>
+        <script src="~/PageJs/buttons.html5.js"></script>
         <script src="~/PageJs/ApplicationCommon.js"></script>
         <script src="~/PageJs/CommonComboLoder.js"></script>
         <script src="~/ApplicationTheme/js/script.js" asp-append-version="true"></script>
@@ -140,16 +159,19 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
         menuCheckActive();
-        $('.menuAction').click(function () {
+        $('.menuAction').click(function ()
+        {
             localStorage.setItem("screenId", $(this).attr('id'));
             localStorage.setItem("firstParentId", $(this).parents().attr('id'));
             localStorage.setItem("rootParentId", $(this).parents().parents().attr('id'));
 
         })
 
-        function menuCheckActive() {
+        function menuCheckActive()
+        {
             if (localStorage.getItem("screenId") != null)
                 $('#' + localStorage.getItem("screenId")).addClass('active');
             if (localStorage.getItem("firstParentId") != null)
