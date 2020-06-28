@@ -47,6 +47,10 @@
         var data = {};
         loadCombo(controlId, url, data, isDefaultRecordRequired);
     };
+    var getLoanProductList = function (controlId, url, isDefaultRecordRequired) {
+        var data = {};
+        loadCombo(controlId, url, data, isDefaultRecordRequired);
+    };
    
     
     var getExcelFiletype = function (controlId, isDefaultRecordRequired) {
@@ -73,17 +77,17 @@
         data.push(item);
         loadComboStatic(controlId, data, isDefaultRecordRequired);
     };
-    var getCustomerType = function (controlId, isDefaultRecordRequired)
+    var getLoanType = function (controlId, isDefaultRecordRequired)
     {
         var data = [];
         var item = {
-            text: "Consumer",
-            value: "I"
+            text: "Retail",
+            value: "01"
         };
         data.push(item);
         item = {
-            text: "Commercial",
-            value: "C"
+            text: "SME",
+            value: "02"
         };
         data.push(item);
         loadComboStatic(controlId, data, isDefaultRecordRequired);
@@ -120,9 +124,10 @@
     return {
         getRmList: getRmList,
         getExcelFiletype: getExcelFiletype,
-        getCustomerType: getCustomerType,
+        getLoanType: getLoanType,
         getCustomerCatagory: getCustomerCatagory,
         getCustomerStatus: getCustomerStatus,
-        getBranchList: getBranchList
+        getBranchList: getBranchList,
+        getLoanProductList: getLoanProductList
     };
 }();

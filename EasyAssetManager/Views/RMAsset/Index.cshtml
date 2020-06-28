@@ -3,5 +3,164 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox" id="divsidebarCollapse">
+                <div class="ibox-title">
+                    <h5>RM Assign</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="sidebarCollapse"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="sidebarContent">
+                    <form id="stepProcess" action="#" class="wizard-big">
+                        <fieldset>
+                            <legend>Search Parameters</legend>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group row">
+                                        <div class="col-xl-1"></div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Business Segment</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <select id="loanType" name="loanType" class="form-control form-element"></select>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-2"></div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">LoanProduct</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <select id="loanProduct" name="loanProduct" class="form-control form-element"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-2"></div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">UBS RM Code</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input id="rmCode" name="rmCode" class="form-control form-element" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-xl-5"></div>
+                                        <div class="col-xl-2">
+                                            <button type="button" class="btn btn-primary" id="search">Search</button>
+                                        </div>
+                                        <div class="col-xl-3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox " id="iboxTbl">
+                <div class="ibox-title">
+                    <h5>Available Loan List to Assign(<label id="lblCustomerCount" name="lblCustomerCount" />)</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="iboxTblImg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="iboxContent">
+                    <div id="div-availableLoan"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="updateData" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content-lg">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Assign RM</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label class="col-form-label">New RM</label>
+                        <select id="newRmCode" name="newRmCode" class="form-control form-element"></select>
+                        <input type="hidden" id="loan_slno" name="loan_slno" class="form-element" />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Effect Date</label>
+                        <input type="text" id="user_name" name="user_name" class="form-control form-element" readonly="readonly" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <input type="button" value="Update" class="btn btn-primary ks-next" onclick="classInactiveUserSearch.Updatedata()" id="btnUpdate">
+                <input type="button" value="Close" class="btn btn-danger ks-next" data-dismiss="modal" id="btnClose">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script type="text/javascript">
+
+
+        var classInactiveUserSearch = function () {
+            var init = function () {
+                eventInitializer();
+
+            };
+            var eventInitializer = function () {
+                $('#search').click(searchInitiate);
+                $('#btnUpdate').click(Updatedata);
+                searchInitiate();
+            };
+            var searchInitiate = function () {
+                $('#div-availableLoan').empty();
+                var url = '/AppUserActivation/GetLockedUserList';
+                 $('#div-availableLoan').load(url);
+
+            };
+            var Updatedata = function () {
+                if ($("#user_status").val() == '') {
+                    ApplicationCommon.showNotification("Error", "Select Status to continue.");
+                }
+                else if ($("#inactive_reason").val() == '') {
+                    ApplicationCommon.showNotification("Error", "Enter reason to continue.");
+                }
+                else {
+                    var updateAccountOpen = ApplicationCommon.getData('form-element');
+                    var url = '/AppUserActivation/UpdateUserStatus';
+                    ApplicationCommon.request(url, 'POST', updateAccountOpen, false, true, false, function (res) {
+                        ApplicationCommon.showNotification(res.messageType, res.messageString);
+                        if (res.messageType == 1) {
+                            $(".modal-backdrop").remove();
+                            searchInitiate();
+                        }
+                    });
+                }
+            };
+            return { init: init, Updatedata: Updatedata };
+        }();
+
+        classInactiveUserSearch.init();
+
+    </script>
+} 
 

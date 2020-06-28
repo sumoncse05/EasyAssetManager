@@ -21,5 +21,10 @@ namespace EasyAssetManager.Controllers
         {
             return View();
         }
+
+        public IActionResult GetAvailableLoan()
+        {
+            return PartialView("_GetAvailableLoan", null);
+        }
     }
 }

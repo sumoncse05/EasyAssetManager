@@ -1,0 +1,65 @@
+﻿@model IEnumerable<EasyAssetManagerCore.Models.EntityModel.Loan>
+@{
+    Layout = null;
+}
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped table-bordered table-hover dataTables-example table-responsive" id="tb-abailabilLoan">
+        <thead>
+            <tr>
+                <th class="removeSorting"><input type="checkbox" id="UserChkAll" name="UserChkAll" /></th>
+                <th class="collapse">Loan SL</th>
+                <th>Loan Number</th>
+                <th>Loan Name</th>
+                <th>Segment</th>
+                <th>UBS RM code</th>
+                <th>UBS RM Name</th>
+                <th>Disburse Amount</th>
+                <th>Outstanding Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var v in Model)
+            {
+                <tr>
+                    <td><input type="checkbox" value="@v.loan_slno" id="UserChk" name="UserChk" class="innerCheck" /></td>
+                    <td class="collapse">@v.loan_slno</td>
+                    <td>@v.loan_ac_number</td>
+                    <td>@v.loan_ac_name </td>
+                    <td>@v.seg_desc</td>
+                    <td>@v.orig_rm_code</td>
+                    <td>@v.orig_rm_name</td>
+                    <td>@v.loan_amount</td>
+                    <td>@v.outstanding_amount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No record found.</p>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        ApplicationCommon.makePagination('tb-abailabilLoan');
+        $("#UserChkAll").click(function () {
+            var checkAll = $("#UserChkAll").prop('checked');
+            if (checkAll) {
+                $(".innerCheck").prop("checked", true);
+            } else {
+                $(".innerCheck").prop("checked", false);
+            }
+        });
+        $(".innerCheck").click(function () {
+            if ($(".innerCheck").length == $(".innerCheck:checked").length) {
+                $("#UserChkAll").prop("checked", true);
+            } else {
+                $("#UserChkAll").prop("checked", false);
+            }
+
+        });
+    });
+
+</script>
+
