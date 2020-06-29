@@ -4,6 +4,8 @@ using EasyAssetManagerCore.Models.CommonModel;
 using EasyAssetManagerCore.Models.EntityModel;
 using EasyAssetManagerCore.Repository.Security;
 using Microsoft.AspNetCore.Http;
+using SecurityService;
+using SmsService;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -223,40 +225,19 @@ namespace EasyAssetManagerCore.BusinessLogic.Security
                 if (Connection.State != ConnectionState.Open)
                     Connection.Open();
                 var transaction = new TransactionSession();
-                var user = userRepository.GetLoginInfo(pUser.user_id, new Encription().Encrypt(pUser.Password), pUser.StationIp, pUser.SessionId);
-                if (user != null)
+
+                SecurityServicesSoapClient client = new SecurityServicesSoapClient(SecurityServicesSoapClient.EndpointConfiguration.SecurityServicesSoap);
+                var result = client.AuthenticateUserAsync(pUser.user_id, pUser.Password, "P003", "", "");
+                var response = result.Result.Body.AuthenticateUserResult;
+                if (response.StatusCode == "40999")
                 {
-                    if (user.Locked != "Y")
+                    var user = userRepository.GetLoginInfo(pUser.user_id, new Encription().Encrypt(pUser.Password), pUser.StationIp, pUser.SessionId);
+                    if (user != null)
                     {
-                        if (user.Loggedin != "Y")
-                        {
                         if (user.Active == "Y")
                         {
-                            if (user.otp_req == "Y")
-                            {
-                                if (!string.IsNullOrEmpty(user.mobile))
-                                {
-                                    List<string> msg = commonManager.RequestSmsOtp(user.user_type, user.user_id, user.mobile, "", user.user_id, user.StationIp);
-                                    if (msg[0] == "40999")
-                                    {
-                                        transaction.SmsReqRefNo = msg[2];
-                                        transaction.SmsOtpData = msg[3];
-                                    }
-                                    else
-                                    {
-                                        MessageHelper.Error(Message, "Unable to Send OTP SMS. Please try again.");
-                                        return Message;
-                                    }
-                                }
-                                else
-                                {
-                                    MessageHelper.Error(Message, "User Mobile No not found. Please try again.");
-                                    return Message;
-                                }
-                            }
-
-                            var screenAccessPermissions = userRepository.GetRoleWisePermission(user.roleid,"", user.user_id);
-                            var screens = userRepository.GetScreens(user.user_id, "1", "50000");
+                            var screenAccessPermissions = userRepository.GetRoleWisePermission(user.roleid, "", user.user_id);
+                            var screens = userRepository.GetScreens(user.user_id);
                             appSession = new AppSession
                             {
                                 User = user,
@@ -272,15 +253,11 @@ namespace EasyAssetManagerCore.BusinessLogic.Security
                         {
                             MessageHelper.Error(Message, "Your are not yet activated. Please contact administrator.");
                         }
-                        }
-                        else
-                        {
-                            MessageHelper.Error(Message, "Your are already logged in. Please contact administrator.");
-                        }
+
                     }
                     else
                     {
-                        MessageHelper.Error(Message, "Your Account has been Locked. Please contact administrator.");
+                        MessageHelper.Error(Message, "User name and password doesn't match. Please try with another.");
                     }
                 }
                 else
@@ -363,7 +340,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Security
                             var update = new List<string>();
                             var delete = new List<string>();
                             var view = new List<string>();
-                           // var i = 0;
+                            // var i = 0;
                             foreach (var access in userRole.ScreenAccessPermissions)
                             {
                                 if (access.can_update == "Y" || access.can_delete == "Y" || access.can_view == "Y")
@@ -374,7 +351,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Security
                                     view.Add(access.can_view == null ? "N" : access.can_view);
                                 }
 
-                               // i++;
+                                // i++;
                             }
                             response = userRepository.SaveScreenAccessPermission(userRole.rolE_ID, screen.ToArray(), update.ToArray(), delete.ToArray(), view.ToArray(), session.User.user_id);
                             if (response.pvc_status == "40999")
@@ -673,13 +650,13 @@ namespace EasyAssetManagerCore.BusinessLogic.Security
             }
             return Message;
         }
-        public IEnumerable<User> GetUserList(string sc_user_type, string sc_user_idno, string sc_user_name,AppSession session)
+        public IEnumerable<User> GetUserList(string sc_user_type, string sc_user_idno, string sc_user_name, AppSession session)
         {
             return userRepository.GetUserList(sc_user_type, sc_user_idno, sc_user_name, session.User.user_id);
         }
         public Message SetUserInactive(string user_id, string user_status, string update_reason, AppSession session)
         {
-            
+
             try
             {
                 if (Connection.State != ConnectionState.Open)
@@ -765,7 +742,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Security
             }
             return Message;
         }
-        public User GetUserById(string user_id,AppSession session) 
+        public User GetUserById(string user_id, AppSession session)
         {
             return userRepository.GetUser(user_id, session.User.user_id);
         }
@@ -777,7 +754,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Security
         {
             return userRepository.CmdUserList(user_id);
         }
-        public IEnumerable<UserRole> GetAssignedRole(string user_id,AppSession session)
+        public IEnumerable<UserRole> GetAssignedRole(string user_id, AppSession session)
         {
             return userRepository.GetAssignedRole(user_id, session.User.user_id);
         }
@@ -808,7 +785,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Security
                 Connection.Close();
             }
             return Message;
-        }    
+        }
         public IEnumerable<UserType> GetUserTypeList(string pvc_appuser)
         {
             return userRepository.GetUserTypeList(pvc_appuser);
