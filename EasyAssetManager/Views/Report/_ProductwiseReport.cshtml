@@ -13,23 +13,23 @@
             <th colspan="3" class="text-center">O/S-as of reporting date</th>
             <th colspan="4" class="text-center">CL as of last Qtr.</th>
             <th colspan="2" class="text-center">Revenue-YTD</th>
-            <th colspan="2" class="text-center">Net WO as of last qtr.</th>
+            <th colspan="3" class="text-center">Net WO as of last qtr.</th>
         </tr>
         <tr>
-            <th rowspan="2" class="text-center">In Last Yr.-2018</th>
-            <th rowspan="2" class="text-center">Disbursement -YTD</th>
-            <th colspan="2"># of A/C</th>
-            <th colspan="2">Amount</th>
-            <th colspan="2">% with total O/S</th>
-            <th colspan="2"># of A/C</th>
-            <th colspan="2">Amount</th>
-            <th colspan="2" class="text-center">% with O/S</th>
-            <th colspan="2" class="text-center">% with Total CL</th>
-            <th colspan="2">Amount</th>
-            <th colspan="2" class="text-center">% with Total Revenue</th>
-            <th colspan="2"># of A/C</th>
-            <th colspan="2">Amount</th>
-            <th colspan="2">% with Total W/O</th>
+            <th colspan="2" class="text-center">In Last Yr.-2018</th>
+            <th colspan="2" class="text-center">Disbursement -YTD</th>
+            <th rowspan="2"># of A/C</th>
+            <th rowspan="2">Amount</th>
+            <th rowspan="2">% with total O/S</th>
+            <th rowspan="2"># of A/C</th>
+            <th rowspan="2">Amount</th>
+            <th rowspan="2" class="text-center">% with O/S</th>
+            <th rowspan="2" class="text-center">% with Total CL</th>
+            <th rowspan="2">Amount</th>
+            <th rowspan="2" class="text-center">% with Total Revenue</th>
+            <th rowspan="2"># of A/C</th>
+            <th rowspan="2">Amount</th>
+            <th rowspan="2">% with Total W/O</th>
         </tr>
         <tr>
             <th># of A/C</th>
@@ -43,7 +43,7 @@
     {
     <tr>
 
-        @*<td>MR. KADER</td>
+        <td>MR. KADER</td>
         <td>3202</td>
         <td>12457863952</td>
         <td>50000+@i</td>
@@ -60,7 +60,7 @@
         <td>50000+@i</td>
         <td>12457863952</td>
         <td>50000+@i</td>
-        <td>50000+@i</td>*@
+        <td>50000+@i</td>
         
     </tr>
     }
@@ -77,30 +77,28 @@
         var rowArray = [];
         var colArray = [];
         var title = "";
-        rowArray.push([6, 13, 2]);
-        rowArray.push([13, 19, 2]);
-        rowArray.push([19, 25, 2]);
-        rowArray.push([25, 27, 2]);
-        rowArray.push([8, 10, 3]);
-        rowArray.push([10, 12, 3]);
-        rowArray.push([13, 15, 3]);
-        rowArray.push([15, 17, 3]);
-        rowArray.push([17, 19, 3]);
-        rowArray.push([19, 21, 3]);
-        rowArray.push([21, 23, 3]);
-        rowArray.push([23, 25, 3]);
-
+        rowArray.push([3, 7, 2]);
+        rowArray.push([7, 10, 2]);
+        rowArray.push([10, 14, 2]);
+        rowArray.push([14, 16, 2]);
+        rowArray.push([16, 19, 2]);
+        rowArray.push([3, 5, 3]);
+        rowArray.push([5, 7, 3]);
 
         colArray.push([2, 4, 1]);
         colArray.push([2, 4, 2]);
-        colArray.push([2, 4, 3]);
-        colArray.push([2, 4, 4]);
-        colArray.push([2, 4, 5]);
-        colArray.push([3, 4, 6]);
         colArray.push([3, 4, 7]);
+        colArray.push([3, 4, 8]);
+        colArray.push([3, 4, 9]);
+        colArray.push([3, 4, 10]);
+        colArray.push([3, 4, 11]);
         colArray.push([3, 4, 12]);
-        colArray.push([3, 4, 25]);
-        colArray.push([3, 4, 26]);
+        colArray.push([3, 4, 13]);
+        colArray.push([3, 4, 14]);
+        colArray.push([3, 4, 15]);
+        colArray.push([3, 4, 16]);
+        colArray.push([3, 4, 17]);
+        colArray.push([3, 4, 18]);
 
         title = ApplicationCommon.reportTitleAndHeaderCustomize();
         ApplicationCommon.makePagination('tb-productwiseReport', 3, rowArray, colArray, title);
