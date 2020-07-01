@@ -160,9 +160,10 @@ namespace EasyAssetManager
             services.AddScoped<IAgentManager, AgentManager>();
             services.AddScoped<IRemmittanceManager, RemmittanceManager>();
 
+            services.AddScoped<IReportManager, ReportManager>();
             services.AddScoped<IRMAssetManager, RMAssetManager>();
             services.AddScoped<ICommonManager, CommonManager>();
-            services.AddScoped<IFileProcessManager, FileProcessManager>();
+            services.AddScoped<IFileProcessManager, FileProcessManager>(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
