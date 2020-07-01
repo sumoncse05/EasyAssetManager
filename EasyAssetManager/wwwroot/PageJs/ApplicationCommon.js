@@ -314,16 +314,32 @@ var ApplicationCommon = function ()
                 {
                     extend: 'excel',
                     title: title,
-                    customize: function (xlsx) {
+                    customize: function (xlsx)
+                    {
+                        var sSh = xlsx.xl['styles.xml'];
+                        var lastXfIndex = $('cellXfs xf', sSh).length - 1;
+                        //var n1 = '<numFmt formatCode="##0.0000%" numFmtId="300"/>';
+                        var s1 = '<xf numFmtId="300" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>';
+                        var s2 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="1" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="center" wrapText="1" /></xf>';
+                        // sSh.childNodes[0].childNodes[0].innerHTML += n1;
+                        sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2;
+
+                        var fourDecPlaces = lastXfIndex + 1;
+                        var greyBoldCentered = lastXfIndex + 2;
+
                         var sheet = xlsx.xl.worksheets['sheet1.xml'];
                         var mergeCells = $('mergeCells', sheet);
-                        for (var i = 0; i < rowArray.length; i++) {
+                        for (var i = 0; i < rowArray.length; i++)
+                        {
                             rowmerge(rowArray[i][0], rowArray[i][1], rowArray[i][2]);
                         }
-                        for (var i = 0; i < colArray.length; i++) {
-                            colmerge(colArray[i][0], colArray[i][1], colArray[i][2]);
+                        for (var j = 0; j < colArray.length; j++)
+                        {
+                            colmerge(colArray[j][0], colArray[j][1], colArray[j][2]);
                         }
-                        function rowmerge(fromCol, toCol, row) {
+                        function rowmerge(fromCol, toCol, row)
+                        {
                             mergeCells[0].appendChild(_createNode(sheet, 'mergeCell', {
                                 attr: {
                                     ref: toColumnName(fromCol) + row + ':' + toColumnName(toCol - 1) + row
@@ -331,27 +347,33 @@ var ApplicationCommon = function ()
                             }));
                         }
 
-                        function colmerge(fromRow, toRow, col) {
+                        function colmerge(fromRow, toRow, col)
+                        {
                             mergeCells[0].appendChild(_createNode(sheet, 'mergeCell', {
                                 attr: {
                                     ref: toColumnName(col) + fromRow + ':' + toColumnName(col) + toRow
                                 }
                             }));
-
                         }
 
-                        function _createNode(doc, nodeName, opts) {
+                        function _createNode(doc, nodeName, opts)
+                        {
                             var tempNode = doc.createElement(nodeName);
-                            if (opts) {
-                                if (opts.attr) {
+                            if (opts)
+                            {
+                                if (opts.attr)
+                                {
                                     $(tempNode).attr(opts.attr);
                                 }
-                                if (opts.children) {
-                                    $.each(opts.children, function (key, value) {
+                                if (opts.children)
+                                {
+                                    $.each(opts.children, function (key, value)
+                                    {
                                         tempNode.appendChild(value);
                                     });
                                 }
-                                if (opts.text !== null && opts.text !== undefined) {
+                                if (opts.text !== null && opts.text !== undefined)
+                                {
                                     tempNode.appendChild(doc.createTextNode(opts.text));
                                 }
                             }
@@ -359,19 +381,22 @@ var ApplicationCommon = function ()
                         }
 
                         //Function to fetch the cell name
-                        function toColumnName(num) {
-                            for (var ret = '', a = 1, b = 26; (num -= a) >= 0; a = b, b *= 26) {
+                        function toColumnName(num)
+                        {
+                            for (var ret = '', a = 1, b = 26; (num -= a) >= 0; a = b, b *= 26)
+                            {
                                 ret = String.fromCharCode(parseInt((num % b) / a) + 65) + ret;
                             }
                             return ret;
                         }
 
-                        // $('row c', sheet).attr('s', '25');
-
-                        for (var i = 1; i <= headerrow + 1; i++) {
-                            //  $('row:nth-child(' + i + ') c', sheet).attr('s', 7);
-                            $('row:nth-child(' + i + ') c', sheet).attr('s', 51);
+                        $('row c', sheet).attr('s', '25');
+                        $('row:nth-child(1) c', sheet).attr('s', 7);
+                        for (var i = 2; i <= headerrow + 1; i++)
+                        {
+                            $('row:nth-child(' + i + ') c', sheet).attr('s', greyBoldCentered);
                         }
+
                     }
 
                 }
@@ -1291,11 +1316,11 @@ var ApplicationCommon = function ()
     };
     var reportTitleAndHeaderCustomize = function () {
         var title=$("#reportName option:selected").text();
-        if ($('#loantype').val() == "01") {
+        if ($('#loantype').val() === "01") {
             $('#reportHeader').text("Retail " + title);
             title = "Retail " + title;
             $('#headerChange').text("Retail");
-        } else if ($('#loantype').val() == "02") {
+        } else if ($('#loantype').val() === "02") {
             $('#reportHeader').text("SME " + title);
             title = "SME " + title;
             $('#headerChange').text("Small");
