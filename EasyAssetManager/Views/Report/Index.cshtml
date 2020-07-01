@@ -28,7 +28,7 @@
                                             <label class="col-form-label">Report Name</label>
                                         </div>
                                         <div class="col-xl-3">
-                                            <select id="reportName" name="reportName" class="form-control form-element"></select>
+                                            <select id="reportName" name="reportName" class="form-control form-element chosen-select"></select>
                                         </div>
                                         <div class="col-xl-2">
                                             <label class="col-form-label">Loan Product</label>
@@ -60,11 +60,14 @@
                                         <div class="col-xl-3">
                                             <select id="rmCode" name="rmCode" class="form-control form-element chosen-select"></select>
                                         </div>
-
-                                        <label class="col-form-label">To Date</label>
-                                        <div class="input-group date">
-                                            <input class="form-control form-element" type="text" id="toDate" name="toDate" placeholder="dd/mm/yyyy" data-mask="99/99/9999">
-                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">To Date</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <div class="input-group date">
+                                                <input class="form-control form-element" type="text" id="toDate" name="toDate" placeholder="dd/mm/yyyy" data-mask="99/99/9999">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -118,9 +121,9 @@
             };
             var eventInitializer = function () {
                 $('#search').click(searchInitiate);
-                combo.getRmList('rmCode', 'Common/GetRmList', true);
-                combo.getBranchList('branch', 'Common/GetBranchList', true);
-                combo.getAreaList('area', 'Common/GetAreaList', true);
+                //combo.getRmList('rmCode', 'Common/GetRmList', true);
+               // combo.getBranchList('branch', 'Common/GetBranchList', true);
+                //combo.getAreaList('area', 'Common/GetAreaList', true);
                 combo.getReportName('reportName', false);
                 combo.getLoanType('loantype', false);
                 
@@ -141,9 +144,9 @@
                 var area = $('#area').val();
                 var branch = $('#branch').val();
                 var toDate = $('#toDate').val();
-                var reportId = $('#reportName').val(); 
+                var reportId = parseInt($('#reportName').val()); 
                 var url = '';
-
+               
                 switch (reportId) {
                     case 1:
                         url = '/Report/AssetAtGlance';
@@ -169,7 +172,6 @@
                     case 8:
                         url = '/Report/ClientwiseReport';
                         break;
-                   
                 }
 
                 $('#div-dynamicReportLoad').load(url + '?loanType=' + loanType + '&&rmCode=' + rmCode + '&&areaCode=' + area + '&&branchCode=' + branch + '&&todate=' + toDate);

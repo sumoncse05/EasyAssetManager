@@ -1,4 +1,111 @@
-﻿
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@*@model IEnumerable<EasyAssetManagerCore.Models.EntityModel.Loan>*@
+@{
+    Layout = null;
+}
+@*@if (Model != null && Model.Any())
+    {*@
+<table class="table table-striped table-bordered table-hover  table-responsive" id="tb-productwiseReport" width="100%">
+    <thead>
+        <tr>
+            <th rowspan="3">Name of the products</th>
+            <th rowspan="3">Product Code</th>
+            <th colspan="4" class="text-center">Disbursement</th>
+            <th colspan="3" class="text-center">O/S-as of reporting date</th>
+            <th colspan="4" class="text-center">CL as of last Qtr.</th>
+            <th colspan="2" class="text-center">Revenue-YTD</th>
+            <th colspan="2" class="text-center">Net WO as of last qtr.</th>
+        </tr>
+        <tr>
+            <th rowspan="2" class="text-center">In Last Yr.-2018</th>
+            <th rowspan="2" class="text-center">Disbursement -YTD</th>
+            <th colspan="2"># of A/C</th>
+            <th colspan="2">Amount</th>
+            <th colspan="2">% with total O/S</th>
+            <th colspan="2"># of A/C</th>
+            <th colspan="2">Amount</th>
+            <th colspan="2" class="text-center">% with O/S</th>
+            <th colspan="2" class="text-center">% with Total CL</th>
+            <th colspan="2">Amount</th>
+            <th colspan="2" class="text-center">% with Total Revenue</th>
+            <th colspan="2"># of A/C</th>
+            <th colspan="2">Amount</th>
+            <th colspan="2">% with Total W/O</th>
+        </tr>
+        <tr>
+            <th># of A/C</th>
+            <th>Amount</th>
+            <th># of A/C</th>
+            <th>Amount</th>
+           
+        </tr>
+    </thead>
+    @for (var i = 1; i <= 10; i++)
+    {
+    <tr>
+
+        @*<td>MR. KADER</td>
+        <td>3202</td>
+        <td>12457863952</td>
+        <td>50000+@i</td>
+        <td>12457863952</td>
+        <td>50000+@i</td>
+        <td>12457863952</td>
+        <td>50000+@i</td>
+        <td>50000+@i</td>
+        <td>12457863952</td>
+        <td>50000+@i</td>
+        <td>50000+@i</td>
+        <td>50000+@i</td>
+        <td>50000+@i</td>
+        <td>50000+@i</td>
+        <td>12457863952</td>
+        <td>50000+@i</td>
+        <td>50000+@i</td>*@
+        
+    </tr>
+    }
+</table>
+
+@*}
+    else
+    {
+        <p>No record found.</p>
+    }*@
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var rowArray = [];
+        var colArray = [];
+        var title = "";
+        rowArray.push([6, 13, 2]);
+        rowArray.push([13, 19, 2]);
+        rowArray.push([19, 25, 2]);
+        rowArray.push([25, 27, 2]);
+        rowArray.push([8, 10, 3]);
+        rowArray.push([10, 12, 3]);
+        rowArray.push([13, 15, 3]);
+        rowArray.push([15, 17, 3]);
+        rowArray.push([17, 19, 3]);
+        rowArray.push([19, 21, 3]);
+        rowArray.push([21, 23, 3]);
+        rowArray.push([23, 25, 3]);
+
+
+        colArray.push([2, 4, 1]);
+        colArray.push([2, 4, 2]);
+        colArray.push([2, 4, 3]);
+        colArray.push([2, 4, 4]);
+        colArray.push([2, 4, 5]);
+        colArray.push([3, 4, 6]);
+        colArray.push([3, 4, 7]);
+        colArray.push([3, 4, 12]);
+        colArray.push([3, 4, 25]);
+        colArray.push([3, 4, 26]);
+
+        title = ApplicationCommon.reportTitleAndHeaderCustomize();
+        ApplicationCommon.makePagination('tb-productwiseReport', 3, rowArray, colArray, title);
+    });
+
+</script>
+
+
