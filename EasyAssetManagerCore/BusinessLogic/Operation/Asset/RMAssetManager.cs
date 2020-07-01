@@ -26,6 +26,10 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             return rmRepository.GetBranchList(user_id);
         }
 
+        public IEnumerable<Area> GetAreaList(string user_id)
+        {
+            return rmRepository.GetAreaList(user_id);
+        }
         public IEnumerable<LoanProduct> GetLoanProductList(string loanType, string user_id)
         {
             return rmRepository.GetLoanProduct(loanType, user_id);
@@ -117,6 +121,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
     public interface IRMAssetManager
     {
         IEnumerable<Branch> GetBranchList(string user_id);
+        IEnumerable<Area> GetAreaList(string user_id);
         IEnumerable<RM> GetRmList(string branch_code, string user_id);
         IEnumerable<LoanProduct> GetLoanProductList(string loanType, string user_id);
         Message SetAssignRM(List<string> loans, string newRmCode, string effectDate, AppSession session);

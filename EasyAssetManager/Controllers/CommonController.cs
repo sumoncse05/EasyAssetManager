@@ -29,10 +29,10 @@ namespace EasyAssetManager.Controllers
         [HttpGet]
         public IActionResult GetAreaList()
         {
-            var userTypes = rMAssetManager.GetBranchList(Session.User.user_id);
+            var userTypes = rMAssetManager.GetAreaList(Session.User.user_id);
             if (userTypes != null && userTypes.Any())
             {
-                var selectList = userTypes.Select(x => new SelectListItem() { Text = x.BRANCH_NAME, Value = x.BRANCH_CODE });
+                var selectList = userTypes.Select(x => new SelectListItem() { Text = x.AREA_NAME, Value = x.AREA_CODE });
                 return Json(selectList);
             }
             return Json(null);
