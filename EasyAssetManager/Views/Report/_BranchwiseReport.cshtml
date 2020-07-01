@@ -1,0 +1,177 @@
+﻿@*@model IEnumerable<EasyAssetManagerCore.Models.EntityModel.Loan>*@
+@{
+    Layout = null;
+}
+@*@if (Model != null && Model.Any())
+    {*@
+<table class="table table-striped table-bordered table-hover  table-responsive" id="tb-branchwiseReport" width="100%">
+    <thead>
+        <tr>
+            <th rowspan="3">SL.</th>
+            <th rowspan="3">Code of Branch</th>
+            <th rowspan="3">Name of Branch</th>
+            <th rowspan="3">Name of Area</th>
+            <th colspan="10" class="text-center"><span id="headerChange"></span> Loan Outstanding-Target-Achievement and Position</th>
+            <th colspan="6" class="text-center">PD (Disbursed loans in last 12 months)</th>
+            <th colspan="4" class="text-center">Loan Disbursement</th>
+            <th colspan="4" class="text-center">Income</th>
+            <th colspan="9" class="text-center">CL O/S as of Last qtr.2019</th>
+            <th colspan="2" class="text-center">Net W/O as of Last qtr. 2019</th>
+            <th colspan="2" class="text-center">Closing A/C</th>
+        </tr>
+        <tr>
+            <th colspan="2" class="text-center">O/S position in last year-2018</th>
+            <th colspan="2" class="text-center">O/S position as of Last month</th>
+            <th rowspan="2">O/S position as of today/YTD</th>
+            <th rowspan="2">O/S growth-YTD</th>
+            <th rowspan="2">O/S growth-MTD</th>
+            <th rowspan="2">O/S growth target-for the yr.2019</th>
+            <th rowspan="2">O/S growth target-YTD</th>
+            <th rowspan="2">% of achit. of O/S growth-YTD</th>
+            <th colspan="2" class="text-center">As of last yr.-2018</th>
+            <th colspan="2" class="text-center">YTD</th>
+            <th colspan="2" class="text-center">Difference</th>
+            <th colspan="2" class="text-center">YTD</th>
+            <th colspan="2" class="text-center">MTD</th>
+            <th rowspan="2">Target for the Yr.-2019</th>
+            <th rowspan="2">YTD Target</th>
+            <th rowspan="2">Acht.-YTD</th>
+            <th rowspan="2">% of Acht.</th>
+            <th colspan="2" class="text-center">SS</th>
+            <th colspan="2" class="text-center">DF</th>
+            <th colspan="2" class="text-center">BL</th>
+            <th colspan="2" class="text-center">Total</th>
+            <th rowspan="2">% of CL (with O/S)</th>
+            <th rowspan="2"># of A/C</th>
+            <th rowspan="2">Amount</th>
+            <th rowspan="2"># of A/C</th>
+            <th rowspan="2">Amount</th>
+        </tr>
+        <tr>
+            <th># of A/C</th>
+            <th>Amount</th>
+            <th># of A/C</th>
+            <th>Amount</th>
+            <th># of A/C</th>
+            <th>Amount</th>
+            <th># of A/C</th>
+            <th>Amount</th>
+            <th># of A/C</th>
+            <th>Amount</th>
+            <th># of A/C</th>
+            <th>Amount</th>
+            <th># of A/C</th>
+            <th>Amount</th>
+            <th># of A/C</th>
+            <th>Amount</th>
+            <th># of A/C</th>
+            <th>Amount</th>
+            <th># of A/C</th>
+            <th>Amount</th>
+            <th># of A/C</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    @for (var i = 1; i <= 10; i++)
+    {
+        <tr>
+
+            <td>@i</td>
+            <td>3202</td>
+            <td>Head Office</td>
+            <td>DHAKA</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+            <td>50000+@i</td>
+            <td>50000+@i</td>
+            <td>50000+@i</td>
+            <td>50000+@i</td>
+            <td>50000+@i</td>
+            <td>50000+@i</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+            <td>50000+@i</td>
+            <td>50000+@i</td>
+            <td>50000+@i</td>
+            <td>50000+@i</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+            <td>50000+@i</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+        </tr>
+    }
+</table>
+
+@*}
+    else
+    {
+        <p>No record found.</p>
+    }*@
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var rowArray = [];
+        var colArray = [];
+        var title = "";
+        rowArray.push([5, 15, 2]);
+        rowArray.push([15, 21, 2]);
+        rowArray.push([21, 25, 2]);
+        rowArray.push([25, 29, 2]);
+        rowArray.push([29, 38, 2]);
+        rowArray.push([38, 40, 2]);
+        rowArray.push([40, 42, 2]);
+        rowArray.push([5, 7, 3]);
+        rowArray.push([7, 9, 3]);
+        rowArray.push([15, 17, 3]);
+        rowArray.push([17, 19, 3]);
+        rowArray.push([19, 21, 3]);
+        rowArray.push([21, 23, 3]);
+        rowArray.push([23, 25, 3]);
+        rowArray.push([29, 31, 3]);
+        rowArray.push([31, 33, 3]);
+        rowArray.push([33, 35, 3]);
+        rowArray.push([35, 37, 3]);
+
+        colArray.push([2, 4, 1]);
+        colArray.push([2, 4, 2]);
+        colArray.push([2, 4, 3]);
+        colArray.push([2, 4, 4]);
+        colArray.push([3, 4, 9]);
+        colArray.push([3, 4, 10]);
+        colArray.push([3, 4, 11]);
+        colArray.push([3, 4, 12]);
+        colArray.push([3, 4, 13]);
+        colArray.push([3, 4, 14]);
+        colArray.push([3, 4, 25]);
+        colArray.push([3, 4, 26]);
+        colArray.push([3, 4, 27]);
+        colArray.push([3, 4, 28]);
+        colArray.push([3, 4, 37]);
+        colArray.push([3, 4, 38]);
+        colArray.push([3, 4, 39]);
+        colArray.push([3, 4, 40]);
+        colArray.push([3, 4, 41]);
+        title = ApplicationCommon.reportTitleAndHeaderCustomize();
+        ApplicationCommon.makePagination('tb-branchwiseReport', 3, rowArray, colArray, title);
+    });
+
+</script>

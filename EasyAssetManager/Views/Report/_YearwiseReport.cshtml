@@ -1,0 +1,74 @@
+﻿@*@model IEnumerable<EasyAssetManagerCore.Models.EntityModel.Loan>*@
+@{
+    Layout = null;
+}
+@*@if (Model != null && Model.Any())
+    {*@
+<table class="table table-striped table-bordered table-hover  table-responsive" id="tb-yearwiseReport" width="100%">
+    <thead>
+        <tr>
+            <th rowspan="2">Year</th>
+            <th colspan="2" class="text-center">Disbursement</th>
+            <th colspan="2" class="text-center">O/S</th>
+            <th colspan="4" class="text-center">CL</th>
+            <th colspan="3" class="text-center">W/O</th>
+        </tr>
+        <tr>
+            <th>#</th>
+            <th>TK</th>
+            <th>#</th>
+            <th>TK</th>
+            <th>#</th>
+            <th>TK</th>
+            <th>% of CL with O/S</th>
+            <th>% of CL with Disb.</th>
+            <th>#</th>
+            <th>TK</th>
+            <th> % with total WO</th>
+        </tr>
+    </thead>
+    @for (var i = 1; i <= 10; i++)
+    {
+    <tr>
+        <td>2018</td>
+        <td>12457863952</td>
+        <td>50000+@i</td>
+        <td>12457863952</td>
+        <td>50000+@i</td>
+        <td>12457863952</td>
+        <td>50000+@i</td>
+        <td>50000+@i</td>
+        <td>50000+@i</td>
+        <td>12457863952</td>
+        <td>50000+@i</td>
+        <td>50000+@i</td>
+    </tr>
+    }
+</table>
+
+@*}
+    else
+    {
+        <p>No record found.</p>
+    }*@
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var rowArray = [];
+        var colArray = [];
+        var title = "";
+        rowArray.push([2, 4, 2]);
+        rowArray.push([4, 6, 2]);
+        rowArray.push([6, 10, 2]);
+        rowArray.push([10, 13, 2]);
+       
+        colArray.push([2, 3, 1]);
+        
+
+        title = ApplicationCommon.reportTitleAndHeaderCustomize();
+        ApplicationCommon.makePagination('tb-yearwiseReport',2, rowArray, colArray, title);
+    });
+
+</script>
+
+

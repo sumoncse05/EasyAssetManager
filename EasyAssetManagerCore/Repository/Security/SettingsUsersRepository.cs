@@ -54,13 +54,12 @@ namespace EasyAssetManagerCore.Repository.Security
             }).Count() > 0;
         }
 
-        public IEnumerable<Screen> GetScreens(string userId,string projectId,string moduleId)
+        public IEnumerable<Screen> GetScreens(string userId)
         {
             var dyParam = new OracleDynamicParameters();
             dyParam.Add("pvc_userid", userId, OracleMappingType.Varchar2, ParameterDirection.Input, 50);
-            dyParam.Add("pvc_modid", "", OracleMappingType.Varchar2, ParameterDirection.Input, 50);
             dyParam.Add("pcr_useramenu", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
-            return Connection.Query<Screen>("pkg_sec_user.dpd_get_usermenu_agent", dyParam, commandType: CommandType.StoredProcedure);
+            return Connection.Query<Screen>("pkg_sec_user.dpd_get_usermenualternet", dyParam, commandType: CommandType.StoredProcedure);
 
         }
 
@@ -464,7 +463,7 @@ namespace EasyAssetManagerCore.Repository.Security
         SettingsUsers Get(int userId);
         int Update(SettingsUsers olduser);
         SettingsUsers Get(string userName);
-        IEnumerable<Screen> GetScreens(string userId, string projectId, string moduleId);
+        IEnumerable<Screen> GetScreens(string userId);
         SettingsUsers GetLoginInfo(string userName, string password, string stationId, string sessionId);
         IEnumerable<Module> GetUserModules(string user_Id);
         ResponseMessage SetUserPassword(string pvc_userid, string pvc_useroldpass,

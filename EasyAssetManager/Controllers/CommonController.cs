@@ -26,8 +26,18 @@ namespace EasyAssetManager.Controllers
             }
             return Json(null);
         }
+        [HttpGet]
+        public IActionResult GetAreaList()
+        {
+            var userTypes = rMAssetManager.GetAreaList(Session.User.user_id);
+            if (userTypes != null && userTypes.Any())
+            {
+                var selectList = userTypes.Select(x => new SelectListItem() { Text = x.AREA_NAME, Value = x.AREA_CODE });
+                return Json(selectList);
+            }
+            return Json(null);
+        }
 
- 
         [HttpGet]
         public IActionResult GetRmList()
         {
