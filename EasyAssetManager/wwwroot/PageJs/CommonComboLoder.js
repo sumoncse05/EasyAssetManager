@@ -44,6 +44,7 @@
     };
     var getBranchList = function (controlId, url, isDefaultRecordRequired)
     {
+        alert('hi');
         var data = {};
         loadCombo(controlId, url, data, isDefaultRecordRequired);
     };

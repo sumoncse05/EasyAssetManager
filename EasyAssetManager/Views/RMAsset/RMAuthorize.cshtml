@@ -110,9 +110,8 @@
             {
                 $('#search').click(searchInitiate);
                 $('#btnAuthorizeRM').click(authorizeRM);
-                $('#btnModalOpen').click(showModaldata);
-                //searchInitiate();
-                //combo.getBranchList('branchCode', 'Common/GetBranchList', true);
+                searchInitiate();
+                combo.getBranchList('branchCode', '/Common/GetBranchList', true);
                 combo.getLoanType('loanType', true);
             };
 

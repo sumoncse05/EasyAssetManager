@@ -28,7 +28,7 @@
                                             <label class="col-form-label">Business Segment</label>
                                         </div>
                                         <div class="col-xl-3">
-                                            <select id="loanType" name="loanType" class="form-control form-element"></select>
+                                            <select id="loanType" name="loanType" class="form-control form-element chosen-select"></select>
                                         </div>
 
                                     </div>
@@ -38,7 +38,7 @@
                                             <label class="col-form-label">Loan Product</label>
                                         </div>
                                         <div class="col-xl-3">
-                                            <select id="loanProduct" name="loanProduct" class="form-control form-element"></select>
+                                            <select id="loanProduct" name="loanProduct" class="form-control form-element chosen-selectcs"></select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -155,13 +155,14 @@
                 $('#search').click(searchInitiate);
                 $('#btnAssign').click(assignRM);
                 $('#btnModalOpen').click(showModaldata);
-                //searchInitiate();
-                //combo.getRmList('newRmCode', 'Common/GetRmList', true);
+                searchInitiate();
+                combo.getRmList('newRmCode', '/Common/GetRmList', true);
                 combo.getLoanType('loanType', true);
                 $('#loanType').on('change', function ()
                 {
                     var loanType = $('#loanType').val();
-                    // combo.getLoanProductList('loanProduct', loanType, 'Common/GetLoanProductList', true);
+                    combo.getLoanProductList('loanProduct', '/Common/GetLoanProductList', loanType, true);
+                    $('.chosen-selectcs').chosen({ width: "100%" });
                 });
                 $('.input-group.date').datepicker({
                     todayBtn: "linked",
@@ -197,7 +198,12 @@
             {
                 $('#div-availableLoan').empty();
                 var loanType = $('#loanType').val();
-                var loanProduct = $('#loanProduct').val();
+                var loanProduct = '';
+                if ($('#loanProduct').val()) {
+                    loanProduct = $('#loanProduct').val();
+                } else {
+                    alert("Hello");
+                }
                 var rmCode = $('#rmCode').val();
                 var url = '/RMAsset/GetAvailableLoan';
                 $('#div-availableLoan').load(url + '?loanType=' + loanType + '&&loanProduct=' + loanProduct + '&&rmCode=' + rmCode);
