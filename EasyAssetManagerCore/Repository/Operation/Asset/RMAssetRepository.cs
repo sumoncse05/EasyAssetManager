@@ -58,12 +58,13 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
 
         }
 
-        public IEnumerable<Branch> GetBranchList(string pvc_appuser)
+        public IEnumerable<Branch> GetBranchList(string pvc_areacode, string pvc_appuser)
         {
             var dyParam = new OracleDynamicParameters();
+            dyParam.Add("pvc_areacode", pvc_areacode, OracleMappingType.Varchar2, ParameterDirection.Input);
             dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input);
-            dyParam.Add("pcr_userbranchlist", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
-            return Connection.Query<Branch>("pkg_liability_lov_manager.dpd_get_userbranchlist", dyParam, commandType: CommandType.StoredProcedure);
+            dyParam.Add("pcr_allbranchlist", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
+            return Connection.Query<Branch>("pkg_liability_lov_manager.dpd_get_areawisebranchlist", dyParam, commandType: CommandType.StoredProcedure);
         }
 
         public IEnumerable<Area> GetAreaList(string pvc_appuser)
@@ -104,7 +105,7 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
         IEnumerable<RM> GetRMList(string pvc_branchcode, string pvc_appuser);
         IEnumerable<Loan> GetAvailableLoan(string pvc_seg_id, string pvc_product_code, string pvc_origrm_code, string pvc_appuser);
         ResponseMessage SetRMAssignWithLoan(string pvc_loanlogslno, string pvc_rm_code, string pvc_effdate, string pvc_appuser);
-        IEnumerable<Branch> GetBranchList(string pvc_appuser);
+        IEnumerable<Branch> GetBranchList(string pvc_areacode, string pvc_appuser);
         IEnumerable<Area> GetAreaList(string pvc_appuser);
         IEnumerable<Loan> GetUnAuthorizeLoanRM(string pvc_seg_id, string pvc_branchCode, string pvc_rmcode, string pvc_appuser);
         IEnumerable<LoanProduct> GetLoanProduct(string pvc_sgid, string pvc_appuser);

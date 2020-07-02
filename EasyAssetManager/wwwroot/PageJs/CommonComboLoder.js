@@ -10,7 +10,7 @@
                 $('#' + controlId).empty();
                 $('#' + controlId).get(0).options.length = 0;
                 if (isDefaultRecordRequired) {
-                    $('#' + controlId).get(0).options[0] = new Option("------Select------", "");
+                    $('#' + controlId).get(0).options[0] = new Option("ALL", "");
 
                 }
                 if (data !== null && data.length > 0) {
@@ -26,7 +26,7 @@
         $('#' + controlId).empty();
         $('#' + controlId).get(0).options.length = 0;
         if (isDefaultRecordRequired) {
-            $('#' + controlId).get(0).options[0] = new Option("------Select------", "");
+            $('#' + controlId).get(0).options[0] = new Option("ALL", "");
 
         }
         if (data !== null && data.length > 0) {
@@ -37,15 +37,14 @@
 
     };
 
-    var getRmList = function (controlId, url, isDefaultRecordRequired)
+    var getRmList = function (controlId, url,branchCode, isDefaultRecordRequired)
     {
-        var data = {};
+        var data = { branchCode: branchCode};
         loadCombo(controlId, url, data, isDefaultRecordRequired);
     };
-    var getBranchList = function (controlId, url, isDefaultRecordRequired)
+    var getBranchList = function (controlId, url, arearId, isDefaultRecordRequired)
     {
-        alert('hi');
-        var data = {};
+        var data = { arearId: arearId};
         loadCombo(controlId, url, data, isDefaultRecordRequired);
     };
     var getAreaList = function (controlId, url, isDefaultRecordRequired) {

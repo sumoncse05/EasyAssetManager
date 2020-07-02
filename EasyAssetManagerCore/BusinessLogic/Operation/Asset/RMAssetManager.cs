@@ -21,9 +21,9 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             return rmRepository.GetUnAuthorizeLoanRM(loanType, branchCode, rmCode, session.User.user_id);
         }
 
-        public IEnumerable<Branch> GetBranchList(string user_id)
+        public IEnumerable<Branch> GetBranchList(string pvc_areacode, string user_id)
         {
-            return rmRepository.GetBranchList(user_id);
+            return rmRepository.GetBranchList(pvc_areacode,user_id);
         }
 
         public IEnumerable<Area> GetAreaList(string user_id)
@@ -120,7 +120,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
 
     public interface IRMAssetManager
     {
-        IEnumerable<Branch> GetBranchList(string user_id);
+        IEnumerable<Branch> GetBranchList(string areacode, string user_id);
         IEnumerable<Area> GetAreaList(string user_id);
         IEnumerable<RM> GetRmList(string branch_code, string user_id);
         IEnumerable<LoanProduct> GetLoanProductList(string loanType, string user_id);

@@ -16,9 +16,9 @@ namespace EasyAssetManager.Controllers
        
        
         [HttpGet]
-        public IActionResult GetBranchList()
+        public IActionResult GetBranchList(string arearId="")
         {
-            var userTypes = rMAssetManager.GetBranchList(Session.User.user_id);
+            var userTypes = rMAssetManager.GetBranchList(arearId,Session.User.user_id);
             if (userTypes != null && userTypes.Any())
             {
                 var selectList = userTypes.Select(x => new SelectListItem() { Text = x.BRANCH_NAME, Value = x.BRANCH_CODE });
@@ -39,9 +39,10 @@ namespace EasyAssetManager.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetRmList()
+        public IActionResult GetRmList(string branchCode="")
         {
-            var userTypes = rMAssetManager.GetRmList(Session.User.branch_code, Session.User.user_id);
+            branchCode = string.IsNullOrEmpty(branchCode) ? Session.User.branch_code : branchCode;
+            var userTypes = rMAssetManager.GetRmList(branchCode, Session.User.user_id);
             if (userTypes != null && userTypes.Any())
             {
                 var selectList = userTypes.Select(x => new SelectListItem() { Text = x.EMP_NAME, Value = x.RM_CODE });

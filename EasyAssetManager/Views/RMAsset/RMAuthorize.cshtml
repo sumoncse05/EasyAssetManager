@@ -34,7 +34,7 @@
                                             <label class="col-form-label">Branch Product</label>
                                         </div>
                                         <div class="col-xl-3">
-                                            <select id="branchCode" name="branchCode" class="form-control form-element"></select>
+                                            <select id="branchCode" name="branchCode" class="form-control form-element chosen-select"></select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -43,7 +43,7 @@
                                             <label class="col-form-label">Business Segment</label>
                                         </div>
                                         <div class="col-xl-3">
-                                            <select id="loanType" name="loanType" class="form-control form-element"></select>
+                                            <select id="loanType" name="loanType" class="form-control form-element chosen-select"></select>
                                         </div>
 
                                     </div>
@@ -96,28 +96,28 @@
         </div>
     </div>
 </div>
-
+@section Styles {
+    <link rel="stylesheet" href="~/ApplicationTheme/lib/chosen/bootstrap-chosen.css" />
+}
 @section scripts{
+    <script src="~/ApplicationTheme/lib/chosen/chosen.jquery.js"></script>
     <script type="text/javascript">
-        var classRMLoanAssign = function ()
-        {
-            var init = function ()
-            {
+        var classRMLoanAssign = function () {
+            var init = function () {
                 eventInitializer();
 
             };
-            var eventInitializer = function ()
-            {
+            var eventInitializer = function () {
                 $('#search').click(searchInitiate);
                 $('#btnAuthorizeRM').click(authorizeRM);
                 searchInitiate();
                 combo.getBranchList('branchCode', '/Common/GetBranchList', true);
                 combo.getLoanType('loanType', true);
+                $('.chosen-select').chosen({ width: "100%" });
             };
 
 
-            var searchInitiate = function ()
-            {
+            var searchInitiate = function () {
                 $('#div-unAuthorizeLoan').empty();
                 var loanType = $('#loanType').val();
                 var branchCode = $('#branchCode').val();
@@ -126,27 +126,21 @@
                 $('#div-unAuthorizeLoan').load(url + '?loanType=' + loanType + '&&branchCode=' + branchCode + '&&rmCode=' + rmCode);
 
             };
-            var authorizeRM = function ()
-            {
-                var checkedVals = $('.innerCheck:checkbox:checked').map(function ()
-                {
+            var authorizeRM = function () {
+                var checkedVals = $('.innerCheck:checkbox:checked').map(function () {
                     return this.value;
                 }).get();
-                if (checkedVals == '')
-                {
+                if (checkedVals == '') {
                     ApplicationCommon.showNotification("2", "Please Select a RM.")
                 }
-                else
-                {
-                 var  loanList = checkedVals.join(",");
+                else {
+                    var loanList = checkedVals.join(",");
                     var formData = new FormData();
                     formData.append("loanList", loanList);
                     var url = '/RMAsset/SetAuthorizeRM';
-                    ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res)
-                    {
+                    ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res) {
                         ApplicationCommon.showNotification(res.messageType, res.messageString);
-                        if (res.messageType == 1)
-                        {
+                        if (res.messageType == 1) {
                             searchInitiate();
                         }
                     });

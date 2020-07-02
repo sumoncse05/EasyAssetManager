@@ -1325,7 +1325,15 @@ var ApplicationCommon = function ()
             title = "SME " + title;
             $('#headerChange').text("Small");
         }
+        var res = $('#toDate').val().split("/");
+        var year = parseInt(res[2]);
+        $('#headercurrentYear1').text(year);
+        $('#headercurrentYear2').text(year);
+        $('#headercurrentYear3').text(year);
+        $('#headercurrentYear4').text(year);
 
+        $('#headerpreviousYear1').text(year-1);
+        $('#headerpreviousYear2').text(year-1);
         return title;
     };
     return {

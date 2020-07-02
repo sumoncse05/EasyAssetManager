@@ -65,7 +65,7 @@
                                         </div>
                                         <div class="col-xl-3">
                                             <div class="input-group date">
-                                                <input class="form-control form-element" type="text" id="toDate" name="toDate" placeholder="dd/mm/yyyy" data-mask="99/99/9999">
+                                                <input class="form-control form-element" type="text" id="toDate" name="toDate" placeholder="dd/mm/yyyy" data-mask="99/99/9999" value="@DateTime.Now.ToString("dd/MM/yyyy")">
                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                             </div>
                                         </div>
@@ -121,12 +121,19 @@
             };
             var eventInitializer = function () {
                 $('#search').click(searchInitiate);
-                //combo.getRmList('rmCode', 'Common/GetRmList', true);
-               // combo.getBranchList('branch', 'Common/GetBranchList', true);
-                //combo.getAreaList('area', 'Common/GetAreaList', true);
+                combo.getAreaList('area', '/Common/GetAreaList', true);
+                combo.getBranchList('branch', '/Common/GetBranchList', $('#area').val(), true);
+                combo.getRmList('rmCode', '/Common/GetRmList', $('#branch').val(), true);
                 combo.getReportName('reportName', false);
                 combo.getLoanType('loantype', false);
-                
+                $('#area').on('change', function () {
+                    combo.getBranchList('branch', '/Common/GetBranchList', $('#area').val(), true);
+                    $('#branch').trigger("chosen:updated");
+                });
+                $('#branch').on('change', function () {
+                    combo.getRmList('rmCode', '/Common/GetRmList', $('#branch').val(), true);
+                    $('#rmCode').trigger("chosen:updated");
+                });
                 $('.input-group.date').datepicker({
                     todayBtn: "linked",
                     keyboardNavigation: false,

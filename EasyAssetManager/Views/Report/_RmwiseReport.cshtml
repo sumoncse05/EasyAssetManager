@@ -1,133 +1,134 @@
-﻿@*@model IEnumerable<EasyAssetManagerCore.Models.EntityModel.Loan>*@
+﻿@model IEnumerable<EasyAssetManagerCore.Models.EntityModel.AstDailyStatus>
 @{
     Layout = null;
 }
-@*@if (Model != null && Model.Any())
-    {*@
-<table class="table table-striped table-bordered table-hover  table-responsive" id="tb-rmwiseReport" width="100%">
-    <thead>
-        <tr>
-            <th rowspan="3">SL.</th>
-            <th rowspan="3">Code of RM</th>
-            <th rowspan="3">Name of RM</th>
-            <th rowspan="3">Name of Branch</th>
-            <th rowspan="3">Name of Area</th>
-            <th colspan="10" class="text-center"><span id="headerChange"></span> Loan Outstanding-Target-Achievement and Position</th>
-            <th colspan="6" class="text-center">PD (Disbursed loans in last 12 months)</th>
-            <th colspan="4" class="text-center">Loan Disbursement</th>
-            <th colspan="4" class="text-center">Income</th>
-            <th colspan="9" class="text-center">CL O/S as of Last qtr.2019</th>
-            <th colspan="2" class="text-center">Net W/O as of Last qtr. 2019</th>
-            <th colspan="2" class="text-center">Closing A/C</th>
-        </tr>
-        <tr>
-            <th colspan="2" class="text-center">O/S position in last year-2018</th>
-            <th colspan="2" class="text-center">O/S position as of Last month</th>
-            <th rowspan="2">O/S position as of today/YTD</th>
-            <th rowspan="2">O/S growth-YTD</th>
-            <th rowspan="2">O/S growth-MTD</th>
-            <th rowspan="2">O/S growth target-for the yr.2019</th>
-            <th rowspan="2">O/S growth target-YTD</th>
-            <th rowspan="2">% of achit. of O/S growth-YTD</th>
-            <th colspan="2" class="text-center">As of last yr.-2018</th>
-            <th colspan="2" class="text-center">YTD</th>
-            <th colspan="2" class="text-center">Difference</th>
-            <th colspan="2" class="text-center">YTD</th>
-            <th colspan="2" class="text-center">MTD</th>
-            <th rowspan="2">Target for the Yr.-2019</th>
-            <th rowspan="2">YTD Target</th>
-            <th rowspan="2">Acht.-YTD</th>
-            <th rowspan="2">% of Acht.</th>
-            <th colspan="2" class="text-center">SS</th>
-            <th colspan="2" class="text-center">DF</th>
-            <th colspan="2" class="text-center">BL</th>
-            <th colspan="2" class="text-center">Total</th>
-            <th rowspan="2">% of CL (with O/S)</th>
-            <th rowspan="2"># of A/C</th>
-            <th rowspan="2">Amount</th>
-            <th rowspan="2"># of A/C</th>
-            <th rowspan="2">Amount</th>
-        </tr>
-        <tr>
-            <th># of A/C</th>
-            <th>Amount</th>
-            <th># of A/C</th>
-            <th>Amount</th>
-            <th># of A/C</th>
-            <th>Amount</th>
-            <th># of A/C</th>
-            <th>Amount</th>
-            <th># of A/C</th>
-            <th>Amount</th>
-            <th># of A/C</th>
-            <th>Amount</th>
-            <th># of A/C</th>
-            <th>Amount</th>
-            <th># of A/C</th>
-            <th>Amount</th>
-            <th># of A/C</th>
-            <th>Amount</th>
-            <th># of A/C</th>
-            <th>Amount</th>
-            <th># of A/C</th>
-            <th>Amount</th>
-        </tr>
-    </thead>
-    @for (var i = 1; i <= 10; i++)
-    {
-    <tr>
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped table-bordered table-hover  table-responsive" id="tb-rmwiseReport" width="100%">
+        <thead>
+            <tr>
+                <th rowspan="3">SL.</th>
+                <th rowspan="3">Code of RM</th>
+                <th rowspan="3">Name of RM</th>
+                <th rowspan="3">Name of Branch</th>
+                <th rowspan="3">Name of Area</th>
+                <th colspan="10" class="text-center"><span id="headerChange"></span> Loan Outstanding-Target-Achievement and Position</th>
+                <th colspan="6" class="text-center">PD (Disbursed loans in last 12 months)</th>
+                <th colspan="4" class="text-center">Loan Disbursement</th>
+                <th colspan="4" class="text-center">Income</th>
+                <th colspan="9" class="text-center">CL O/S as of Last qtr.<span id="headercurrentYear1"></span></th>
+                @*<th colspan="2" class="text-center">Net W/O as of Last qtr. <span id="headercurrentYear2"></span></th>*@
+                <th colspan="2" class="text-center">Closing A/C</th>
+            </tr>
+            <tr>
+                <th colspan="2" class="text-center">O/S position in last year-<span id="headerpreviousYear1"></span></th>
+                <th colspan="2" class="text-center">O/S position as of Last month</th>
+                <th rowspan="2">O/S position as of today/YTD</th>
+                <th rowspan="2">O/S growth-YTD</th>
+                <th rowspan="2">O/S growth-MTD</th>
+                <th rowspan="2">O/S growth target-for the yr.<span id="headercurrentYear3"></span></th>
+                <th rowspan="2">O/S growth target-YTD</th>
+                <th rowspan="2">% of achit. of O/S growth-YTD</th>
+                <th colspan="2" class="text-center">As of last yr.-<span id="headerpreviousYear2"></span></th>
+                <th colspan="2" class="text-center">YTD</th>
+                <th colspan="2" class="text-center">Difference</th>
+                <th colspan="2" class="text-center">YTD</th>
+                <th colspan="2" class="text-center">MTD</th>
+                <th rowspan="2">Target for the Yr.-<span id="headercurrentYear4"></span></th>
+                <th rowspan="2">YTD Target</th>
+                <th rowspan="2">Acht.-YTD</th>
+                <th rowspan="2">% of Acht.</th>
+                <th colspan="2" class="text-center">SS</th>
+                <th colspan="2" class="text-center">DF</th>
+                <th colspan="2" class="text-center">BL</th>
+                <th colspan="2" class="text-center">Total</th>
+                <th rowspan="2">% of CL (with O/S)</th>
+                @*<th rowspan="2"># of A/C</th>
+                <th rowspan="2">Amount</th>*@
+                <th rowspan="2"># of A/C</th>
+                <th rowspan="2">Amount</th>
+            </tr>
+            <tr>
+                <th># of A/C</th>
+                <th>Amount</th>
+                <th># of A/C</th>
+                <th>Amount</th>
+                <th># of A/C</th>
+                <th>Amount</th>
+                <th># of A/C</th>
+                <th>Amount</th>
+                <th># of A/C</th>
+                <th>Amount</th>
+                <th># of A/C</th>
+                <th>Amount</th>
+                <th># of A/C</th>
+                <th>Amount</th>
+                <th># of A/C</th>
+                <th>Amount</th>
+                <th># of A/C</th>
+                <th>Amount</th>
+                <th># of A/C</th>
+                <th>Amount</th>
+                <th># of A/C</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        @{ var i = 0; }
+        @foreach (var v in Model)
+        {
+            i = i + 1;
 
-        <td>@i</td>
-        <td>3202</td>
-        <td>MR. KADER</td>
-        <td>Head Office</td>
-        <td>DHAKA</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-        <td>50000+@i</td>
-        <td>50000+@i</td>
-        <td>50000+@i</td>
-        <td>50000+@i</td>
-        <td>50000+@i</td>
-        <td>50000+@i</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-        <td>50000+@i</td>
-        <td>50000+@i</td>
-        <td>50000+@i</td>
-        <td>50000+@i</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-        <td>50000+@i</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-    </tr>
-    }
-</table>
+        <tr>
 
-@*}
-    else
-    {
-        <p>No record found.</p>
-    }*@
+            <td>@i</td>
+            <td>@v.rm_code</td>
+            <td>@v.emp_name</td>
+            <td>@v.branch_name</td>
+            <td>@v.area_name</td>
+            <td>@v.os_pos_lyr_ac</td>
+            <td>@v.os_pos_lyr_amount</td>
+            <td>@v.os_pos_lmon_ac</td>
+            <td>@v.os_pos_lmon_amount</td>
+            <td>@v.os_pos_ytd</td>
+            <td>@v.os_growth_ytd</td>
+            <td>@v.os_growth_mtd</td>
+            <td>@v.os_growth_trgt_crnt_yr</td>
+            <td>@v.oa_growth_target_ytd</td>
+            <td>@v.achit_os_growth_ytd</td>
+            <td>@v.pd_last_yr_ac</td>
+            <td>@v.pd_last_yr_amount</td>
+            <td>@v.pd_ytd_ac</td>
+            <td>@v.pd_ytd_amount</td>
+            <td>@v.pd_diff_ac</td>
+            <td>@v.pd_diff_amount</td>
+            <td>@v.rl_ytd_ac</td>
+            <td>@v.rl_ytd_amount</td>
+            <td>@v.rl_mtd_ac</td>
+            <td>@v.rl_mtd_amount</td>
+            <td>@v.inc_trgt_curnt_yr</td>
+            <td>@v.inc_ytd_trgt</td>
+            <td>@v.inc_ach_ytd</td>
+            <td>@v.inc_percnt_acht</td>
+            <td>@v.cl_ss_ac</td>
+            <td>@v.cl_ss_amount</td>
+            <td>@v.cl_df_ac</td>
+            <td>@v.cl_df_amount</td>
+            <td>@v.cl_bl_ac</td>
+            <td>@v.cl_bl_amount</td>
+            <td>@v.cl_tot_ac</td>
+            <td>@v.cl_tot_amount</td>
+            <td>@v.cl_percnt_cl</td>
+            <td>@v.clos_ac_ac</td>
+            <td>@v.clos_ac_amount</td>
+        </tr>
+        }
+    </table>
+
+}
+else
+{
+    <p>No record found.</p>
+}
 <script type="text/javascript">
     $(document).ready(function () {
 
