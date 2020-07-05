@@ -35,8 +35,8 @@ namespace EasyAssetManager.Controllers
         }
         public IActionResult RmwiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate)
         {
-           // var data = reportRepository.RmwiseReport(loanType, rmCode, areaCode, branchCode, todate, Session);
-            return PartialView("_RmwiseReport", null);
+            var data = reportRepository.RmwiseReport(loanType, rmCode, areaCode, branchCode, todate, Session);
+            return PartialView("_RmwiseReport", data);
         }
         public IActionResult BstwiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate)
         {
