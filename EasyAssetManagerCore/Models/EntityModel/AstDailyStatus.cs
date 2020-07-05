@@ -54,6 +54,8 @@ namespace EasyAssetManagerCore.Models.EntityModel
         public double cl_tot_ac { get; set; }
         public double cl_tot_amount { get; set; }
         public double cl_percnt_cl { get; set; }
+        public double wo_lst_ac { get; set; }
+        public double wo_lst_amount { get; set; }
         public double clos_ac_ac { get; set; }
         public double clos_ac_amount { get; set; }
         public string ins_by { get; set; }
