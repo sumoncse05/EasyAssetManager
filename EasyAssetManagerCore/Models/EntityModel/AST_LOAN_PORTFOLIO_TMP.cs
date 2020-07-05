@@ -3,17 +3,18 @@ using System;
 
 namespace EasyAssetManagerCore.Models.EntityModel
 {
-    [TableAttribute("AST_LOAN_PORTFOLIO_TMP", "ERMP")]
-    public class AST_LOAN_PORTFOLIO_TMP
+    [TableAttribute("AST_RM_PORTFOLIO_TMP", "ERMP")]
+    public class AST_RM_PORTFOLIO_TMP
     {
         public int File_Process_ID { get; set; }
-        public string ID_of_Area { get; set; }
-        public string Name_of_Area { get; set; }
-        public string Brn_Code { get; set; }
-        public string Branch_Name { get; set; }
-        public string ID_of_RM { get; set; }
-        public string Name_of_RM { get; set; }
-        public string Loan_Acct_No { get; set; }
+        public string AREA_CODE { get; set; }
+        public string AREA_NAME { get; set; }
+        public string BRANCH_CODE { get; set; }
+        public string BRANCH_NAME { get; set; }
+        public string RM_CODE { get; set; }
+        public string RM_NAME { get; set; }
+        public string LOAN_AC_NUMBER { get; set; }
+        public DateTime EFF_DATE { get; set; }
         public string INS_BY { get; set; }
         public DateTime INS_DATE { get; set; }
     }
@@ -22,16 +23,17 @@ namespace EasyAssetManagerCore.Models.EntityModel
     public class AST_LOAN_CL_TMP
     {
         public int File_Process_ID { get; set; }
-        public string ID_of_Area { get; set; }
-        public string Name_of_Area { get; set; }
-        public string Brn_Code { get; set; }
-        public string Branch_Name { get; set; }
-        public string ID_of_RM { get; set; }
-        public string Name_of_RM { get; set; }
-        public string ID_of_BST { get; set; }
-        public string Name_of_BST { get; set; }
-        public string Loan_Acct_No { get; set; }
-        public string Classification_TYPE { get; set; }
+        public string AREA_CODE { get; set; }
+        public string AREA_NAME { get; set; }
+        public string BRANCH_CODE { get; set; }
+        public string BRANCH_NAME { get; set; }
+        public string RM_CODE { get; set; }
+        public string RM_NAME { get; set; }
+        public string BST_CODE { get; set; }
+        public string BST_NAME { get; set; }
+        public string LOAN_AC_NUMBER { get; set; }
+        public string CL_STATUS { get; set; }
+        public DateTime EFF_DATE { get; set; }
         public string INS_BY { get; set; }
         public DateTime INS_DATE { get; set; }
     }
@@ -40,16 +42,17 @@ namespace EasyAssetManagerCore.Models.EntityModel
     public class AST_LOAN_TARGET_TMP
     {
         public int File_Process_ID { get; set; }
-        public string ID_of_Area { get; set; }
-        public string Name_of_Area { get; set; }
-        public string Brn_Code { get; set; }
-        public string Branch_Name { get; set; }
-        public string ID_of_RM { get; set; }
-        public string Name_of_RM { get; set; }
-        public string ID_of_BST { get; set; }
-        public string Name_of_BST { get; set; }
-        public string Out_Standing_Amount { get; set; }
-        public string Disbursed_Amount { get; set; }
+        public string AREA_CODE { get; set; }
+        public string AREA_NAME { get; set; }
+        public string BRANCH_CODE { get; set; }
+        public string BRANCH_NAME { get; set; }
+        public string RM_CODE { get; set; }
+        public string RM_NAME { get; set; }
+        public string BST_CODE { get; set; }
+        public string BST_NAME { get; set; }
+        public string OS_TARGET_AMT { get; set; }
+        public string DISB_TARGET_AMT { get; set; }
+        public string INC_TARGET_AMT { get; set; }
         public string INS_BY { get; set; }
         public DateTime INS_DATE { get; set; }
     }
@@ -59,10 +62,12 @@ namespace EasyAssetManagerCore.Models.EntityModel
     {
         public int File_Process_ID { get; set; }
         public string AREA_CODE { get; set; }
-        public string LOAN_NUMBER { get; set; }
-        public string LOAN_OUTSTANDING { get; set; }
-        public string WO_AMOUNT { get; set; }
         public string AREA_NAME { get; set; }
+        public string BRANCH_CODE { get; set; }
+        public string BRANCH_NAME { get; set; }
+        public string OS_AMOUNT { get; set; }
+        public string WO_AMOUNT { get; set; }
+        public DateTime WO_DATE { get; set; }
         public string INS_BY { get; set; }
         public DateTime INS_DATE { get; set; }
     }
