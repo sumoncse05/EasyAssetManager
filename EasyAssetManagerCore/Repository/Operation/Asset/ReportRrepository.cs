@@ -20,13 +20,13 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
         {
             var dyParam = new OracleDynamicParameters();
             dyParam.Add("pvc_segid", pvc_loantype, OracleMappingType.Varchar2, ParameterDirection.Input);
-            dyParam.Add("pvc_areacode", pvc_areacode, OracleMappingType.Varchar2, ParameterDirection.Input);
-            dyParam.Add("pvc_branchcode", pvc_branchcode, OracleMappingType.Varchar2, ParameterDirection.Input);
-            dyParam.Add("pvc_rmcode", pvc_rmcode, OracleMappingType.Varchar2, ParameterDirection.Input);
+            //dyParam.Add("pvc_areacode", pvc_areacode, OracleMappingType.Varchar2, ParameterDirection.Input);
+            //dyParam.Add("pvc_branchcode", pvc_branchcode, OracleMappingType.Varchar2, ParameterDirection.Input);
+            //dyParam.Add("pvc_rmcode", pvc_rmcode, OracleMappingType.Varchar2, ParameterDirection.Input);
             dyParam.Add("pvc_workdate", System.Convert.ToDateTime(pvc_todate).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture), OracleMappingType.Varchar2, ParameterDirection.Input, 50);
             dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input);
-            dyParam.Add("pcr_assetatglance", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
-            return Connection.Query<AstDailyStatus>("dpg_reports_manager.dpd_get_userrmlist", dyParam, commandType: CommandType.StoredProcedure);
+            dyParam.Add("pcr_retailasstataglance", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
+            return Connection.Query<AstDailyStatus>("dpg_reports_manager.dpd_get_retailasstataglance", dyParam, commandType: CommandType.StoredProcedure);
         }
         public IEnumerable<AstDailyStatus> AreawiseReport(string pvc_loantype, string pvc_rmcode, string pvc_areacode, string pvc_branchcode, string pvc_todate, string pvc_appuser)
         {
@@ -73,8 +73,8 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
             dyParam.Add("pvc_rmcode", pvc_rmcode, OracleMappingType.Varchar2, ParameterDirection.Input);
             dyParam.Add("pvc_workdate", System.Convert.ToDateTime(pvc_todate).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture), OracleMappingType.Varchar2, ParameterDirection.Input, 50);
             dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input);
-            dyParam.Add("pcr_bstwise", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
-            return Connection.Query<AstDailyStatus>("dpg_reports_manager.dpd_get_userrmlist", dyParam, commandType: CommandType.StoredProcedure);
+            dyParam.Add("pcr_bstassetdailystatus", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
+            return Connection.Query<AstDailyStatus>("dpg_reports_manager.dpd_get_bstassetdailystatus", dyParam, commandType: CommandType.StoredProcedure);
         }
         public IEnumerable<AstDailyStatus> ProductwiseReport(string pvc_loantype, string pvc_rmcode, string pvc_areacode, string pvc_branchcode, string pvc_todate, string pvc_appuser)
         {
