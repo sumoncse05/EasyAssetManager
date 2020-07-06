@@ -1,9 +1,9 @@
-﻿@*@model IEnumerable<EasyAssetManagerCore.Models.EntityModel.Loan>*@
+﻿@model IEnumerable<EasyAssetManagerCore.Models.EntityModel.AstDailyStatus>
 @{
     Layout = null;
 }
-@*@if (Model != null && Model.Any())
-    {*@
+@if (Model != null && Model.Any())
+    {
 <table class="table table-striped table-bordered table-hover  table-responsive" id="tb-bstwiseReport" width="100%">
     <thead>
         <tr>
@@ -51,45 +51,47 @@
             <th>Amount</th>
         </tr>
     </thead>
-    @for (var i = 1; i <= 10; i++)
+    @{ var i = 0; }
+    @foreach (var v in Model)
     {
-    <tr>
+        i = i + 1;
+        <tr>
 
-        <td>@i</td>
-        <td>3202</td>
-        <td>MR. KADER</td>
-        <td>Head Office</td>
-        <td>DHAKA</td>
-        <td>50000+@i</td>
-        <td>50000+@i</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-        <td>50000+@i</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-        <td>12457863952</td>
-        <td>50000+@i</td>
-    </tr>
+            <td>@i</td>
+            <td>@v.rm_code</td>
+            <td>@v.emp_name</td>
+            <td>@v.branch_name</td>
+            <td>@v.area_name</td>
+            <td>50000+@i</td>
+            <td>50000+@i</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+            <td>50000+@i</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+            <td>12457863952</td>
+            <td>50000+@i</td>
+        </tr>
     }
 </table>
 
-@*}
+}
     else
     {
         <p>No record found.</p>
-    }*@
+    }
 <script type="text/javascript">
     $(document).ready(function () {
 
