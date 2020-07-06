@@ -82,7 +82,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                                     BRANCH_CODE = wooksheet.Cells[i, 3].Text.Trim(),
                                     BRANCH_NAME = wooksheet.Cells[i, 4].Text.Trim(),
                                     OS_AMOUNT = valid(wooksheet.Cells[i, 5].Text.Trim(), "LOAN_OUTSTANDING", "Number"),
-                                    WO_AMOUNT = valid(wooksheet.Cells[i, 6].Text.Trim(), "WO_AMOUNT", "Digit"),
+                                    WO_AMOUNT = valid(wooksheet.Cells[i, 6].Text.Trim(), "WO_AMOUNT", "Number"),
                                     WO_DATE =Convert.ToDateTime(wooksheet.Cells[i, 7].Text.Trim()),
                                     INS_BY = session.User.user_id,
                                     INS_DATE = DateTime.Now
