@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace EasyAssetManager.Controllers
@@ -21,24 +20,6 @@ namespace EasyAssetManager.Controllers
         }
         public IActionResult Index()
         {
-            //UbsServiceManagerSoapClient client = new UbsServiceManagerSoapClient(UbsServiceManagerSoapClient.EndpointConfiguration.UbsServiceManagerSoap);
-            //var deposit = client.GetCustomerDepositDetailsAsync("RD", "2011910152053", "ADMIN").Result.Any1;
-            //XmlDocument outputXml = new XmlDocument();
-            //outputXml.LoadXml(deposit.ToString());
-            //XmlNodeList xnlNodeList = outputXml.ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes;
-            //var cust_no = xnlNodeList[0].InnerText;
-            //var cust_ac_no = xnlNodeList[1].InnerText;
-            //var ac_desc = xnlNodeList[2].InnerText;
-            //var acy_avl_bal = xnlNodeList[3].InnerText;
-            //var mobile_number = xnlNodeList[4].InnerText;
-            //UbsServiceManagerSoapClient client = new UbsServiceManagerSoapClient(UbsServiceManagerSoapClient.EndpointConfiguration.UbsServiceManagerSoap);
-            //var deposit = client.GetCustomerDetailsAsync("", "2011910152053", "ADMIN").Result.Any1;
-            //XmlDocument outputXml = new XmlDocument();
-            //outputXml.LoadXml(deposit.ToString());
-            //XmlNodeList xnlNodeList = outputXml.ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes;
-            //var customerName = xnlNodeList[1].InnerText;
-            //var mobile_number = xnlNodeList[7].InnerText;
-
             HttpContext.Session.Clear();
             HttpContext.Session.Remove(ApplicationConstant.GlobalSessionSession);
             return View();

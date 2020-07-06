@@ -2,9 +2,7 @@
 using EasyAssetManagerCore.Model.CommonModel;
 using EasyAssetManagerCore.Models.EntityModel;
 using EasyAssetManagerCore.Repository.Operation.Asset;
-using System;
 using System.Collections.Generic;
-using System.Data;
 
 namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
 {
