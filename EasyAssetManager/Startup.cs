@@ -33,46 +33,7 @@ namespace EasyAssetManager
                 password = Configuration["Data:LiveConnection:EbankConnectionString:Password"];
                 ApplicationConstant.ConnectionString = string.Format("Data Source={0};Password={1};User ID={2};", dataSource, new Encription().Decrypt(password), new Encription().Decrypt(userId));
                 ApplicationConstant.EbankConnectionString = string.Format("Data Source={0};Password={1};User ID={2};", dataSource, new Encription().Decrypt(password), new Encription().Decrypt(userId));
-
-                dataSource = Configuration["Data:LiveConnection:EsecConnectionString:DataSource"];
-                userId = Configuration["Data:LiveConnection:EsecConnectionString:UserID"];
-                password = Configuration["Data:LiveConnection:EsecConnectionString:Password"];
-                ApplicationConstant.EsecConnectionString = string.Format("Data Source={0};Password={1};User ID={2};", dataSource, new Encription().Decrypt(password), new Encription().Decrypt(userId));
-
-                dataSource = Configuration["Data:LiveConnection:CbsConnectionString:DataSource"];
-                userId = Configuration["Data:LiveConnection:CbsConnectionString:UserID"];
-                password = Configuration["Data:LiveConnection:CbsConnectionString:Password"];
-                ApplicationConstant.CbsConnectionString = string.Format("Data Source={0};Password={1};User ID={2};", dataSource, new Encription().Decrypt(password), new Encription().Decrypt(userId));
-
-                dataSource = Configuration["Data:LiveConnection:RemitConnectionString:DataSource"];
-                userId = Configuration["Data:LiveConnection:RemitConnectionString:UserID"];
-                password = Configuration["Data:LiveConnection:RemitConnectionString:Password"];
-                ApplicationConstant.RemitConnectionString = string.Format("Data Source={0};Password={1};User ID={2};", dataSource, new Encription().Decrypt(password), new Encription().Decrypt(userId));
-
-                TransactionXmlConstant.SOURCE = Configuration["Data:LiveTransactionXmlConstant:SOURCE"];
-                TransactionXmlConstant.UBSCOMP = Configuration["Data:LiveTransactionXmlConstant:UBSCOMP"];
-                TransactionXmlConstant.USERID = Configuration["Data:LiveTransactionXmlConstant:USERID"];
-                TransactionXmlConstant.SERVICE = Configuration["Data:LiveTransactionXmlConstant:SERVICE"];
-                TransactionXmlConstant.OPERATION = Configuration["Data:LiveTransactionXmlConstant:OPERATION"];
-                TransactionXmlConstant.BATCHNO = Configuration["Data:LiveTransactionXmlConstant:BATCHNO"];
-                TransactionXmlConstant.CCY = Configuration["Data:LiveTransactionXmlConstant:CCY"];
-                TransactionXmlConstant.AUTHSTAT = Configuration["Data:LiveTransactionXmlConstant:AUTHSTAT"];
-                TransactionXmlConstant.SLNO = Configuration["Data:LiveTransactionXmlConstant:SLNO"];
-                TransactionXmlConstant.BATCH_NO = Configuration["Data:LiveTransactionXmlConstant:BATCH_NO"];
-                TransactionXmlConstant.DESCRIPTION = Configuration["Data:LiveTransactionXmlConstant:DESCRIPTION"];
-                TransactionXmlConstant.BALANCING = Configuration["Data:LiveTransactionXmlConstant:BALANCING"];
-
-                ApplicationConstant.CardServiceUserId = Configuration["Data:CardServiceLiveSettings:UserId"];
-                ApplicationConstant.CardServiceUserPassword = new Encription().Decrypt(Configuration["Data:CardServiceLiveSettings:Password"]);
-
-                ApplicationConstant.UbsService = Configuration["Data:LiveServiceUrl:UbsService"];
-                ApplicationConstant.SmsService = Configuration["Data:LiveServiceUrl:SmsService"];
-                ApplicationConstant.FcubService = Configuration["Data:LiveServiceUrl:FcubService"];
                 ApplicationConstant.CardService = Configuration["Data:LiveServiceUrl:CardService"];
-
-                ApplicationConstant.SmsUserId = Configuration["Data:LiveSmsSetting:SmsUserId"];
-                ApplicationConstant.SmsPassword = new Encription().Decrypt(Configuration["Data:LiveSmsSetting:SmsPassword"]);
-                ApplicationConstant.MobileNumber = Configuration["Data:LiveSmsSetting:MobileNumber"];
             }
             else
             {
@@ -81,46 +42,7 @@ namespace EasyAssetManager
                 password = Configuration["Data:TestConnection:EbankConnectionString:Password"];
                 ApplicationConstant.ConnectionString = string.Format("Data Source={0};Password={1};User ID={2};", dataSource, new Encription().Decrypt(password), new Encription().Decrypt(userId));
                 ApplicationConstant.EbankConnectionString = string.Format("Data Source={0};Password={1};User ID={2};", dataSource, new Encription().Decrypt(password), new Encription().Decrypt(userId));
-
-                dataSource = Configuration["Data:TestConnection:EsecConnectionString:DataSource"];
-                userId = Configuration["Data:TestConnection:EsecConnectionString:UserID"];
-                password = Configuration["Data:TestConnection:EsecConnectionString:Password"];
-                ApplicationConstant.EsecConnectionString = string.Format("Data Source={0};Password={1};User ID={2};", dataSource, new Encription().Decrypt(password), new Encription().Decrypt(userId));
-
-                dataSource = Configuration["Data:TestConnection:CbsConnectionString:DataSource"];
-                userId = Configuration["Data:TestConnection:CbsConnectionString:UserID"];
-                password = Configuration["Data:TestConnection:CbsConnectionString:Password"];
-                ApplicationConstant.CbsConnectionString = string.Format("Data Source={0};Password={1};User ID={2};", dataSource, new Encription().Decrypt(password), new Encription().Decrypt(userId));
-
-                dataSource = Configuration["Data:TestConnection:RemitConnectionString:DataSource"];
-                userId = Configuration["Data:TestConnection:RemitConnectionString:UserID"];
-                password = Configuration["Data:TestConnection:RemitConnectionString:Password"];
-                ApplicationConstant.RemitConnectionString = string.Format("Data Source={0};Password={1};User ID={2};", dataSource, new Encription().Decrypt(password), new Encription().Decrypt(userId));
-
-                TransactionXmlConstant.SOURCE = Configuration["Data:TestTransactionXmlConstant:SOURCE"];
-                TransactionXmlConstant.UBSCOMP = Configuration["Data:TestTransactionXmlConstant:UBSCOMP"];
-                TransactionXmlConstant.USERID = Configuration["Data:TestTransactionXmlConstant:USERID"];
-                TransactionXmlConstant.SERVICE = Configuration["Data:TestTransactionXmlConstant:SERVICE"];
-                TransactionXmlConstant.OPERATION = Configuration["Data:TestTransactionXmlConstant:OPERATION"];
-                TransactionXmlConstant.BATCHNO = Configuration["Data:TestTransactionXmlConstant:BATCHNO"];
-                TransactionXmlConstant.CCY = Configuration["Data:TestTransactionXmlConstant:CCY"];
-                TransactionXmlConstant.AUTHSTAT = Configuration["Data:TestTransactionXmlConstant:AUTHSTAT"];
-                TransactionXmlConstant.SLNO = Configuration["Data:TestTransactionXmlConstant:SLNO"];
-                TransactionXmlConstant.BATCH_NO = Configuration["Data:TestTransactionXmlConstant:BATCH_NO"];
-                TransactionXmlConstant.DESCRIPTION = Configuration["Data:TestTransactionXmlConstant:DESCRIPTION"];
-                TransactionXmlConstant.BALANCING = Configuration["Data:TestTransactionXmlConstant:BALANCING"];
-
-                ApplicationConstant.CardServiceUserId = Configuration["Data:CardServiceTestSettings:UserId"];
-                ApplicationConstant.CardServiceUserPassword = new Encription().Decrypt(Configuration["Data:CardServiceTestSettings:Password"]);
-
-                ApplicationConstant.UbsService = Configuration["Data:TestServiceUrl:UbsService"];
-                ApplicationConstant.SmsService = Configuration["Data:TestServiceUrl:SmsService"];
-                ApplicationConstant.FcubService = Configuration["Data:TestServiceUrl:FcubService"];
                 ApplicationConstant.CardService = Configuration["Data:TestServiceUrl:CardService"];
-
-                ApplicationConstant.SmsUserId = Configuration["Data:TestSmsSetting:SmsUserId"];
-                ApplicationConstant.SmsPassword = new Encription().Decrypt(Configuration["Data:TestSmsSetting:SmsPassword"]);
-                ApplicationConstant.MobileNumber = Configuration["Data:TestSmsSetting:MobileNumber"];
             }
 
 
@@ -142,27 +64,11 @@ namespace EasyAssetManager
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<ISettingsUsersService, SettingsUsersService>();
-            services.AddScoped<ICustomerManager, CustomerManager>();
-            services.AddScoped<IDepositManager, DepositManager>();
-            services.AddScoped<IWithdrawCashManager, WithdrawCashManager>();
-            services.AddScoped<IWithdrawRemittanceManager, WithdrawRemittanceManager>();
-            services.AddScoped<IFundTransferManager, FundTransferManager>();
-            services.AddScoped<IBillPayCashManager, BillPayCashManager>();
-            services.AddScoped<IBillPayCashPalliBuddyutManager, BillPayCashPalliBuddyutManager>();
-            services.AddScoped<IAccountOpeningManager, AccountOpeningManager>();
-            services.AddScoped<IServiceRequestManager, ServiceRequestManager>();
-            services.AddScoped<ISearchAgentTransactionManager, SearchAgentTransactionManager>();
-            services.AddScoped<IBalanceEnquiryManager, BalanceEnquiryManager>(); 
-            services.AddScoped<ISearchAccountWorkFlowReqManager, SearchAccountWorkFlowReqManager>();
-            services.AddScoped<IAppUserSetupManager, AppUserSetupManager>();
-            services.AddScoped<ILimitManager, LimitManager>();
-            services.AddScoped<IBillerManager, BillerManager>();
-            services.AddScoped<IAgentManager, AgentManager>();
-            services.AddScoped<IRemmittanceManager, RemmittanceManager>();
+           
 
             services.AddScoped<IReportManager, ReportManager>();
             services.AddScoped<IRMAssetManager, RMAssetManager>();
-            services.AddScoped<ICommonManager, CommonManager>();
+
             services.AddScoped<IFileProcessManager, FileProcessManager>(); 
         }
 

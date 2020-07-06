@@ -7,10 +7,10 @@
             <div class="ibox ">
                 <div class="ibox-title">
                     <span class="label label-success float-right">Monthly</span>
-                    <h5>Account Open</h5>
+                    <h5>Loan Disbursement Amount</h5>
                 </div>
                 <div class="ibox-content">
-                    <h1 class="no-margins">386,200</h1>
+                    <h1 class="no-margins">BDT 200 Cr.</h1>
                 </div>
             </div>
         </div>
@@ -18,19 +18,19 @@
             <div class="ibox ">
                 <div class="ibox-title">
                     <span class="label label-primary float-right">Monthly</span>
-                    <h5>Service Request</h5>
+                    <h5>Outstanding Amount</h5>
                 </div>
                 <div class="ibox-content">
-                    <h1 class="no-margins">80,800</h1>
+                    <h1 class="no-margins">BDT 50 Cr.</h1>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="ibox ">
                 <div class="ibox-title">
-                    <h5>Monthly Commission</h5>
+                    <h5>Monthly Income</h5>
                     <div class="ibox-tools">
-                        <span class="label label-primary">Updated 12.2015</span>
+                        <span class="label label-primary">Updated @string.Format("{0:MMM dd, yyyy}", DateTime.Now)</span>
                     </div>
                 </div>
                 <div class="ibox-content no-padding">
@@ -46,10 +46,10 @@
             <div class="ibox ">
                 <div class="ibox-title">
                     <span class="label label-success float-right">Monthly</span>
-                    <h5>Deposit</h5>
+                    <h5>WO Amount</h5>
                 </div>
                 <div class="ibox-content">
-                    <h1 class="no-margins">386,200</h1>
+                    <h1 class="no-margins">BDT 2.5 Cr.</h1>
                 </div>
             </div>
         </div>
@@ -57,10 +57,10 @@
             <div class="ibox ">
                 <div class="ibox-title">
                     <span class="label label-primary float-right">Monthly</span>
-                    <h5>Withdraw</h5>
+                    <h5>Disbursement Loan Count</h5>
                 </div>
                 <div class="ibox-content">
-                    <h1 class="no-margins">80,800</h1>
+                    <h1 class="no-margins">570</h1>
                 </div>
             </div>
         </div>
@@ -68,10 +68,10 @@
             <div class="ibox ">
                 <div class="ibox-title">
                     <span class="label label-primary float-right">Monthly</span>
-                    <h5>Customer Registration</h5>
+                    <h5>WO Loan Count</h5>
                 </div>
                 <div class="ibox-content">
-                    <h1 class="no-margins">80,800</h1>
+                    <h1 class="no-margins">50</h1>
                 </div>
             </div>
         </div>
@@ -81,15 +81,9 @@
             <div class="ibox ">
                 <div class="ibox-content">
                     <div>
-                        <span class="float-right text-right">
-                            <small>Average value of sales in the past month in: <strong>United states</strong></small>
-                            <br />
-                            All sales: 162,862
-                        </span>
                         <h3 class="font-bold no-margins">
-                            Half-year commission margin
+                            Half-yeary target vs actual achivements
                         </h3>
-                        <small>Sales marketing.</small>
                     </div>
                     <div class="m-t-sm">
                         <div class="row">
@@ -101,15 +95,15 @@
                             <div class="col-md-4">
                                 <ul class="stat-list m-t-lg">
                                     <li>
-                                        <h2 class="no-margins">2,346</h2>
-                                        <small>Total orders in period</small>
+                                        <h2 class="no-margins">BDT 2,346 Cr.</h2>
+                                        <small>Total Achivements in current year</small>
                                         <div class="progress progress-mini">
                                             <div class="progress-bar" style="width: 48%;"></div>
                                         </div>
                                     </li>
                                     <li>
-                                        <h2 class="no-margins ">4,422</h2>
-                                        <small>Orders in last month</small>
+                                        <h2 class="no-margins ">BDT 522 Cr.</h2>
+                                        <small>Achivements in last month</small>
                                         <div class="progress progress-mini">
                                             <div class="progress-bar" style="width: 60%;"></div>
                                         </div>
@@ -121,10 +115,10 @@
                     <div class="m-t-md">
                         <small class="float-right">
                             <i class="fa fa-clock-o"> </i>
-                            Update on 16.07.2015
+                            Update on @string.Format("{0:MMM dd, yyyy}",DateTime.Now)
                         </small>
                         <small>
-                            <strong>Analysis of sales:</strong> The value has been changed over time, and last month reached a level over $50,000.
+                            <strong>Analysis of achivements:</strong> The value has been changed over time, and last month reached a level over BDT 50,000 Cr.
                         </small>
                     </div>
                 </div>
@@ -201,7 +195,7 @@ $(document).ready(function () {
                 labels: ["January", "February", "March", "April", "May", "June", "July"],
                 datasets: [
                     {
-                        label: "Example dataset",
+                        label: "Target",
                         backgroundColor: "rgba(26,179,148,0.5)",
                         borderColor: "rgba(26,179,148,0.7)",
                         pointBackgroundColor: "rgba(26,179,148,1)",
@@ -209,7 +203,7 @@ $(document).ready(function () {
                         data: [48, 48, 60, 39, 56, 37, 30]
                     },
                     {
-                        label: "Example dataset",
+                        label: "Actual",
                         backgroundColor: "rgba(220,220,220,0.5)",
                         borderColor: "rgba(220,220,220,1)",
                         pointBackgroundColor: "rgba(220,220,220,1)",

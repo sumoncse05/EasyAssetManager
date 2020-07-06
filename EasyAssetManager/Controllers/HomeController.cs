@@ -1,13 +1,10 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using EasyAssetManager.Models;
-using EasyAssetManagerCore.Models.EntityModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using EasyAssetManagerCore.BusinessLogic.Security;
-using EasyAssetManagerCore.Models.CommonModel;
 using EasyAssetManagerCore.Model.CommonModel;
-using EasyAssetManagerCore.BusinessLogic.Operation;
 
 namespace EasyAssetManager.Controllers
 {
@@ -16,7 +13,6 @@ namespace EasyAssetManager.Controllers
         private readonly ISettingsUsersService settingsUsersService;
         private IHostingEnvironment environment;
         private readonly IHttpContextAccessor contextAccessor;
-        private readonly ICbsDataConnectionManager cbsDataConnectionManager=new CbsDataConnectionManager();
         public HomeController(ISettingsUsersService settingsUsersService, IHostingEnvironment environment, IHttpContextAccessor contextAccessor)
         {
             this.settingsUsersService = settingsUsersService;
@@ -41,23 +37,6 @@ namespace EasyAssetManager.Controllers
             HttpContext.Session.Remove(ApplicationConstant.GlobalSessionSession);
             return RedirectToAction("Index", "Login");
         }
-        [ScreenPermission("10019")]
-        public IActionResult ChangePassword()
-        {
-            return View();
-        }
-        [HttpPost]
-        public IActionResult ChangePassword(SettingsUsers user)
-        {
-            var msg = settingsUsersService.SetUserPassword(user, Session, contextAccessor);
-            return Json(msg);
-        }
-
-        public IActionResult Profile()
-        {
-            return View();
-        }
-
 
 
     }

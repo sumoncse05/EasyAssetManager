@@ -11,7 +11,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
     public class RMAssetManager : BaseService, IRMAssetManager
     {
         private readonly IRMAssetRepository rmRepository;
-        public RMAssetManager() : base((int)ConnectionStringEnum.EbankConnectionString)
+        public RMAssetManager()
         {
             rmRepository = new RMAssetRepository(Connection);
         }

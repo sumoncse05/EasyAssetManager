@@ -2,16 +2,14 @@
 using EasyAssetManagerCore.Model.CommonModel;
 using EasyAssetManagerCore.Models.EntityModel;
 using EasyAssetManagerCore.Repository.Operation.Asset;
-using System;
 using System.Collections.Generic;
-using System.Data;
 
 namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
 {
     public class ReportManager : BaseService, IReportManager
     {
         private readonly IReportRepository reportRepository;
-        public ReportManager() : base((int)ConnectionStringEnum.EbankConnectionString)
+        public ReportManager()
         {
             reportRepository = new ReportRepository(Connection);
         }

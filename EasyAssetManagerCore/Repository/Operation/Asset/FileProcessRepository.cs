@@ -24,46 +24,37 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
             return result;
         }
 
-        public IEnumerable<Account> GeAccountDetails(string customerAccountNo, string userId)
-        {
-            var dyParam = new OracleDynamicParameters();
-            dyParam.Add("pvc_custacno", customerAccountNo, OracleMappingType.Varchar2, ParameterDirection.Input);
-            dyParam.Add("pvc_appuser", userId, OracleMappingType.Varchar2, ParameterDirection.Input);
 
-            dyParam.Add("pcr_accountdtl", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
-            return Connection.Query<Account>("pkg_lov_manager.dpd_get_accountdtl", dyParam, commandType: CommandType.StoredProcedure);
-        }
+        //public IEnumerable<District> GetDistrictList(string div_code, string pvc_appuser)
+        //{
+        //    var dyParam = new OracleDynamicParameters();
+        //    dyParam.Add("pvc_divcode", div_code, OracleMappingType.Varchar2, ParameterDirection.Input);
+        //    dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input);
 
-        public IEnumerable<District> GetDistrictList(string div_code, string pvc_appuser)
-        {
-            var dyParam = new OracleDynamicParameters();
-            dyParam.Add("pvc_divcode", div_code, OracleMappingType.Varchar2, ParameterDirection.Input);
-            dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input);
+        //    dyParam.Add("pcr_districtlist", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
+        //    return Connection.Query<District>("pkg_lov_manager.dpd_get_districtlist", dyParam, commandType: CommandType.StoredProcedure);
+        //}
 
-            dyParam.Add("pcr_districtlist", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
-            return Connection.Query<District>("pkg_lov_manager.dpd_get_districtlist", dyParam, commandType: CommandType.StoredProcedure);
-        }
+        //public IEnumerable<Division> GetDivisionList(string pvc_appuser)
+        //{
+        //    var dyParam = new OracleDynamicParameters();
+        //    dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input);
 
-        public IEnumerable<Division> GetDivisionList(string pvc_appuser)
-        {
-            var dyParam = new OracleDynamicParameters();
-            dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input);
+        //    dyParam.Add("pcr_divisionlist", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
+        //    return Connection.Query<Division>("pkg_lov_manager.dpd_get_divisionlist", dyParam, commandType: CommandType.StoredProcedure);
+        //}
 
-            dyParam.Add("pcr_divisionlist", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
-            return Connection.Query<Division>("pkg_lov_manager.dpd_get_divisionlist", dyParam, commandType: CommandType.StoredProcedure);
-        }
+        //public IEnumerable<Thana> GetThanaList(string div_code, string dist_code, string pvc_appuser)
+        //{
+        //    var dyParam = new OracleDynamicParameters();
+        //    dyParam.Add("pvc_divcode", div_code, OracleMappingType.Varchar2, ParameterDirection.Input);
+        //    dyParam.Add("pvc_distcode", dist_code, OracleMappingType.Varchar2, ParameterDirection.Input);
+        //    dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input);
 
-        public IEnumerable<Thana> GetThanaList(string div_code, string dist_code, string pvc_appuser)
-        {
-            var dyParam = new OracleDynamicParameters();
-            dyParam.Add("pvc_divcode", div_code, OracleMappingType.Varchar2, ParameterDirection.Input);
-            dyParam.Add("pvc_distcode", dist_code, OracleMappingType.Varchar2, ParameterDirection.Input);
-            dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input);
+        //    dyParam.Add("pcr_thanalist", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
+        //    return Connection.Query<Thana>("pkg_lov_manager.dpd_get_thanalist", dyParam, commandType: CommandType.StoredProcedure);
 
-            dyParam.Add("pcr_thanalist", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
-            return Connection.Query<Thana>("pkg_lov_manager.dpd_get_thanalist", dyParam, commandType: CommandType.StoredProcedure);
-
-        }
+        //}
 
         public int Process_LOAN_CL(List<AST_LOAN_CL_TMP> portFolios)
         {
@@ -153,11 +144,11 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
     #region Interface
     public interface IFileProcessRepository
     {
-        IEnumerable<Account> GeAccountDetails(string customerAccountNo, string userId);
-        IEnumerable<Division> GetDivisionList(string pvc_appuser);
-        IEnumerable<District> GetDistrictList(string div_code, string pvc_appuser);
+        //IEnumerable<Account> GeAccountDetails(string customerAccountNo, string userId);
+        //IEnumerable<Division> GetDivisionList(string pvc_appuser);
+        //IEnumerable<District> GetDistrictList(string div_code, string pvc_appuser);
         int Process_LOAN_WO(List<AST_LOAN_WO_STATUS_TEMP> portFolios);
-        IEnumerable<Thana> GetThanaList(string div_code, string dist_code, string pvc_appuser);
+        //IEnumerable<Thana> GetThanaList(string div_code, string dist_code, string pvc_appuser);
         int DeleteTable(string tableName, string user_id);
         int Process_LOAN_PORTFOLIO(List<AST_RM_PORTFOLIO_TMP> portFolios);
         int Process_LOAN_TARGET(List<AST_LOAN_TARGET_TMP> portFolios);

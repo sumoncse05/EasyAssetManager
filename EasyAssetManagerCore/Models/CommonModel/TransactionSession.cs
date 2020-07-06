@@ -39,7 +39,5 @@ namespace EasyAssetManagerCore.Models.CommonModel
         public string TransactionVatAmount { get; set; }
         public string BearerType { get; set; }
         public string BearerTypeDesc { get; set; }
-        public IEnumerable<Customer> Customers { get; set; }
-        public IEnumerable<WorkFlowType> WorkFlowType { get; set; }
     }
 }
