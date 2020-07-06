@@ -54,8 +54,12 @@ namespace EasyAssetManagerCore.Models.EntityModel
         public double bl_cnt_ytd { get; set; }
         public double bl_amt_ytd { get; set; }
         public double cl_tot_ac { get; set; }
-        public double cl_tot_amount { get; set; }
+        public double cl_tot_amount { get; set; }        
         public double cl_percnt_cl { get; set; }
+        public double cl_tot_amount_lytd { get; set; }
+        public double cl_tot_ac_lytd { get; set; }
+        public double cl_diff_amount { get; set; }
+        public double cl_diff_ac { get; set; }
         public double wo_lst_ac { get; set; }
         public double wo_lst_amount { get; set; }
         public double close_cnt_ytd { get; set; }

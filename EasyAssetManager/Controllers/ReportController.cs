@@ -20,8 +20,8 @@ namespace EasyAssetManager.Controllers
 
         public IActionResult AssetAtGlance(string loanType, string rmCode, string areaCode, string branchCode, string todate)
         {
-            //var data = reportRepository.AssetAtGlance(loanType, rmCode, areaCode, branchCode, todate, Session);
-            return PartialView("_AssetAtGlance", null);
+            var data = reportRepository.AssetAtGlance(loanType, rmCode, areaCode, branchCode, todate, Session);
+            return PartialView("_AssetAtGlance", data);
         }
         public IActionResult AreawiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate)
         {
