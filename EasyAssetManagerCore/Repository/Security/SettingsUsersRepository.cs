@@ -406,14 +406,7 @@ namespace EasyAssetManagerCore.Repository.Security
             dyParam.Add("pcr_userdtl", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
             return Connection.Query<User>("pkg_sec_user.dpd_get_userdtl", dyParam, commandType: CommandType.StoredProcedure).FirstOrDefault();
         }
-        public IEnumerable<Process> GetProcessRunStatus(string run_id, string pvc_appuser)
-        {
-            var dyParam = new OracleDynamicParameters();
-            dyParam.Add("pnm_run_id", run_id, OracleMappingType.Decimal, ParameterDirection.Input, 0);
-            dyParam.Add("pvc_username", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input, 50);
-            dyParam.Add("pcr_processstatus", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
-            return Connection.Query<Process>("dpg_utl_process_control.dpd_process_run_status", dyParam, commandType: CommandType.StoredProcedure);
-        }
+
         public IEnumerable<User> CmdUserList(string pvc_appuser)
         {
             var dyParam = new OracleDynamicParameters();
@@ -500,7 +493,6 @@ namespace EasyAssetManagerCore.Repository.Security
         ResponseMessage SetUserInactive(string pvc_userid, string pvc_inactivereason, string pvc_appuser);
         ResponseMessage DeleteUser(string pvc_userid, string pvc_appuser);
         User GetUser(string pvc_userid, string pvc_appuser);
-        IEnumerable<Process> GetProcessRunStatus(string run_id, string pvc_appuser);
         IEnumerable<User> CmdUserList(string pvc_appuser);
         IEnumerable<UserRole> GetFreeRole(string pvc_userid, string pvc_appuser);
         IEnumerable<UserRole> GetAssignedRole(string pvc_userid, string pvc_appuser);

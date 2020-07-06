@@ -1,5 +1,4 @@
 ﻿using EasyAssetManagerCore.BusinessLogic.Operation.Asset;
-using EasyAssetManagerCore.BusinessLogic.Security;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -10,12 +9,10 @@ namespace EasyAssetManager.Controllers
     {
         private readonly IRMAssetManager rmAssetManager;
         private IHostingEnvironment environment;
-        private readonly ICommonManager commonManager;
-        public RMAssetController(IRMAssetManager rmAssetManager, IHostingEnvironment environment, ICommonManager commonManager)
+        public RMAssetController(IRMAssetManager rmAssetManager, IHostingEnvironment environment)
         {
             this.rmAssetManager = rmAssetManager;
             this.environment = environment;
-            this.commonManager = commonManager;
         }
         //[ScreenPermission("50111")]
         public IActionResult Index()

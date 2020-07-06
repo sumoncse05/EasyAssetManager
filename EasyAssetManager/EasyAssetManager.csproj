@@ -45,6 +45,7 @@
   <ItemGroup>
     <Folder Include="Connected Services\" />
     <Folder Include="Log\" />
+    <Folder Include="Views\Common\" />
     <Folder Include="wwwroot\UserSpace\" />
   </ItemGroup>
 

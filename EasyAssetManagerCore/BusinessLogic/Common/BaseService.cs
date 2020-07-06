@@ -14,29 +14,9 @@ namespace EasyAssetManagerCore.BusinessLogic.Common
         public AppSession Sessoin { get; set; }
         public Message Message { get; set; }
 
-        public BaseService(int connectionstring)
+        public BaseService()
         {
-
-            switch (connectionstring)
-            {
-                case 1:
-                    Connection = new OracleConnection(ApplicationConstant.EbankConnectionString);
-                    break;
-                case 2:
-                    Connection = new OracleConnection(ApplicationConstant.EsecConnectionString);
-                    break;
-                case 3:
-                    Connection = new OracleConnection(ApplicationConstant.CbsConnectionString);
-                    break;
-                case 4:
-                    Connection = new OracleConnection(ApplicationConstant.RemitConnectionString);
-                    break;
-                default:
-                    Connection = new OracleConnection();
-                    break;
-
-            }
-                    
+            Connection = new OracleConnection(ApplicationConstant.EbankConnectionString);
             Message = new Message();
             //if (Connection.State != System.Data.ConnectionState.Open)
             //{

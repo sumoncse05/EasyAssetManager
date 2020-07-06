@@ -16,11 +16,9 @@ namespace EasyAssetManagerCore.BusinessLogic.Security
     public class SettingsUsersService : BaseService, ISettingsUsersService
     {
         private readonly ISettingsUsersRepository userRepository;
-        private readonly ICommonManager commonManager;
-        public SettingsUsersService() : base((int)ConnectionStringEnum.EsecConnectionString)
+        public SettingsUsersService()
         {
             userRepository = new SettingsUsersRepository(Connection);
-            commonManager = new CommonManager();
         }
 
         public Message Delete(SettingsUsers user, AppSession appSession)
@@ -746,10 +744,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Security
         {
             return userRepository.GetUser(user_id, session.User.user_id);
         }
-        public IEnumerable<Process> GetProcessRunStatus(string user_id, AppSession session)
-        {
-            return userRepository.GetProcessRunStatus(user_id, session.User.user_id);
-        }
+ 
         public IEnumerable<User> CmdUserList(string user_id)
         {
             return userRepository.CmdUserList(user_id);
@@ -825,7 +820,6 @@ namespace EasyAssetManagerCore.BusinessLogic.Security
         Message SaveAuthorizePasswordResetRequest(IEnumerable<SettingsUsers> users, AppSession session);
         IEnumerable<User> LoogedinUsers(AppSession session);
         Message ClearLoginSession(string user_id, string station_ip, AppSession session);
-        IEnumerable<Process> GetProcessRunStatus(string user_id, AppSession session);
         IEnumerable<User> CmdUserList(string pvc_appuser);
         IEnumerable<UserRole> GetAssignedRole(string user_id, AppSession session);
         IEnumerable<UserRole> GetFreeRole(string user_id, AppSession session);

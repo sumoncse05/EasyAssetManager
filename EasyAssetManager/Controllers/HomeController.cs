@@ -16,7 +16,6 @@ namespace EasyAssetManager.Controllers
         private readonly ISettingsUsersService settingsUsersService;
         private IHostingEnvironment environment;
         private readonly IHttpContextAccessor contextAccessor;
-        private readonly ICbsDataConnectionManager cbsDataConnectionManager=new CbsDataConnectionManager();
         public HomeController(ISettingsUsersService settingsUsersService, IHostingEnvironment environment, IHttpContextAccessor contextAccessor)
         {
             this.settingsUsersService = settingsUsersService;

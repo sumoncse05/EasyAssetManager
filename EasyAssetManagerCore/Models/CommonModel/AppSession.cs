@@ -11,14 +11,12 @@ namespace EasyAssetManagerCore.Model.CommonModel
         public AppSession()
         {
             Screens = new List<Screen>();
-            Customer = new Customer();
             TransactionSession = new TransactionSession();
         }
         public virtual SettingsUsers User { get; set; }
         public virtual IEnumerable<Screen> Screens { get; set; }
         public virtual IEnumerable<ScreenAccessPermission> ScreenAccessPermissions { get; set; }
-      
-        public Customer Customer { get; set; }
+ 
         public TransactionSession TransactionSession { get; set; }
     }
 
@@ -69,9 +67,6 @@ namespace EasyAssetManagerCore.Model.CommonModel
         public static string ConnectionString { get; set; }
 
         public static string EbankConnectionString { get; set; }
-        public static string EsecConnectionString { get; set; }
-        public static string CbsConnectionString { get; set; }
-        public static string RemitConnectionString { get; set; }
         public static string CardServiceUserId { get; set; }
         public static string CardServiceUserPassword { get; set; }
 

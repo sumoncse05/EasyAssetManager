@@ -11,7 +11,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
     public class ReportManager : BaseService, IReportManager
     {
         private readonly IReportRepository reportRepository;
-        public ReportManager() : base((int)ConnectionStringEnum.EbankConnectionString)
+        public ReportManager()
         {
             reportRepository = new ReportRepository(Connection);
         }

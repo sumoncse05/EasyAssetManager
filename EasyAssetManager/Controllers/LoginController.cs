@@ -14,12 +14,10 @@ namespace EasyAssetManager.Controllers
     {
         private readonly ISettingsUsersService userService;
         private IHostingEnvironment environment;
-        private readonly ICommonManager commonManager;
-        public LoginController(ISettingsUsersService userService, IHostingEnvironment environment, ICommonManager commonManager)
+        public LoginController(ISettingsUsersService userService, IHostingEnvironment environment)
         {
             this.userService = userService;
             this.environment = environment;
-            this.commonManager = commonManager;
         }
         public IActionResult Index()
         {
@@ -79,66 +77,6 @@ namespace EasyAssetManager.Controllers
         {
             return View();
         }
-
-        [HttpPost]
-        public IActionResult ValidateOtp(string otp)
-        {
-            var message = new Message();
-            if (string.IsNullOrEmpty(otp))
-            {
-                MessageHelper.Error(message, "Invalid OTP.");
-                return Json(message);
-            }
-            var appSession = HttpContext.Session.Get<AppSession>(ApplicationConstant.GlobalSessionSession);
-            if (!string.IsNullOrEmpty(appSession.TransactionSession.SmsReqRefNo))
-            {
-                appSession.TransactionSession.SmsOtpVerifyStatus = otp == appSession.TransactionSession.SmsOtpData ? "S" : "F";
-
-                var msg = commonManager.SetSmsOtpResponseStatus(appSession.TransactionSession.SmsReqRefNo, appSession.TransactionSession.SmsOtpData, otp, appSession.TransactionSession.SmsOtpVerifyStatus, appSession.User.user_id, appSession.User.StationIp);
-
-                if (msg.pvc_status == "40999" && appSession.TransactionSession.SmsOtpVerifyStatus == "S")
-                {
-                    appSession.User.otp_req = "N"; //N - Neutral. No need to validate OTP
-                    HttpContext.Session.Set(ApplicationConstant.GlobalSessionSession, appSession);
-                    MessageHelper.Success(message, "OTP Verify Successfully.");
-                    return Json(message);
-                }
-                else
-                {
-                    MessageHelper.Error(message, "Invalid OTP. Please try again.");
-                    return Json(message);
-                }
-
-            }
-            else
-            {
-                MessageHelper.Error(message, "OTP not yet send. Please send again.");
-                return Json(message);
-            }
-        }
-
-        [HttpPost]
-        public IActionResult ReSendOtp()
-        {
-            var appSession = HttpContext.Session.Get<AppSession>(ApplicationConstant.GlobalSessionSession);
-            var message = new Message();
-            List<string> msg = commonManager.RequestSmsOtp("04", appSession.User.user_id, appSession.User.mobile, "", appSession.User.user_id, appSession.User.StationIp);
-            if (msg[0] == "40999")
-            {
-                appSession.TransactionSession.SmsReqRefNo = msg[2];
-                appSession.TransactionSession.SmsOtpData = msg[3];
-                MessageHelper.Success(message, "OTP Re-Send Successfully.");
-                return Json(message);
-            }
-            else
-            {
-                MessageHelper.Error(message, "Unable to Send OTP SMS. Please try again.");
-                return Json(message);
-
-            }
-        }
-
-        
 
     }
 

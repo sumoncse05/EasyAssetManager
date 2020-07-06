@@ -15,7 +15,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
     {
         private readonly IFileProcessRepository fileProcessRepository;
 
-        public FileProcessManager() : base((int)ConnectionStringEnum.EbankConnectionString)
+        public FileProcessManager()
         {
             fileProcessRepository = new FileProcessRepository(Connection);
         }
@@ -427,20 +427,20 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             return Message;
         }
 
-        public IEnumerable<District> GetDistrictList(string div_code, string pvc_appuser)
-        {
-            return fileProcessRepository.GetDistrictList(div_code, pvc_appuser);
-        }
+        //public IEnumerable<District> GetDistrictList(string div_code, string pvc_appuser)
+        //{
+        //    return fileProcessRepository.GetDistrictList(div_code, pvc_appuser);
+        //}
 
-        public IEnumerable<Division> GetDivisionList(string pvc_appuser)
-        {
-            return fileProcessRepository.GetDivisionList(pvc_appuser);
-        }
+        //public IEnumerable<Division> GetDivisionList(string pvc_appuser)
+        //{
+        //    return fileProcessRepository.GetDivisionList(pvc_appuser);
+        //}
 
-        public IEnumerable<Thana> GetThanaList(string div_code, string dist_code, string pvc_appuser)
-        {
-            return fileProcessRepository.GetThanaList(div_code, dist_code, pvc_appuser);
-        }
+        //public IEnumerable<Thana> GetThanaList(string div_code, string dist_code, string pvc_appuser)
+        //{
+        //    return fileProcessRepository.GetThanaList(div_code, dist_code, pvc_appuser);
+        //}
 
         protected string valid(object val, string fieldName, string fieldType)
         {
@@ -498,9 +498,9 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
     }
     public interface IFileProcessManager
     {
-        IEnumerable<Division> GetDivisionList(string pvc_appuser);
-        IEnumerable<District> GetDistrictList(string div_code, string pvc_appuser);
-        IEnumerable<Thana> GetThanaList(string div_code, string dist_code, string pvc_appuser);
+        //IEnumerable<Division> GetDivisionList(string pvc_appuser);
+        //IEnumerable<District> GetDistrictList(string div_code, string pvc_appuser);
+        //IEnumerable<Thana> GetThanaList(string div_code, string dist_code, string pvc_appuser);
         Message ProcessFile(int businessYear, int file_Type, string filepath, AppSession session);
     }
 }
