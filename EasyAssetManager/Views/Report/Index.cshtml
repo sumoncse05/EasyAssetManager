@@ -121,9 +121,9 @@
             };
             var eventInitializer = function () {
                 $('#search').click(searchInitiate);
-               // combo.getAreaList('area', '/Common/GetAreaList', true);
-              //  combo.getBranchList('branch', '/Common/GetBranchList', $('#area').val(), true);
-               // combo.getRmList('rmCode', '/Common/GetRmList', $('#branch').val(), true);
+                combo.getAreaList('area', '/Common/GetAreaList', true);
+                combo.getBranchList('branch', '/Common/GetBranchList', $('#area').val(), true);
+                combo.getRmList('rmCode', '/Common/GetRmList', $('#branch').val(), true);
                 combo.getReportName('reportName', false);
                 combo.getLoanType('loantype', false);
                 $('#area').on('change', function () {

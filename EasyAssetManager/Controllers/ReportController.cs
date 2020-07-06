@@ -20,26 +20,31 @@ namespace EasyAssetManager.Controllers
 
         public IActionResult AssetAtGlance(string loanType, string rmCode, string areaCode, string branchCode, string todate)
         {
-            //var data = reportRepository.AssetAtGlance(loanType, rmCode, areaCode, branchCode, todate, Session);
-            return PartialView("_AssetAtGlance", null);
+            if (string.IsNullOrEmpty(rmCode)) rmCode = ""; if (string.IsNullOrEmpty(areaCode)) areaCode = ""; if (string.IsNullOrEmpty(branchCode)) branchCode = "";
+            var data = reportRepository.AssetAtGlance(loanType, rmCode, areaCode, branchCode, todate, Session);
+            return PartialView("_AssetAtGlance", data);
         }
         public IActionResult AreawiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate)
         {
+            if (string.IsNullOrEmpty(rmCode)) rmCode = ""; if (string.IsNullOrEmpty(areaCode)) areaCode = ""; if (string.IsNullOrEmpty(branchCode)) branchCode = "";
             var data = reportRepository.AreawiseReport(loanType, rmCode, areaCode, branchCode, todate, Session);
             return PartialView("_AreawiseReport", data);
         }
-        public IActionResult BranchwiseReport(string loanType,string rmCode,string areaCode,string branchCode,string todate)
+        public IActionResult BranchwiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate)
         {
+            if (string.IsNullOrEmpty(rmCode)) rmCode = ""; if (string.IsNullOrEmpty(areaCode)) areaCode = ""; if (string.IsNullOrEmpty(branchCode)) branchCode = "";
             var data = reportRepository.BranchwiseReport(loanType, rmCode, areaCode, branchCode, todate, Session);
             return PartialView("_BranchwiseReport", data);
         }
         public IActionResult RmwiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate)
         {
+            if (string.IsNullOrEmpty(rmCode)) rmCode = ""; if (string.IsNullOrEmpty(areaCode)) areaCode = ""; if (string.IsNullOrEmpty(branchCode)) branchCode = "";
             var data = reportRepository.RmwiseReport(loanType, rmCode, areaCode, branchCode, todate, Session);
             return PartialView("_RmwiseReport", data);
         }
         public IActionResult BstwiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate)
         {
+            if (string.IsNullOrEmpty(rmCode)) rmCode = ""; if (string.IsNullOrEmpty(areaCode)) areaCode = ""; if (string.IsNullOrEmpty(branchCode)) branchCode = "";
             var data = reportRepository.BstwiseReport(loanType, rmCode, areaCode, branchCode, todate, Session);
             return PartialView("_BstwiseReport", data);
         }
