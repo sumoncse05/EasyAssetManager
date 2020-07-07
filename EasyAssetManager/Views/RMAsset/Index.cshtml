@@ -70,7 +70,7 @@
         <div class="col-lg-12">
             <div class="ibox " id="iboxTbl">
                 <div class="ibox-title">
-                    <h5>Available Loan List to Assign(<label id="lblLoanCount" name="lblLoanCount" />)</h5>
+                    <h5>Available Loan List to Assign(<label id="lblLoanCount" name="lblLoanCount" /> )</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up" id="iboxTblImg"></i>
@@ -156,12 +156,12 @@
                 $('#btnAssign').click(assignRM);
                 $('#btnModalOpen').click(showModaldata);
                 searchInitiate();
-                combo.getRmList('newRmCode', '/Common/GetRmList', true);
+                combo.getRmList('newRmCode', '@Url.Content("~/Common/GetRmList")', true);
                 combo.getLoanType('loanType', true);
                 $('#loanType').on('change', function ()
                 {
                     var loanType = $('#loanType').val();
-                    combo.getLoanProductList('loanProduct', '/Common/GetLoanProductList', loanType, true);
+                    combo.getLoanProductList('loanProduct','@Url.Content("~/Common/GetLoanProductList")', loanType, true);
                     $('#loanProduct').trigger("chosen:updated");
                 });
                 $('.input-group.date').datepicker({
@@ -203,7 +203,7 @@
                     loanProduct = $('#loanProduct').val();
                 } 
                 var rmCode = $('#rmCode').val();
-                var url = '/RMAsset/GetAvailableLoan';
+                var url ='@Url.Content("~/RMAsset/GetAvailableLoan")';
                 $('#div-availableLoan').load(url + '?loanType=' + loanType + '&&loanProduct=' + loanProduct + '&&rmCode=' + rmCode);
 
             };
@@ -223,7 +223,7 @@
                     formData.append("loanList", loanList);
                     formData.append("newRmCode", $("#newRmCode").val());
                     formData.append("effectDate", $("#effectDate").val());
-                    var url = '/RMAsset/SetAssignRM';
+                    var url ='@Url.Content("~/RMAsset/SetAssignRM")';
                     ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res)
                     {
                         ApplicationCommon.showNotification(res.messageType, res.messageString);

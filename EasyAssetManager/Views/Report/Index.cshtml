@@ -121,17 +121,17 @@
             };
             var eventInitializer = function () {
                 $('#search').click(searchInitiate);
-                combo.getAreaList('area', '/Common/GetAreaList', true);
-                combo.getBranchList('branch', '/Common/GetBranchList', $('#area').val(), true);
-                combo.getRmList('rmCode', '/Common/GetRmList', $('#branch').val(), true);
+                combo.getAreaList('area', '@Url.Content("~/Common/GetAreaList")', true);
+                combo.getBranchList('branch','@Url.Content("~/Common/GetBranchList")', $('#area').val(), true);
+                combo.getRmList('rmCode','@Url.Content("~/Common/GetRmList")', $('#branch').val(), true);
                 combo.getReportName('reportName', false);
                 combo.getLoanType('loantype', false);
                 $('#area').on('change', function () {
-                    combo.getBranchList('branch', '/Common/GetBranchList', $('#area').val(), true);
+                    combo.getBranchList('branch','@Url.Content("~/Common/GetBranchList")', $('#area').val(), true);
                     $('#branch').trigger("chosen:updated");
                 });
                 $('#branch').on('change', function () {
-                    combo.getRmList('rmCode', '/Common/GetRmList', $('#branch').val(), true);
+                    combo.getRmList('rmCode', '@Url.Content("~/Common/GetRmList")', $('#branch').val(), true);
                     $('#rmCode').trigger("chosen:updated");
                 });
                 $('.input-group.date').datepicker({
@@ -156,28 +156,28 @@
                
                 switch (reportId) {
                     case 1:
-                        url = '/Report/AssetAtGlance';
+                       url ='@Url.Content("~/Report/AssetAtGlance")';
                         break;
                     case 2:
-                        url = '/Report/AreawiseReport';
+                        url = '@Url.Content("~/Report/AreawiseReport")';
                         break;
                     case 3:
-                        url = '/Report/BranchwiseReport';
+                        url = '@Url.Content("~/Report/BranchwiseReport")';
                         break;
                     case 4:
-                        url = '/Report/RmwiseReport';
+                        url ='@Url.Content("~/Report/RmwiseReport")';
                         break;
                     case 5:
-                        url = '/Report/BstwiseReport';
+                        url ='@Url.Content("~/Report/BstwiseReport")';
                         break;
                     case 6:
-                        url = '/Report/ProductwiseReport';
+                        url ='@Url.Content("~/Report/ProductwiseReport")';
                         break;
                     case 7:
-                        url = '/Report/YearwiseReport';
+                        url ='@Url.Content("~/Report/YearwiseReport")';
                         break;
                     case 8:
-                        url = '/Report/ClientwiseReport';
+                        url ='@Url.Content("~/Report/ClientwiseReport")';
                         break;
                 }
 

@@ -56,7 +56,7 @@ var ApplicationCommon = function ()
         var w = (width / 2) - 750;
         var h = (height / 2) - 150;
         var div = '<div id="ICustomLoder" style="height:' + height + 'px; width:' + width + 'px; background-color:rgba(0,0,0,0.5);z-index:999999;top:0;bottom:0;right:0;left:0;position:fixed;">' +
-            '<div style="margin-left:' + w + 'px;margin-top:' + h + 'px;"><p style="color:lightgray; font-size:20px; text-align:center; line-height:75px;"><img src="/ApplicationTheme/assets/img/loading.gif"/></p></div>';
+            '<div style="margin-left:' + w + 'px;margin-top:' + h + 'px;"><p style="color:lightgray; font-size:20px; text-align:center; line-height:75px;"><img src="/AssetManager/ApplicationTheme/assets/img/loading.gif"/></p></div>';
         $('body').append(div);
     };
     var hideLoder = function ()

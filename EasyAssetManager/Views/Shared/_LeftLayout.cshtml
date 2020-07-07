@@ -26,7 +26,7 @@
 
                     @if (appSession != null && appSession.Screens != null)
                     {
-                        @foreach (var parentScreen in appSession.Screens.Where(o => o.scr_parent_id == null))
+                        @foreach (var parentScreen in appSession.Screens.Where(o => o.scr_parent_id == null && o.mod_id=="AST"))
                         {
 
                             string className = "";
@@ -72,7 +72,7 @@
                                         {
                                             @foreach (var lastChildscreen in appSession.Screens.Where(o => o.scr_parent_id == firstChildscreen.scr_id))
                                             {
-                                            <li class="menuAction" id="@lastChildscreen.scr_id"><a href="@lastChildscreen.scr_link">@lastChildscreen.scr_name</a></li>
+                                            <li class="menuAction" id="@lastChildscreen.scr_id"><a href="@Url.Content("/AssetManager"+lastChildscreen.scr_link)">@lastChildscreen.scr_name</a></li>
                                             }
                                         }
                                         }
