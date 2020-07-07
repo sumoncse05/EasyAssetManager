@@ -81,9 +81,11 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                                     AREA_NAME = wooksheet.Cells[i, 2].Text.Trim(),
                                     BRANCH_CODE = wooksheet.Cells[i, 3].Text.Trim(),
                                     BRANCH_NAME = wooksheet.Cells[i, 4].Text.Trim(),
-                                    OS_AMOUNT = valid(wooksheet.Cells[i, 5].Text.Trim(), "LOAN_OUTSTANDING", "Number"),
-                                    WO_AMOUNT = valid(wooksheet.Cells[i, 6].Text.Trim(), "WO_AMOUNT", "Number"),
-                                    WO_DATE =Convert.ToDateTime(wooksheet.Cells[i, 7].Text.Trim()),
+                                    SEG_ID = wooksheet.Cells[i, 5].Text.Trim(),
+                                    SEG_NAME = wooksheet.Cells[i, 6].Text.Trim(),
+                                    OS_AMOUNT = valid(wooksheet.Cells[i, 7].Text.Trim(), "LOAN_OUTSTANDING", "Number"),
+                                    WO_AMOUNT = valid(wooksheet.Cells[i, 8].Text.Trim(), "WO_AMOUNT", "Number"),
+                                    WO_DATE =Convert.ToDateTime(wooksheet.Cells[i, 9].Text.Trim()),
                                     INS_BY = session.User.user_id,
                                     INS_DATE = DateTime.Now
                                 };
@@ -275,9 +277,11 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                                     RM_NAME = wooksheet.Cells[i, 6].Text.Trim(),
                                     BST_CODE = wooksheet.Cells[i, 7].Text.Trim(),
                                     BST_NAME = wooksheet.Cells[i, 8].Text.Trim(),
-                                    OS_TARGET_AMT = valid(wooksheet.Cells[i, 9].Text.Trim(), "OS_TARGET_AMT", "Number"),
-                                    DISB_TARGET_AMT = valid(wooksheet.Cells[i, 10].Text.Trim(), "DISB_TARGET_AMT", "Number"),
-                                    INC_TARGET_AMT = valid(wooksheet.Cells[i, 11].Text.Trim(), "INC_TARGET_AMT", "Number"),
+                                    SEG_ID = wooksheet.Cells[i, 9].Text.Trim(),
+                                    SEG_NAME = wooksheet.Cells[i, 10].Text.Trim(),
+                                    OS_TARGET_AMT = valid(wooksheet.Cells[i, 11].Text.Trim(), "OS_TARGET_AMT", "Number"),
+                                    DISB_TARGET_AMT = valid(wooksheet.Cells[i, 12].Text.Trim(), "DISB_TARGET_AMT", "Number"),
+                                    INC_TARGET_AMT = valid(wooksheet.Cells[i, 13].Text.Trim(), "INC_TARGET_AMT", "Number"),
                                     INS_BY = session.User.user_id,
                                     INS_DATE = DateTime.Now
                                 };
@@ -427,20 +431,6 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             return Message;
         }
 
-        //public IEnumerable<District> GetDistrictList(string div_code, string pvc_appuser)
-        //{
-        //    return fileProcessRepository.GetDistrictList(div_code, pvc_appuser);
-        //}
-
-        //public IEnumerable<Division> GetDivisionList(string pvc_appuser)
-        //{
-        //    return fileProcessRepository.GetDivisionList(pvc_appuser);
-        //}
-
-        //public IEnumerable<Thana> GetThanaList(string div_code, string dist_code, string pvc_appuser)
-        //{
-        //    return fileProcessRepository.GetThanaList(div_code, dist_code, pvc_appuser);
-        //}
 
         protected string valid(object val, string fieldName, string fieldType)
         {
@@ -493,14 +483,11 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
     {
         public static List<string> LOAN_CL = new List<string> { "AREA_CODE", "AREA_NAME", "BRANCH_CODE", "BRANCH_NAME", "RM_CODE", "RM_NAME", "BST_CODE", "BST_NAME", "LOAN_AC_NUMBER", "CL_STATUS", "EFF_DATE" };
         public static List<string> LOAN_PORTFOLIO = new List<string> { "AREA_CODE", "AREA_NAME", "BRANCH_CODE", "BRANCH_NAME", "RM_CODE", "RM_NAME", "LOAN_AC_NUMBER", "EFF_DATE" };
-        public static List<string> LOAN_TARGET = new List<string> { "AREA_CODE", "AREA_NAME", "BRANCH_CODE", "BRANCH_NAME", "RM_CODE", "RM_NAME", "BST_CODE", "BST_NAME", "OS_TARGET_AMT", "DISB_TARGET_AMT", "INC_TARGET_AMT" };
-        public static List<string> LOAN_WO = new List<string> { "AREA_CODE", "AREA_NAME", "BRANCH_CODE", "BRANCH_NAME", "OS_AMOUNT", "WO_AMOUNT", "WO_DATE" };
+        public static List<string> LOAN_TARGET = new List<string> { "AREA_CODE", "AREA_NAME", "BRANCH_CODE", "BRANCH_NAME", "RM_CODE", "RM_NAME", "BST_CODE", "BST_NAME", "SEG_ID", "SEG_NAME", "OS_TARGET_AMT", "DISB_TARGET_AMT", "INC_TARGET_AMT" };
+        public static List<string> LOAN_WO = new List<string> { "AREA_CODE", "AREA_NAME", "BRANCH_CODE", "BRANCH_NAME", "SEG_ID", "SEG_NAME", "OS_AMOUNT", "WO_AMOUNT", "WO_DATE" };
     }
     public interface IFileProcessManager
     {
-        //IEnumerable<Division> GetDivisionList(string pvc_appuser);
-        //IEnumerable<District> GetDistrictList(string div_code, string pvc_appuser);
-        //IEnumerable<Thana> GetThanaList(string div_code, string dist_code, string pvc_appuser);
         Message ProcessFile(int businessYear, int file_Type, string filepath, AppSession session);
     }
 }

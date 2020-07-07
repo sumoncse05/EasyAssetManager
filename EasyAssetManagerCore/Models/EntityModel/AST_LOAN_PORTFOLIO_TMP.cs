@@ -50,6 +50,8 @@ namespace EasyAssetManagerCore.Models.EntityModel
         public string RM_NAME { get; set; }
         public string BST_CODE { get; set; }
         public string BST_NAME { get; set; }
+        public string SEG_ID { get; set; }
+        public string SEG_NAME { get; set; }
         public string OS_TARGET_AMT { get; set; }
         public string DISB_TARGET_AMT { get; set; }
         public string INC_TARGET_AMT { get; set; }
@@ -65,6 +67,8 @@ namespace EasyAssetManagerCore.Models.EntityModel
         public string AREA_NAME { get; set; }
         public string BRANCH_CODE { get; set; }
         public string BRANCH_NAME { get; set; }
+        public string SEG_ID { get; set; }
+        public string SEG_NAME { get; set; }
         public string OS_AMOUNT { get; set; }
         public string WO_AMOUNT { get; set; }
         public DateTime WO_DATE { get; set; }
