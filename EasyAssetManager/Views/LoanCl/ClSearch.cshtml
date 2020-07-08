@@ -1,0 +1,128 @@
+﻿@{
+    ViewData["Title"] = "Loan CL Search";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="ibox" id="divsidebarCollapse">
+                <div class="ibox-title">
+                    <h5>Search Parameters</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="sidebarCollapse"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="sidebarContent">
+                    <form id="stepProcess" action="#" class="wizard-big">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">EFF Date</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <div class="input-group date">
+                                                <input class="form-control form-element" type="text" id="eff_date" name="eff_date" placeholder="dd/mm/yyyy" data-mask="99/99/9999">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Loan Number</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="loan_number" name="loan_number" class="form-control form-element" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">CL Status</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <select id="cl_status" name="cl_status" class="form-control form-element">
+                                                <option value="">ALL</option>
+                                                <option value="SS">SS</option>
+                                                <option value="DF">DF</option>
+                                                <option value="BL">BL</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-5"></div>
+                                        <div class="col-xl-2">
+                                            <button type="button" class="btn btn-primary" id="search">Search</button>
+                                        </div>
+                                        <div class="col-xl-3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox" id="iboxTbl">
+                <div class="ibox-title">
+                    <h5>Lon CL Result</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="iboxTblImg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="iboxContent">
+                    <div id="div_loanwo"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/ApplicationTheme/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
+    <link rel="stylesheet" href="~/ApplicationTheme/lib/chosen/bootstrap-chosen.css" />
+}
+@section scripts{
+    <script src="~/ApplicationTheme/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+    <script src="~/ApplicationTheme/lib/chosen/chosen.jquery.js"></script>
+    <script type="text/javascript">
+        var classLoanWoSearch = function () {
+            var init = function () {
+                eventInitializer();
+            };
+            var eventInitializer = function () {
+                $('#search').click(searchInitiate);
+                
+                $('.input-group.date').datepicker({
+                    todayBtn: "linked",
+                    keyboardNavigation: false,
+                    forceParse: false,
+                    calendarWeeks: true,
+                    autoclose: true,
+                    format: 'dd/mm/yyyy',
+                });
+
+            };
+            var searchInitiate = function () {
+                var loan_number = $('#loan_number').val();
+                var cl_status = $('#cl_status').val();
+                var eff_date = $('#eff_date').val();
+                $('#div_loanwo').empty();
+                 var url = '@Url.Content("~/LoanCl/GetClLoan")';
+                 url =url+'?loan_number=' + loan_number + '&&cl_status=' + cl_status + '&&eff_date=' + eff_date;
+                $('#div_loanwo').load(url);
+            };
+            return { init: init};
+        }();
+
+        classLoanWoSearch.init();
+
+    </script>
+}
+

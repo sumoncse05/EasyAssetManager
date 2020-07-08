@@ -7,6 +7,7 @@ using EasyAssetManagerCore.Repository.Common;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 
 namespace EasyAssetManagerCore.Repository.Operation.Asset
 {
@@ -25,37 +26,61 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
         }
 
 
-        //public IEnumerable<District> GetDistrictList(string div_code, string pvc_appuser)
-        //{
-        //    var dyParam = new OracleDynamicParameters();
-        //    dyParam.Add("pvc_divcode", div_code, OracleMappingType.Varchar2, ParameterDirection.Input);
-        //    dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input);
+        public IEnumerable<AST_LOAN_WO_STATUS_TEMP> Getloanwo(string loan_number,string are_code,string branch_code,string wo_date, string pvc_appuser)
+        {
+            var dyParam = new OracleDynamicParameters();
+            dyParam.Add("pvc_area_code", are_code, OracleMappingType.Varchar2, ParameterDirection.Input);
+            dyParam.Add("pvc_branch_code", branch_code, OracleMappingType.Varchar2, ParameterDirection.Input);
+            dyParam.Add("pvc_loan_number", wo_date, OracleMappingType.Varchar2, ParameterDirection.Input);
+            dyParam.Add("pvc_wo_date", wo_date, OracleMappingType.Varchar2, ParameterDirection.Input);
+            dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input);
 
-        //    dyParam.Add("pcr_districtlist", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
-        //    return Connection.Query<District>("pkg_lov_manager.dpd_get_districtlist", dyParam, commandType: CommandType.StoredProcedure);
-        //}
+            dyParam.Add("pcr_loanwo", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
+            return Connection.Query<AST_LOAN_WO_STATUS_TEMP>("pkg_asset_manager.dpd_get_loan_wo", dyParam, commandType: CommandType.StoredProcedure);
+        }
+        public ResponseMessage Set_LOAN_WO(AST_LOAN_WO_STATUS_TEMP loan_wo, string pvc_appuser)
+        {
+            var responseMessage = new ResponseMessage();
+            var dyParam = new OracleDynamicParameters();
+            dyParam.Add("pvc_area_code", loan_wo.AREA_CODE, OracleMappingType.Varchar2, ParameterDirection.Input, 20);
+            dyParam.Add("pvc_branch_code", loan_wo.BRANCH_CODE, OracleMappingType.Varchar2, ParameterDirection.Input, 20);
+            dyParam.Add("pvc_osamount", loan_wo.OS_AMOUNT, OracleMappingType.Varchar2, ParameterDirection.Input, 20);
+            dyParam.Add("pvc_woamount", loan_wo.WO_AMOUNT, OracleMappingType.Varchar2, ParameterDirection.Input, 20);
+            dyParam.Add("pvc_wodate",loan_wo.WO_DATE.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture), OracleMappingType.Varchar2, ParameterDirection.Input, 20);
+            dyParam.Add("pvc_seg_id", loan_wo.SEG_ID, OracleMappingType.Varchar2, ParameterDirection.Input, 20);
+            dyParam.Add("pvc_loan_number", loan_wo.LOAN_AC_NUMBER, OracleMappingType.Varchar2, ParameterDirection.Input, 20);
+            dyParam.Add("pvc_product_code", loan_wo.PRODUCT_CODE, OracleMappingType.Varchar2, ParameterDirection.Input, 20);
+            dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input, 50);
+            dyParam.Add("pvc_status", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 5);
+            dyParam.Add("pvc_statusmsg", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 255);
+            var res = responseMessage.QueryExecute(Connection, "pkg_asset_manager.dpd_set_loan_wo", dyParam);
+            return res;
+        }
 
-        //public IEnumerable<Division> GetDivisionList(string pvc_appuser)
-        //{
-        //    var dyParam = new OracleDynamicParameters();
-        //    dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input);
+        public IEnumerable<AST_LOAN_CL_TMP> Getloancl(string loan_number, string cl_status,string eff_date, string pvc_appuser)
+        {
+            var dyParam = new OracleDynamicParameters();
+            dyParam.Add("pvc_loan_number", loan_number, OracleMappingType.Varchar2, ParameterDirection.Input);
+            dyParam.Add("pvc_cl_status", cl_status, OracleMappingType.Varchar2, ParameterDirection.Input);
+            dyParam.Add("pvc_eff_date", eff_date, OracleMappingType.Varchar2, ParameterDirection.Input);
+            dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input);
 
-        //    dyParam.Add("pcr_divisionlist", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
-        //    return Connection.Query<Division>("pkg_lov_manager.dpd_get_divisionlist", dyParam, commandType: CommandType.StoredProcedure);
-        //}
-
-        //public IEnumerable<Thana> GetThanaList(string div_code, string dist_code, string pvc_appuser)
-        //{
-        //    var dyParam = new OracleDynamicParameters();
-        //    dyParam.Add("pvc_divcode", div_code, OracleMappingType.Varchar2, ParameterDirection.Input);
-        //    dyParam.Add("pvc_distcode", dist_code, OracleMappingType.Varchar2, ParameterDirection.Input);
-        //    dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input);
-
-        //    dyParam.Add("pcr_thanalist", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
-        //    return Connection.Query<Thana>("pkg_lov_manager.dpd_get_thanalist", dyParam, commandType: CommandType.StoredProcedure);
-
-        //}
-
+            dyParam.Add("pcr_loancl", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
+            return Connection.Query<AST_LOAN_CL_TMP>("pkg_asset_manager.dpd_get_loan_cl", dyParam, commandType: CommandType.StoredProcedure);
+        }
+        public ResponseMessage Set_LOAN_CL(AST_LOAN_CL_TMP loan_wo, string pvc_appuser)
+        {
+            var responseMessage = new ResponseMessage();
+            var dyParam = new OracleDynamicParameters();
+            dyParam.Add("pvc_loan_number", loan_wo.LOAN_AC_NUMBER, OracleMappingType.Varchar2, ParameterDirection.Input, 20);
+            dyParam.Add("pvc_cl_status", loan_wo.CL_STATUS, OracleMappingType.Varchar2, ParameterDirection.Input, 20);
+            dyParam.Add("pvc_effdate", loan_wo.EFF_DATE.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) , OracleMappingType.Varchar2, ParameterDirection.Input, 20);
+            dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input, 50);
+            dyParam.Add("pvc_status", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 5);
+            dyParam.Add("pvc_statusmsg", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 255);
+            var res = responseMessage.QueryExecute(Connection, "pkg_asset_manager.dpd_set_loan_cl", dyParam);
+            return res;
+        }
         public int Process_LOAN_CL(List<AST_LOAN_CL_TMP> portFolios)
         {
             var sql = QB<AST_LOAN_CL_TMP>.Insert();
@@ -144,11 +169,11 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
     #region Interface
     public interface IFileProcessRepository
     {
-        //IEnumerable<Account> GeAccountDetails(string customerAccountNo, string userId);
-        //IEnumerable<Division> GetDivisionList(string pvc_appuser);
-        //IEnumerable<District> GetDistrictList(string div_code, string pvc_appuser);
+        IEnumerable<AST_LOAN_WO_STATUS_TEMP> Getloanwo(string loan_number, string are_code, string branch_code, string wo_date, string pvc_appuser);
+        ResponseMessage Set_LOAN_WO(AST_LOAN_WO_STATUS_TEMP loan_wo, string pvc_appuser);
+        IEnumerable<AST_LOAN_CL_TMP> Getloancl(string loan_number, string cl_status, string eff_date, string pvc_appuser);
+        ResponseMessage Set_LOAN_CL(AST_LOAN_CL_TMP loan_wo, string pvc_appuser);
         int Process_LOAN_WO(List<AST_LOAN_WO_STATUS_TEMP> portFolios);
-        //IEnumerable<Thana> GetThanaList(string div_code, string dist_code, string pvc_appuser);
         int DeleteTable(string tableName, string user_id);
         int Process_LOAN_PORTFOLIO(List<AST_RM_PORTFOLIO_TMP> portFolios);
         int Process_LOAN_TARGET(List<AST_LOAN_TARGET_TMP> portFolios);

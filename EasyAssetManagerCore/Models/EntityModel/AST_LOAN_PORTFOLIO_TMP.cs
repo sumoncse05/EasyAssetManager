@@ -69,6 +69,9 @@ namespace EasyAssetManagerCore.Models.EntityModel
         public string BRANCH_NAME { get; set; }
         public string SEG_ID { get; set; }
         public string SEG_NAME { get; set; }
+        public string PRODUCT_CODE { get; set; }
+        public string PRODUCT_DESC { get; set; }
+        public string LOAN_AC_NUMBER { get; set; }
         public string OS_AMOUNT { get; set; }
         public string WO_AMOUNT { get; set; }
         public DateTime WO_DATE { get; set; }

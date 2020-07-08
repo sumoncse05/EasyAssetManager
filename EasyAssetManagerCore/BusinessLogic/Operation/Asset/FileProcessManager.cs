@@ -39,7 +39,6 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             }
             return Message;
         }
-
         private Message Process_LOAN_WO(string filepath, AppSession session, string tableName, int businessYear)
         {
             try
@@ -79,13 +78,16 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                                     File_Process_ID = fileProcessID,
                                     SEG_ID = wooksheet.Cells[i, 1].Text.Trim(),
                                     SEG_NAME = wooksheet.Cells[i, 2].Text.Trim(),
-                                    AREA_CODE =wooksheet.Cells[i, 3].Text.Trim(),
+                                    AREA_CODE = wooksheet.Cells[i, 3].Text.Trim(),
                                     AREA_NAME = wooksheet.Cells[i, 4].Text.Trim(),
                                     BRANCH_CODE = wooksheet.Cells[i, 5].Text.Trim(),
                                     BRANCH_NAME = wooksheet.Cells[i, 6].Text.Trim(),
-                                    OS_AMOUNT = valid(wooksheet.Cells[i, 7].Text.Trim(), "LOAN_OUTSTANDING", "Number"),
-                                    WO_AMOUNT = valid(wooksheet.Cells[i, 8].Text.Trim(), "WO_AMOUNT", "Number"),
-                                    WO_DATE =Convert.ToDateTime(wooksheet.Cells[i, 9].Text.Trim()),
+                                    PRODUCT_CODE = wooksheet.Cells[i, 7].Text.Trim(),
+                                    PRODUCT_DESC = wooksheet.Cells[i, 8].Text.Trim(),
+                                    LOAN_AC_NUMBER = wooksheet.Cells[i, 9].Text.Trim(),
+                                    OS_AMOUNT = valid(wooksheet.Cells[i, 10].Text.Trim(), "LOAN_OUTSTANDING", "Number"),
+                                    WO_AMOUNT = valid(wooksheet.Cells[i, 11].Text.Trim(), "WO_AMOUNT", "Number"),
+                                    WO_DATE = Convert.ToDateTime(wooksheet.Cells[i, 12].Text.Trim()),
                                     INS_BY = session.User.user_id,
                                     INS_DATE = DateTime.Now
                                 };
@@ -136,7 +138,6 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
 
             return Message;
         }
-
         private Message Process_LOAN_PORTFOLIO(string filepath, AppSession session, string tableName, int businessYear)
         {
             try
@@ -174,14 +175,14 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                                 var portFolio = new AST_RM_PORTFOLIO_TMP
                                 {
                                     File_Process_ID = fileProcessID,
-                                    AREA_CODE =wooksheet.Cells[i, 1].Text.Trim(),
+                                    AREA_CODE = wooksheet.Cells[i, 1].Text.Trim(),
                                     AREA_NAME = wooksheet.Cells[i, 2].Text.Trim(),
                                     BRANCH_CODE = wooksheet.Cells[i, 3].Text.Trim(),
                                     BRANCH_NAME = wooksheet.Cells[i, 4].Text.Trim(),
                                     RM_CODE = wooksheet.Cells[i, 5].Text.Trim(),
                                     RM_NAME = wooksheet.Cells[i, 6].Text.Trim(),
                                     LOAN_AC_NUMBER = valid(wooksheet.Cells[i, 7].Text.Trim(), "LOAN_AC_NUMBER", "Number"),
-                                    EFF_DATE =Convert.ToDateTime(wooksheet.Cells[i, 8].Text.Trim()),
+                                    EFF_DATE = Convert.ToDateTime(wooksheet.Cells[i, 8].Text.Trim()),
                                     INS_BY = session.User.user_id,
                                     INS_DATE = DateTime.Now
                                 };
@@ -379,7 +380,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                                     BST_NAME = wooksheet.Cells[i, 8].Text.Trim(),
                                     LOAN_AC_NUMBER = valid(wooksheet.Cells[i, 9].Text.Trim(), "LOAN_AC_NUMBER", "Number"),
                                     CL_STATUS = valid(wooksheet.Cells[i, 10].Text.Trim(), "CL_STATUS", "Digit"),
-                                    EFF_DATE =Convert.ToDateTime(wooksheet.Cells[i, 11].Text.Trim()),
+                                    EFF_DATE = Convert.ToDateTime(wooksheet.Cells[i, 11].Text.Trim()),
                                     INS_BY = session.User.user_id,
                                     INS_DATE = DateTime.Now
                                 };
@@ -431,7 +432,6 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             return Message;
         }
 
-
         protected string valid(object val, string fieldName, string fieldType)
         {
             string strVal = (val != DBNull.Value ? val.ToString().Trim() : Convert.ToString(0).Trim());
@@ -458,7 +458,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                     break;
                 case "Digit":
                     decimal digit = 0;
-                    canConvert = strVal != "" ? strVal.Length<=2 : true;
+                    canConvert = strVal != "" ? strVal.Length <= 2 : true;
                     if (canConvert == false)
                         throw new Exception(fieldName + " contains invalid Number: " + strVal);
                     break;
@@ -469,7 +469,73 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             return strVal;
         }
 
+        public IEnumerable<AST_LOAN_WO_STATUS_TEMP> Getloanwo(string loan_number, string are_code, string branch_code, string wo_date, string pvc_appuser)
+        {
+            return fileProcessRepository.Getloanwo(loan_number,are_code, branch_code, wo_date, pvc_appuser);
+        }
 
+        public Message Set_LOAN_WO(AST_LOAN_WO_STATUS_TEMP loan_wo, AppSession session)
+        {
+            try
+            {
+                if (Connection.State != ConnectionState.Open)
+                    Connection.Open();
+
+                var response = fileProcessRepository.Set_LOAN_WO(loan_wo, session.User.user_id);
+                if (response.pvc_status == "40999")
+                {
+                    MessageHelper.Success(Message, "Data process successfully....");
+                }
+                else
+                {
+                    MessageHelper.Error(Message, response.pvc_statusmsg);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageHelper.Error(Message, ex.Message);
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return Message;
+        }
+
+        public IEnumerable<AST_LOAN_CL_TMP> Getloancl(string loan_number, string cl_status, string eff_date, string pvc_appuser)
+        {
+            return fileProcessRepository.Getloancl(loan_number, cl_status, eff_date, pvc_appuser);
+        }
+
+        public Message Set_LOAN_CL(AST_LOAN_CL_TMP loan_wo, AppSession session)
+        {
+            try
+            {
+                if (Connection.State != ConnectionState.Open)
+                    Connection.Open();
+
+                var response = fileProcessRepository.Set_LOAN_CL(loan_wo, session.User.user_id);
+                if (response.pvc_status == "40999")
+                {
+                    MessageHelper.Success(Message, "Data process successfully....");
+                }
+                else
+                {
+                    MessageHelper.Error(Message, response.pvc_statusmsg);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageHelper.Error(Message, ex.Message);
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return Message;
+        }
     }
 
     public enum FileType
@@ -484,10 +550,15 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
         public static List<string> LOAN_CL = new List<string> { "AREA_CODE", "AREA_NAME", "BRANCH_CODE", "BRANCH_NAME", "RM_CODE", "RM_NAME", "BST_CODE", "BST_NAME", "LOAN_AC_NUMBER", "CL_STATUS", "EFF_DATE" };
         public static List<string> LOAN_PORTFOLIO = new List<string> { "AREA_CODE", "AREA_NAME", "BRANCH_CODE", "BRANCH_NAME", "RM_CODE", "RM_NAME", "LOAN_AC_NUMBER", "EFF_DATE" };
         public static List<string> LOAN_TARGET = new List<string> { "SEG_ID", "SEG_NAME", "AREA_CODE", "AREA_NAME", "BRANCH_CODE", "BRANCH_NAME", "RM_CODE", "RM_NAME", "BST_CODE", "BST_NAME", "OS_TARGET_AMT", "DISB_TARGET_AMT", "INC_TARGET_AMT" };
-        public static List<string> LOAN_WO = new List<string> { "SEG_ID", "SEG_NAME", "AREA_CODE", "AREA_NAME", "BRANCH_CODE", "BRANCH_NAME", "OS_AMOUNT", "WO_AMOUNT", "WO_DATE" };
+        public static List<string> LOAN_WO = new List<string> { "SEG_ID", "SEG_NAME", "AREA_CODE", "AREA_NAME", "BRANCH_CODE", "BRANCH_NAME", "PRODUCT_CODE", "PRODUCT_DESC", "LOAN_AC_NUMBER", "OS_AMOUNT", "WO_AMOUNT", "WO_DATE" };
     }
     public interface IFileProcessManager
     {
         Message ProcessFile(int businessYear, int file_Type, string filepath, AppSession session);
+
+        IEnumerable<AST_LOAN_WO_STATUS_TEMP> Getloanwo(string loan_number, string are_code, string branch_code, string wo_date, string pvc_appuser);
+        Message Set_LOAN_WO(AST_LOAN_WO_STATUS_TEMP loan_wo, AppSession session);
+        IEnumerable<AST_LOAN_CL_TMP> Getloancl(string loan_number, string cl_status, string eff_date, string pvc_appuser);
+        Message Set_LOAN_CL(AST_LOAN_CL_TMP loan_wo, AppSession session);
     }
 }

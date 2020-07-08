@@ -150,7 +150,9 @@
             this.max_selected_options = this.options.max_selected_options || Infinity;
             this.inherit_select_classes = this.options.inherit_select_classes || false;
             this.display_selected_options = this.options.display_selected_options != null ? this.options.display_selected_options : true;
+            
             return this.display_disabled_options = this.options.display_disabled_options != null ? this.options.display_disabled_options : true;
+
         };
 
         AbstractChosen.prototype.set_default_text = function() {
@@ -159,9 +161,11 @@
             } else if (this.is_multiple) {
                 this.default_text = this.options.placeholder_text_multiple || this.options.placeholder_text || AbstractChosen.default_multiple_text;
             } else {
-                this.default_text = this.options.placeholder_text_single || this.options.placeholder_text || AbstractChosen.default_single_text;
+                this.default_text = this.options.placeholder_text_single || this.options.placeholder_text
+                    || AbstractChosen.default_single_text;
             }
-            return this.results_none_found = this.form_field.getAttribute("data-no_results_text") || this.options.no_results_text || AbstractChosen.default_no_result_text;
+            return this.results_none_found = this.form_field.getAttribute("data-no_results_text") || this.options.no_results_text
+                || AbstractChosen.default_no_result_text;
         };
 
         AbstractChosen.prototype.mouse_enter = function() {
@@ -512,7 +516,7 @@
 
         AbstractChosen.default_multiple_text = "Select Some Options";
 
-        AbstractChosen.default_single_text = "ALL";
+       // AbstractChosen.default_single_text = "ALL";
 
         AbstractChosen.default_no_result_text = "No results match";
 

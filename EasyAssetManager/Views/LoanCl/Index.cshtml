@@ -1,0 +1,189 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Loan WO Information</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form id="LoanWoSetup">
+                                <div class="col-lg-12">
+                                    @*<div class="form-group row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Area:<span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <select id="AREA_CODE" name="AREA_CODE" class="form-control form-element chosen-select"></select>
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Branch:<span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <select id="BRANCH_CODE" name="BRANCH_CODE" class="form-control form-element chosen-select"></select>
+                                        </div>
+                                    </div>*@
+
+                                    <div class="form-group row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Loan Number:<span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <input class="form-control form-element" type="text" id="LOAN_AC_NUMBER" name="LOAN_AC_NUMBER" />
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">CL STATUS:<span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <select id="CL_STATUS" name="CL_STATUS" class="form-control form-element">
+                                                <option value="">ALL</option>
+                                                <option value="SS">SS</option>
+                                                <option value="DF">DF</option>
+                                                <option value="BL">BL</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">EFF Date:<span class="required">*</span></label>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <div class="input-group date">
+                                                <input class="form-control form-element" type="text" id="EFF_DATE" name="EFF_DATE" placeholder="dd/mm/yyyy" data-mask="99/99/9999">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group hr-line-dashed"> </div>
+                                <div style="text-align:left" id="page1">
+                                    <input type="button" value="Clear Data" class="btn btn-default ks-next" id="btnClear">
+                                    <input type="button" value="Save Data" class="btn btn-primary ks-next" id="btnSave">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Styles {
+    <link rel="stylesheet" href="~/ApplicationTheme/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
+    <link rel="stylesheet" href="~/ApplicationTheme/lib/chosen/bootstrap-chosen.css" />
+}
+@section scripts{
+    <script src="~/ApplicationTheme/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+    <script src="~/ApplicationTheme/lib/chosen/chosen.jquery.js"></script>
+    <script type="text/javascript">
+        var classLoWoSetup = function ()
+        {
+            var formId = "LoanWoSetup";
+            var init = function ()
+            {
+                eventInitializer();
+                validation(formId);
+                var model =@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@ViewBag.LoanCl));
+                ApplicationCommon.setData(model, null);
+            };
+            var eventInitializer = function ()
+            {
+                $('#btnSave').click(saveAgent);
+                $('#btnClear').click(clear);
+                @*combo.getAreaList('AREA_CODE', '@Url.Content("~/Common/GetAreaList")', true);
+                combo.getBranchList('BRANCH_CODE', '@Url.Content("~/Common/GetBranchList")', $('#AREA_CODE').val(), true);
+                $('#AREA_CODE').on('change', function () {
+                    combo.getBranchList('BRANCH_CODE', '@Url.Content("~/Common/GetBranchList")', $('#AREA_CODE').val(), true);
+                    $('#BRANCH_CODE').trigger("chosen:updated");
+                });*@
+                $('.input-group.date').datepicker({
+                    todayBtn: "linked",
+                    keyboardNavigation: false,
+                    forceParse: false,
+                    calendarWeeks: true,
+                    autoclose: true,
+                    format: 'dd/mm/yyyy',
+                });
+               // $('.chosen-select').chosen({ width: "100%" });
+            };
+            var clear = function ()
+            {
+                ApplicationCommon.clearFields(null, formId);
+
+            };
+            var saveAgent = function ()
+            {
+                if (ApplicationCommon.isValidForm(formId))
+                {
+                    var agent = ApplicationCommon.getData('form-element');
+                    var url = '@Url.Content("~/LoanCl/SubmitLoanCl")';
+                    ApplicationCommon.request(url, 'POST', agent, false, true, false, function (res)
+                    {
+                        ApplicationCommon.showNotification(res.messageType, res.messageString);
+
+                        if (res.messageType == 1)
+                        {
+                            clear();
+                        }
+                    });
+                }
+            };
+            var validation = function (formId)
+            {
+                $('#' + formId).validate({
+                    rules: {
+                        //AREA_CODE: {
+                        //    required: true
+                        //},
+                        //BRANCH_CODE: {
+                        //    required: true
+                        //},
+                        CL_STATUS: {
+                            required: true
+                        },
+                        EFF_DATE: {
+                            required: true
+                        },
+                        LOAN_AC_NUMBER: {
+                            required: true
+                        }
+
+                    },
+                    messages: {
+                        //AREA_CODE: {
+                        //    required: "Select area to continue."
+                        //},
+                        //BRANCH_CODE: {
+                        //    required: "Select branch to continue."
+                        //},
+                        CL_STATUS: {
+                            required: "Select cl status to continue."
+                        },
+                        
+                        EFF_DATE: {
+                            required: "Enter eff date to continue."
+                        },
+                        LOAN_AC_NUMBER: {
+                            required: "Enter loan number to continue."
+                        }
+                    }
+                });
+            };
+            return { init: init };
+        }();
+
+        classLoWoSetup.init();
+    </script>
+}
+
+
+
