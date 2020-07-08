@@ -45,7 +45,7 @@ namespace EasyAssetManager.Controllers
             var userTypes = rMAssetManager.GetRmList(branchCode, Session.User.user_id);
             if (userTypes != null && userTypes.Any())
             {
-                var selectList = userTypes.Select(x => new SelectListItem() { Text = x.EMP_NAME, Value = x.RM_CODE });
+                var selectList = userTypes.Select(x => new SelectListItem() { Text = x.emp_name, Value = x.rm_code });
                 return Json(selectList);
             }
             return Json(null);
@@ -62,7 +62,62 @@ namespace EasyAssetManager.Controllers
             return Json(null);
         }
 
+        [HttpGet]
+        public IActionResult GetDesignationList()
+        {
+            var userTypes = rMAssetManager.GetDesignationList(Session.User.user_id);
+            if (userTypes != null && userTypes.Any())
+            {
+                var selectList = userTypes.Select(x => new SelectListItem() { Text = x.desig_name, Value = x.desig_code });
+                return Json(selectList);
+            }
+            return Json(null);
+        }
 
+        [HttpGet]
+        public IActionResult GetGradeList()
+        {
+            var userTypes = rMAssetManager.GetGradeList(Session.User.user_id);
+            if (userTypes != null && userTypes.Any())
+            {
+                var selectList = userTypes.Select(x => new SelectListItem() { Text = x.grade_name, Value = x.grade_code });
+                return Json(selectList);
+            }
+            return Json(null);
+        }
+        [HttpGet]
+        public IActionResult GetDepartmentList()
+        {
+            var userTypes = rMAssetManager.GetDepartmentList(Session.User.user_id);
+            if (userTypes != null && userTypes.Any())
+            {
+                var selectList = userTypes.Select(x => new SelectListItem() { Text = x.dept_name, Value = x.dept_code });
+                return Json(selectList);
+            }
+            return Json(null);
+        }
+        [HttpGet]
+        public IActionResult GetCategoryList()
+        {
+            var userTypes = rMAssetManager.GetCategoryList(Session.User.user_id);
+            if (userTypes != null && userTypes.Any())
+            {
+                var selectList = userTypes.Select(x => new SelectListItem() { Text = x.cat_desc, Value = x.cat_id });
+                return Json(selectList);
+            }
+            return Json(null);
+        }
+        [HttpGet]
+        public IActionResult GetRMStatusList()
+        {
+            var userTypes = rMAssetManager.GetRMStatusList(Session.User.user_id);
+            if (userTypes != null && userTypes.Any())
+            {
+                var selectList = userTypes.Select(x => new SelectListItem() { Text = x.status_desc, Value = x.status_code });
+                return Json(selectList);
+            }
+            return Json(null);
+        }
 
 
     }

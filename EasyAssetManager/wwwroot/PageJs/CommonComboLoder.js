@@ -55,6 +55,26 @@
         var data = { loanType: loanType};
         loadCombo(controlId, url, data, isDefaultRecordRequired);
     };
+    var getDesignationList = function (controlId, url, isDefaultRecordRequired) {
+        var data = {};
+        loadCombo(controlId, url, data, isDefaultRecordRequired);
+    };
+    var getGradeList = function (controlId, url, isDefaultRecordRequired) {
+        var data = {};
+        loadCombo(controlId, url, data, isDefaultRecordRequired);
+    };
+    var getDepartmentList = function (controlId, url, isDefaultRecordRequired) {
+        var data = {};
+        loadCombo(controlId, url, data, isDefaultRecordRequired);
+    };
+    var getCategoryList = function (controlId, url, isDefaultRecordRequired) {
+        var data = {};
+        loadCombo(controlId, url, data, isDefaultRecordRequired);
+    };
+    var getRMStatusList = function (controlId, url, isDefaultRecordRequired) {
+        var data = {};
+        loadCombo(controlId, url, data, isDefaultRecordRequired);
+    };
    
     
     var getExcelFiletype = function (controlId, isDefaultRecordRequired) {
@@ -170,6 +190,20 @@
 
         loadComboStatic(controlId, data, isDefaultRecordRequired);
     };
+    var getEmpCategoryType = function (controlId, isDefaultRecordRequired) {
+        var data = [];
+        var item = {
+            text: "RM",
+            value: "RM"
+        };
+        data.push(item);
+        item = {
+            text: "BST",
+            value: "BST"
+        };
+        data.push(item);
+        loadComboStatic(controlId, data, isDefaultRecordRequired);
+    };
 
 
     return {
@@ -181,6 +215,12 @@
         getBranchList: getBranchList,
         getAreaList: getAreaList,
         getLoanProductList: getLoanProductList,
-        getReportName: getReportName
+        getReportName: getReportName,
+        getEmpCategoryType: getEmpCategoryType,
+        getDesignationList: getDesignationList,
+        getGradeList: getGradeList,
+        getDepartmentList: getDepartmentList,
+        getCategoryList: getCategoryList,
+        getRMStatusList: getRMStatusList
     };
 }();

@@ -1,0 +1,140 @@
+﻿
+@{
+    ViewData["Title"] = "Search RM Details";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="ibox" id="divsidebarCollapse">
+                <div class="ibox-title">
+                    <h5>Search RM/BST Details</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="sidebarCollapse"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="sidebarContent">
+                    <form id="stepProcess" action="#" class="wizard-big">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group row">
+                                        <div class="col-xl-2"></div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">RM Code</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="ac_rm_code" name="ac_rm_code" class="form-control form-element" />
+                                        </div>
+                                        <div class="col-xl-5"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-2"></div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">RM Name</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="rm_name" name="rm_name" class="form-control form-element" />
+                                        </div>
+                                        <div class="col-xl-5"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-5"></div>
+                                        <div class="col-xl-2">
+                                            <button type="button" class="btn btn-primary" id="search">Search</button>
+                                        </div>
+                                        <div class="col-xl-3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox " id="iboxTbl">
+                <div class="ibox-title">
+                    <h5> RM/BST Details</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="iboxTblImg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="iboxContent">
+                    <div id="acc_openingreq"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        var classSearchRMDetails = function () {
+            var init = function () {
+                eventInitializer();
+            };
+            var eventInitializer = function () {
+                $('#search').click(searchInitiate);
+            };
+            var searchInitiate = function () {
+                var ac_rm_code = $('#ac_rm_code').val();
+                var rm_name = $('#rm_name').val().replace(/ /g, "+");
+                $('#acc_openingreq').empty();
+                var url = '/RM/GetRMDetailList';
+                $('#acc_openingreq').load(url + '?ac_rm_code=' + ac_rm_code + '&&rm_name=' + rm_name);
+            };
+            var Updatedata = function () {
+                if ($("#status_code").val() == "") {
+                    ApplicationCommon.showNotification("2", "Select Status to continue.");
+                    $("#dstatus_code").focus();
+                }
+                else if ($("#status_code").val() == "01" && $("#new_branch_code").val() == "") {
+                    ApplicationCommon.showNotification("2", "Select Branch to continue.");
+                    $("#new_branch_code").focus();
+                }
+                else if ($("#effect_date").val() == "") {
+                    ApplicationCommon.showNotification("2", "Enter Effect date to continue.");
+                    $("#effect_date").focus();
+                }
+                else if ($("#effect_date").val() == "__/__/____") {
+                    ApplicationCommon.showNotification("2", "Enter Effect date to continue.");
+                    $("#effect_date").focus();
+                }
+                else if ($("#new_branch_code").val() == "") {
+                    ApplicationCommon.showNotification("2", "Enter RM code to continue");
+                    $("#txtRMCodePop").focus();
+                }
+                else if ($("#status_code").val() !== "03" && $("#new_rm").val() == "") {
+                    ApplicationCommon.showNotification("2", "Select RM to continue.");
+                    $("#new_rm").focus();
+                }
+                else {
+                    var updateAccountOpen = ApplicationCommon.getData('form-element');
+                    var url = '@Url.Content("~/RM/UpdateRMStatus")';
+                    ApplicationCommon.request(url, 'POST', updateAccountOpen, false, true, false, function (res) {
+                        ApplicationCommon.showNotification(res.messageType, res.messageString);
+                        if (res.messageType == 1) {
+                            $('body').removeClass('modal-open');
+                            $(".modal-backdrop").remove();
+                            searchInitiate();
+                        }
+                    });
+                }
+            };
+            return { init: init, Updatedata: Updatedata, searchInitiate: searchInitiate };
+        }();
+
+        classSearchRMDetails.init();
+
+    </script>
+}

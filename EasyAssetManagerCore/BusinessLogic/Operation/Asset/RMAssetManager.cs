@@ -116,6 +116,99 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
         {
             return rmRepository.GetAvailableLoan(loanType, loanProduct, rmCode,session.User.user_id);
         }
+
+        public IEnumerable<Designation> GetDesignationList(string user_id)
+        {
+            return rmRepository.GetDesignationList(user_id);
+        }
+        public IEnumerable<Grade> GetGradeList(string user_id)
+        {
+            return rmRepository.GetGradeList(user_id);
+        }
+        public IEnumerable<Department> GetDepartmentList(string user_id)
+        {
+            return rmRepository.GetDepartmentList(user_id);
+        }
+        public IEnumerable<Category> GetCategoryList(string user_id)
+        {
+            return rmRepository.GetCategoryList(user_id);
+        }
+        public IEnumerable<RMStatus> GetRMStatusList(string user_id)
+        {
+            return rmRepository.GetRMStatusList(user_id);
+        }
+        
+        public Message SetRM(RM rm, AppSession session)
+        {
+
+            try
+            {
+                if (Connection.State != ConnectionState.Open)
+                    Connection.Open();                
+                    var msg = rmRepository.SetRM(rm, session.User.user_id);
+                if (msg.pvc_status == "40999")
+                {
+                    MessageHelper.Success(Message, "RM Saved sucessfully:");
+                }
+                else
+                {
+                    MessageHelper.Error(Message, "RM Saved Failed:");
+                }                
+            }
+            catch (Exception ex)
+            {
+                MessageHelper.Error(Message, ex.Message);
+            }
+            finally
+            {
+                Connection.Close();
+            }
+            return Message;
+        }
+        public Message UpdateRMStatus(RM rm, AppSession session)
+        {
+
+            try
+            {
+                if (Connection.State != ConnectionState.Open)
+                    Connection.Open();
+                var msg = rmRepository.UpdateRMStatus(rm, session.User.user_id);
+                if (msg.pvc_status == "40999")
+                {
+                    MessageHelper.Success(Message, "RM Update sucessfully:");
+                }
+                else
+                {
+                    MessageHelper.Error(Message, "RM Update Failed:");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageHelper.Error(Message, ex.Message);
+            }
+            finally
+            {
+                Connection.Close();
+            }
+            return Message;
+        }
+        public RM GetRMDetails(string emp_id, string user_id)
+        {
+            var rmDetails = rmRepository.GetRMDetails(emp_id,user_id);
+            if (rmDetails == null)
+            {
+                rmDetails = new RM();
+                MessageHelper.Error(Message,"No Employee found");
+            } 
+            else
+                MessageHelper.Success(Message, "Employee found");
+            rmDetails.Message = Message;
+            return rmDetails;
+        }
+        public IEnumerable<RM> GetRMDetailList(string emp_id,string rm_name, string user_id)
+        {
+            return rmRepository.GetRMDetailList(emp_id, rm_name, user_id);            
+        }
     }
 
     public interface IRMAssetManager
@@ -128,5 +221,14 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
         IEnumerable<Loan> GetUnAuthorizeRM(string loanType, string branchCode, string rmCode, AppSession session);
         Message SetAuthorizeRM(List<string> loans, AppSession session);
         IEnumerable<Loan> GetAvailableLoan(string loanType, string loanProduct, string rmCode, AppSession session);
+        IEnumerable<Designation> GetDesignationList(string user_id); 
+        IEnumerable<Grade> GetGradeList(string user_id);
+        IEnumerable<Department> GetDepartmentList(string user_id);
+        IEnumerable<Category> GetCategoryList(string user_id);
+        IEnumerable<RMStatus> GetRMStatusList(string user_id);
+        Message SetRM(RM rm, AppSession session); 
+        RM GetRMDetails(string emp_id, string user_id);
+        IEnumerable<RM> GetRMDetailList(string emp_id, string rm_name, string user_id); 
+        Message UpdateRMStatus(RM rm, AppSession session);
     }
 }

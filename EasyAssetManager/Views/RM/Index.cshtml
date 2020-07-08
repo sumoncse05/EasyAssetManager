@@ -1,0 +1,307 @@
+﻿
+@{
+    ViewData["Title"] = "RM Setup";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5> RM / BST Setup</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form id="agentSetup">
+                                <div class="col-lg-12">
+                                    @*<div class="form-group row">
+                                        <div class="col-xl-12">
+                                            <h4 class="col-form-label"> RM/BST Setup</h4>
+                                        </div>
+                                    </div>
+                                    <div class="form-group hr-line-dashed"> </div>*@
+                                    <div class="form-group"> </div>
+                                    <div class="row form-group">
+                                        <div class="col-lg-5">
+                                            <div class="form-group row">
+                                                <div class="col-xl-4">
+                                                    <label class="col-form-label">Employee ID:<span class="required">*</span></label>
+                                                </div>
+                                                <div class="col-xl-8">
+                                                    <div class="input-group">
+                                                        <input type="text" id="emp_id" name="emp_id" class="form-control form-element required" />
+                                                        <button type="button" class="btn-default" id="btnSearch"><i class="fa fa-search"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-xl-4">
+                                                    <label class="col-form-label">Employee Name:<span class="required">*</span></label>
+                                                </div>
+                                                <div class="col-xl-8">
+                                                    <input type="text" id="emp_name" name="emp_name" class="form-control form-element required" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-xl-4">
+                                                    <label class="col-form-label">Designation:<span class="required">*</span></label>
+                                                </div>
+                                                <div class="col-xl-8">
+                                                    <select id="desig_code" name="desig_code" class="form-control form-element required"></select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-xl-4">
+                                                    <label class="col-form-label">Branch:<span class="required">*</span></label>
+                                                </div>
+                                                <div class="col-xl-8">
+                                                    <select id="branch_code" name="branch_code" class="form-control form-element required"></select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-xl-4">
+                                                    <label class="col-form-label">Category:<span class="required">*</span></label>
+                                                </div>
+                                                <div class="col-xl-8">
+                                                    <select id="cat_id" name="cat_id" class="form-control form-element required"></select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-xl-4">
+                                                    <label class="col-form-label">Email:<span class="required">*</span></label>
+                                                </div>
+                                                <div class="col-xl-8">
+                                                    <input type="text" id="email" name="email" class="form-control form-element" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="vertical-line vertical-line-border">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <div class="form-group row">
+                                                <div class="col-xl-4">
+                                                    <label class="col-form-label">RM Code:<span class="required">*</span></label>
+                                                </div>
+                                                <div class="col-xl-8">
+                                                    <input type="text" id="rm_code" name="rm_code" class="form-control form-element required" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-xl-4">
+                                                    <label class="col-form-label">Emp Category:<span class="required">*</span></label>
+                                                </div>
+                                                <div class="col-xl-8">
+                                                    <select id="emp_cat" name="emp_cat" class="form-control form-element required"></select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-xl-4">
+                                                    <label class="col-form-label">Grade:<span class="required">*</span></label>
+                                                </div>
+                                                <div class="col-xl-8">
+                                                    <select id="grade_code" name="grade_code" class="form-control form-element required "></select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-xl-4">
+                                                    <label class="col-form-label">Department:<span class="required">*</span></label>
+                                                </div>
+                                                <div class="col-xl-8">
+                                                    <select id="dept_code" name="dept_code" class="form-control form-element required"></select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-xl-4">
+                                                    <label class="col-form-label">Mobile:<span class="required">*</span></label>
+                                                </div>
+                                                <div class="col-xl-8">
+                                                    <input type="text" id="mobile" name="mobile" class="form-control form-element" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-xl-4">
+
+                                                </div>
+                                                <div class="col-xl-8">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group hr-line-dashed"> </div>
+                                    <div style="text-align:left" id="page1">
+                                        <input type="button" value="Clear Data" class="btn btn-default ks-next" id="btnClear">
+                                        <input type="button" value="Save Data" class="btn btn-primary ks-next" id="btnSave">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Styles {
+    <link rel="stylesheet" href="~/ApplicationTheme/lib/chosen/bootstrap-chosen.css" />
+}
+@section Scripts {
+    <script src="~/ApplicationTheme/lib/chosen/chosen.jquery.js"></script>
+    <script type="text/javascript">
+        var classAgentSetup = function ()
+        {
+            var formId = "agentSetup";
+            var init = function ()
+            {
+                eventInitializer();
+                validation(formId);
+                var model =@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@ViewBag.RMDetails));
+                ApplicationCommon.setData(model, null);
+
+            };
+            var eventInitializer = function ()
+            {
+                $('#btnSave').click(saveRM);
+                $('#btnSearch').click(searchRM);
+                $('#btnClear').click(clear);
+                combo.getDesignationList('desig_code', '@Url.Content("~/Common/GetDesignationList")', true);
+                combo.getGradeList('grade_code', '@Url.Content("~/Common/GetGradeList")', true);
+                combo.getDepartmentList('dept_code', '@Url.Content("~/Common/GetDepartmentList")', true);
+                combo.getCategoryList('cat_id', '@Url.Content("~/Common/GetCategoryList")', true);
+                combo.getBranchList('branch_code', '@Url.Content("~/Common/GetBranchList")', '',true);
+                combo.getEmpCategoryType('emp_cat', true);
+                $('.chosen-select').chosen({ width: "100%" });
+            };
+            var clear = function (){
+                ApplicationCommon.clearFields(null, formId);
+            };
+            var saveRM = function (){
+                if (ApplicationCommon.isValidForm(formId))
+                {
+                    var rmData = ApplicationCommon.getData('form-element');
+                    var url = '@Url.Content("~/RM/SaveRM")';
+                    ApplicationCommon.request(url, 'POST', rmData, false, true, false, function (res)
+                    {
+                        ApplicationCommon.showNotification(res.messageType, res.messageString);
+
+                        if (res.messageType == 1)
+                        {
+                            clear();
+                        }
+                    });
+                }
+            };
+            var searchRM = function () {
+                if ($('#emp_id').val() !== '') {
+                    var formData = new FormData();
+                    formData.append("emp_id", $('#emp_id').val());
+                    var url = '@Url.Content("~/RM/GetRMDetails")';
+                    ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res) {
+                        if (res.message.messageType == 1) {
+                            ApplicationCommon.setData(res, null);
+                        } else {
+                            ApplicationCommon.showNotification(res.message.messageType, res.message.messageString);
+                        }
+                    })
+                }
+                else {
+                    ApplicationCommon.showNotification("2", "Employee Id is required");
+                }
+            };
+
+            var validation = function (formId)
+            {
+                $('#' + formId).validate({
+                    rules: {
+                        emp_id: {
+                            required: true
+                        },
+                        rm_code: {
+                            required: true
+                        },
+                        emp_name: {
+                            required: true
+                        },
+                        mobile: {
+                            required: true,
+                            //maxlength: 11,
+                            //minlength: 11,
+                            digits: true
+                        },
+                        email: {
+                            required: true,
+                            email: true
+                        },
+                        dept_code: {
+                            required: true
+                        },
+                        branch_code: {
+                            required: true
+                        },
+                        grade_code: {
+                            required: true
+                        },
+                        cat_id: {
+                            required: true
+                        },
+                        desig_code: {
+                            required: true
+                        },
+                        emp_cat: {
+                            required: true
+                        },
+                    },
+                    messages: {
+                        emp_id: {
+                            required: "Enter Emp Id to continue."
+                        },
+                        rm_code: {
+                            required: "Enter RM Code to continue."
+                        },
+                        emp_name: {
+                            required: "Enter Employee Name to continue."
+                        },
+                        dept_code: {
+                            required: "Select department to continue."
+                        },
+                        email: {
+                            required: "Enter agent email to continue.",
+                            email: "Please enter a valid email address"
+                        },
+                        mobile: {
+                            required: "Enter mobile to continue",
+                            //maxlength: "Mobile must be 11 digits",
+                            //minlength: "Mobile must be 11 digits",
+                            digits: "Mobile must be numeric"
+                        },
+                        grade_code: {
+                            required: "Select grade to continue."
+                        },
+                        branch_code: {
+                            required: "Select branch to continue."
+                        },
+                        cat_id: {
+                            required: "Select Category to continue."
+                        },
+                        desig_code: {
+                            required: "Select degignation to continue."
+                        },
+                        emp_cat: {
+                            required: "Select Employee category to continue."
+                        }
+                    }
+                });
+            };
+            return { init: init };
+        }();
+
+        classAgentSetup.init();
+    </script>
+}
+
+
