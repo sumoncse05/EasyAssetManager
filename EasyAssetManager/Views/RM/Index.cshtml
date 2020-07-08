@@ -158,10 +158,14 @@
             var formId = "agentSetup";
             var init = function ()
             {
+                $("#emp_id").prop('disabled', false);
                 eventInitializer();
                 validation(formId);
                 var model =@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@ViewBag.RMDetails));
-                ApplicationCommon.setData(model, null);
+                if (model != null || model != '') {
+                    ApplicationCommon.setData(model, null);
+                    $("#emp_id").prop('disabled', true);
+                }
 
             };
             var eventInitializer = function ()

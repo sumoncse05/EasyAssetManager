@@ -90,7 +90,7 @@
                 var ac_rm_code = $('#ac_rm_code').val();
                 var rm_name = $('#rm_name').val().replace(/ /g, "+");
                 $('#acc_openingreq').empty();
-                var url = '/RM/GetRMDetailList';
+                var url = '@Url.Content("~/RM/GetRMDetailList")';
                 $('#acc_openingreq').load(url + '?ac_rm_code=' + ac_rm_code + '&&rm_name=' + rm_name);
             };
             var Updatedata = function () {
