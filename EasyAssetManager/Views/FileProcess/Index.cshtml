@@ -87,7 +87,7 @@
                     formData.append('file_Type', $('#file_Type').val());
                     formData.append('businessYear', $('#business_Year').val());
                     formData.append('file', $('#logo')[0].files[0]);
-                    var url = '/FileProcess/UploadFile';
+                    var url ='@Url.Content("~/FileProcess/UploadFile")';
                     ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res)
                     {
                         ApplicationCommon.showNotification(res.messageType, res.messageString);
