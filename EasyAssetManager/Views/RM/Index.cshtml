@@ -50,7 +50,7 @@
                                                     <label class="col-form-label">Designation:<span class="required">*</span></label>
                                                 </div>
                                                 <div class="col-xl-8">
-                                                    <select id="desig_code" name="desig_code" class="form-control form-element required"></select>
+                                                    <select id="desig_code" name="desig_code" class="form-control form-element chosen-select required"></select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -58,7 +58,7 @@
                                                     <label class="col-form-label">Branch:<span class="required">*</span></label>
                                                 </div>
                                                 <div class="col-xl-8">
-                                                    <select id="branch_code" name="branch_code" class="form-control form-element required"></select>
+                                                    <select id="branch_code" name="branch_code" class="form-control form-element chosen-select required"></select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -104,7 +104,7 @@
                                                     <label class="col-form-label">Grade:<span class="required">*</span></label>
                                                 </div>
                                                 <div class="col-xl-8">
-                                                    <select id="grade_code" name="grade_code" class="form-control form-element required "></select>
+                                                    <select id="grade_code" name="grade_code" class="form-control form-element chosen-select required "></select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -112,7 +112,7 @@
                                                     <label class="col-form-label">Department:<span class="required">*</span></label>
                                                 </div>
                                                 <div class="col-xl-8">
-                                                    <select id="dept_code" name="dept_code" class="form-control form-element required"></select>
+                                                    <select id="dept_code" name="dept_code" class="form-control form-element chosen-select required"></select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -224,6 +224,7 @@
 
             var validation = function (formId)
             {
+                $.validator.setDefaults({ ignore: ":hidden:not(.chosen-select)" });
                 $('#' + formId).validate({
                     rules: {
                         emp_id: {
