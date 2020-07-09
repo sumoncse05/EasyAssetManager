@@ -28,7 +28,7 @@
                                             <label class="col-form-label">PRODUCT CODE:<span class="required">*</span></label>
                                         </div>
                                         <div class="col-xl-4">
-                                            <select id="PRODUCT_CODE" name="PRODUCT_CODE" class="form-control form-element"></select>
+                                            <select id="PRODUCT_CODE" name="PRODUCT_CODE" class="form-control form-element chosen-select"></select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -36,13 +36,13 @@
                                             <label class="col-form-label">Area:<span class="required">*</span></label>
                                         </div>
                                         <div class="col-xl-4">
-                                            <select id="AREA_CODE" name="AREA_CODE" class="form-control form-element"></select>
+                                            <select id="AREA_CODE" name="AREA_CODE" class="form-control form-element chosen-select"></select>
                                         </div>
                                         <div class="col-xl-2">
                                             <label class="col-form-label">Branch:<span class="required">*</span></label>
                                         </div>
                                         <div class="col-xl-4">
-                                            <select id="BRANCH_CODE" name="BRANCH_CODE" class="form-control form-element"></select>
+                                            <select id="BRANCH_CODE" name="BRANCH_CODE" class="form-control form-element chosen-select"></select>
                                         </div>
                                     </div>
 
@@ -162,10 +162,11 @@
             var changeProduct = function () {
                 var loanType = $('#SEG_ID').val();
                 combo.getLoanProductList('PRODUCT_CODE', '@Url.Content("~/Common/GetLoanProductList")', loanType, true);
-               // $('#PRODUCT_CODE').trigger("chosen:updated");
+                $('#PRODUCT_CODE').trigger("chosen:updated");
             };
             var validation = function (formId)
             {
+                $.validator.setDefaults({ ignore: ":hidden:not(.chosen-select)" });
                 $('#' + formId).validate({
                     rules: {
                         AREA_CODE: {

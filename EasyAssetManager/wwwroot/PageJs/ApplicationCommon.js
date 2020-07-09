@@ -162,6 +162,10 @@ var ApplicationCommon = function ()
                     || $('#' + upper).is('select') || $(this).is('input[type="password"]'))
                 {
                     $('#' + upper).val(data[key]);
+                    if ($('#' + upper).hasClass('chosen-select')) {
+                        $('#' + upper).val(data[key]).trigger("chosen:updated");
+                    }
+                   
                 }
                 if ($('#' + upper).is('textarea'))
                 {
@@ -272,10 +276,14 @@ var ApplicationCommon = function ()
                 {
                     $(this).val('');
                 }
+               
             });
             $('select').each(function ()
             {
                 $(this).val('');
+                if ($(this).hasClass('chosen-select')) {
+                    $(this).val('').trigger("chosen:updated");
+                }
             });
             $('textarea').each(function ()
             {
