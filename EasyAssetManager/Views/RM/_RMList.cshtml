@@ -5,55 +5,55 @@
 
 @if (Model != null && Model.Any())
 {
-    <table class="table table-striped table-bordered table-hover dataTables-example table-responsive" id="tb-accreq">
-        <thead>
-            <tr>
-                <th>Branch Code</th>
-                <th>Branch</th>
-                <th>RM Code</th>
-                <th>Employee Name</th>
-                <th>Designation</th>
-                <th>Category</th>
-                <th>Email</th>
-                <th>Mobile</th>
-                <th>Emp Category</th>
-                <th>Update Status</th>
-                <th>Edit</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var v in Model)
+<table class="table table-striped table-bordered table-hover dataTables-example table-responsive" id="tb-accreq">
+    <thead>
+        <tr>
+            <th>Branch Code</th>
+            <th>Branch</th>
+            <th>RM Code</th>
+            <th>Employee Name</th>
+            <th>Designation</th>
+            <th>Category</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Emp Category</th>
+            <th>Update Status</th>
+            <th>Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var v in Model)
             {
-                <tr>
-                    <td>@v.branch_code</td>
-                    <td>@v.branch_name</td>
-                    <td>@v.rm_code </td>
-                    <td>@v.emp_name</td>
-                    <td>@v.desig_name</td>
-                    <td>@v.cat_desc</td>
-                    <td>@v.email</td>
-                    <td>@v.mobile</td>
-                    <td>@v.emp_cat</td>
-                    <td>
-                        <button type="button" class="btn btn-success gridButton" onclick="showUpdatedata('@v.rm_code','@v.emp_name','@v.branch_code','@v.branch_name','@v.emp_id');" data-id="@v.emp_id">
-                            <i class="fa fa-save"></i>
-                        </button>
-                    </td>
-                    <td>
-                        <a href="@Url.Action("GetRMDetail","RM",new { emp_id=v.emp_id})" target="_blank" class="btn btn-success gridButton" data-id="@v.emp_id"><i class="fa fa-edit"></i></a>
+        <tr>
+            <td>@v.branch_code</td>
+            <td>@v.branch_name</td>
+            <td>@v.rm_code </td>
+            <td>@v.emp_name</td>
+            <td>@v.desig_name</td>
+            <td>@v.cat_desc</td>
+            <td>@v.email</td>
+            <td>@v.mobile</td>
+            <td>@v.emp_cat</td>
+            <td>
+                <button type="button" class="btn btn-success gridButton" onclick="showUpdatedata('@v.rm_code','@v.emp_name','@v.branch_code','@v.branch_name','@v.emp_id');" data-id="@v.emp_id">
+                    <i class="fa fa-save"></i>
+                </button>
+            </td>
+            <td>
+                <a href="@Url.Action("GetRMDetail","RM",new { emp_id=v.emp_id})" target="_blank" class="btn btn-success gridButton" data-id="@v.emp_id"><i class="fa fa-edit"></i></a>
 
-                        @*<button type="button" class="btn btn-success gridButton" onclick="showUpdatedata('@v.ac_reg_slno','@v.ac_customer_type_desc','@v.joint_desc','@v.no_of_customer','@v.ac_name','@v.cheque_book','@v.debit_card','@v.remarks');" data-id="@v.ac_reg_slno">
-                                <i class="fa fa-edit"></i>
-                            </button>*@
-                    </td>
-                </tr>
+                @*<button type="button" class="btn btn-success gridButton" onclick="showUpdatedata('@v.ac_reg_slno','@v.ac_customer_type_desc','@v.joint_desc','@v.no_of_customer','@v.ac_name','@v.cheque_book','@v.debit_card','@v.remarks');" data-id="@v.ac_reg_slno">
+                        <i class="fa fa-edit"></i>
+                    </button>*@
+            </td>
+        </tr>
             }
-        </tbody>
-    </table>
+    </tbody>
+</table>
 }
 else
 {
-    <p>No record found.</p>
+<p>No record found.</p>
 }
 <div class="modal fade" id="updateData" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -130,13 +130,13 @@ else
                         <div class="col-lg-8">
                             <div class="form-group">
                                 <div class="input-group">
-                                    <input type="text" id="new_rm_code" name="new_rm_code" class="form-control form-element required col-lg-3"  />
+                                    <input type="text" id="new_rm_code" name="new_rm_code" class="form-control form-element required col-lg-3" />
                                     <select id="new_rm" name="new_rm" class="form-control form-element col-lg-9" onchange="setRmCode(this)"></select>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row" id="trBranchPop" >
+                    <div class="form-group row" id="trBranchPop">
                         <div class="col-lg-3">
                             <label class="col-form-label">New Branch<span class="required">*</span></label>
                         </div>
@@ -148,18 +148,14 @@ else
             </div>
             <div class="modal-footer">
                 <input type="button" value="Update" class="btn btn-primary ks-next" onclick="classSearchRMDetails.Updatedata()" id="btnUpdate">
-                <input type="button" value="Close" class="btn btn-primary ks-next" data-dismiss="modal" id="btnClose">
+                <input type="button" value="Close" class="btn btn-danger ks-next" data-dismiss="modal" id="btnClose">
             </div>
         </div>
     </div>
 </div>
 
-@section Styles {
-    <link rel="stylesheet" href="~/ApplicationTheme/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
-}
 
-<script src="~/ApplicationTheme/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript">
+    <script type="text/javascript">
     $(document).ready(function () {
         combo.getRMStatusList('status_code', '@Url.Content("~/Common/GetRMStatusList")', true);
         combo.getBranchList('new_branch_code', '@Url.Content("~/Common/GetBranchList")', '', true);
@@ -190,12 +186,8 @@ else
         $("#branch_code").val(branch_code);
         $("#branch_name").val(branch_name);
         $("#emp_id").val(emp_id);
-        
-        $("#effect_date").val('');
-        $("#new_rm_code").val('');
-        $("#new_rm").val('');
-        $("#status_code").val('');
-        $("#new_branch_code").val('');
+        clearField();
+        $('#status_code').prop('selectedIndex', 0);
     }
     function setRmCode(e) {
         $("#new_rm_code").val(e.value);
@@ -209,7 +201,8 @@ else
         $("#new_rm").val(rm_code);
     });
 
-    $('#status_code').change(function () {
+        $('#status_code').change(function () {
+        clearField();
         if ($("#status_code").val() === "01") {
             $('#rmCodeAction').text('Customer Re Assigned RM');
             $("#trBranchPop").show();
@@ -217,15 +210,20 @@ else
         else if ($("#status_code").val() === "02") {
             $('#rmCodeAction').text('Customer Re Assigned RM');
             $("#trBranchPop").hide();
-            $("#new_branch_code").selectedIndex = 0;
         }
         else if ($("#status_code").val() === "03") {
             $('#rmCodeAction').text('Updated RM Code');
             $("#trBranchPop").hide();
-            $("#new_branch_code").selectedIndex = 0;
-            $("#new_rm").selectedIndex = 0;
             $("#new_rm").hide();
         }
     });
+        function clearField() {
+            $("#new_rm").show();
+        $("#effect_date").val('');
+        $("#new_rm_code").val('');
+        $('#new_branch_code').prop('selectedIndex', 0);
+        $('#new_rm').prop('selectedIndex', 0);
 
-</script>
+    }
+
+    </script>

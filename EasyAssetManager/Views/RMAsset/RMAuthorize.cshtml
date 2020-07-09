@@ -111,7 +111,7 @@
                 $('#search').click(searchInitiate);
                 $('#btnAuthorizeRM').click(authorizeRM);
                 searchInitiate();
-                combo.getBranchList('branchCode', '@Url.Content("~/Common/GetBranchList")', true);
+                combo.getBranchList('branchCode', '@Url.Content("~/Common/GetBranchList")', {}, true);
                 combo.getLoanType('loanType', true);
                 $('.chosen-select').chosen({ width: "100%" });
             };

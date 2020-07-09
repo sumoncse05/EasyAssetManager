@@ -158,13 +158,15 @@
             var formId = "agentSetup";
             var init = function ()
             {
+                $('#btnSearch').show();
                 $("#emp_id").prop('disabled', false);
                 eventInitializer();
                 validation(formId);
                 var model =@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@ViewBag.RMDetails));
-                if (model != null || model != '') {
+                if ('@ViewBag.RMDetails' != '') {                    
                     ApplicationCommon.setData(model, null);
                     $("#emp_id").prop('disabled', true);
+                    $('#btnSearch').hide();
                 }
 
             };
@@ -195,6 +197,8 @@
 
                         if (res.messageType == 1)
                         {
+                            $('#btnSearch').show();
+                            $("#emp_id").prop('disabled', false);
                             clear();
                         }
                     });

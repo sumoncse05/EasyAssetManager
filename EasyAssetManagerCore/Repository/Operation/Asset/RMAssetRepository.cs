@@ -167,7 +167,8 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
             dyParam.Add("pvc_new_rm_code", rm.new_rm_code, OracleMappingType.Varchar2, ParameterDirection.Input, 10);
             dyParam.Add("pvc_old_branch_code", rm.branch_code, OracleMappingType.Varchar2, ParameterDirection.Input, 10); 
             dyParam.Add("pvc_new_branch_code", rm.new_branch_code, OracleMappingType.Varchar2, ParameterDirection.Input, 10);
-            dyParam.Add("pvc_eff_date", System.Convert.ToDateTime(rm.effect_date).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture), OracleMappingType.Varchar2, ParameterDirection.Input, 50);
+            //dyParam.Add("pvc_eff_date", System.Convert.ToDateTime(rm.effect_date).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture), OracleMappingType.Varchar2, ParameterDirection.Input, 50);
+            dyParam.Add("pvc_eff_date", rm.effect_date, OracleMappingType.Varchar2, ParameterDirection.Input, 50);
             dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input, 50);
             dyParam.Add("pvc_status", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 5);
             dyParam.Add("pvc_statusmsg", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 255);

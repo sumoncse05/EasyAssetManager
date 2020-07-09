@@ -77,7 +77,13 @@
 </div>
 
 
+@section Styles {
+    <link rel="stylesheet" href="~/ApplicationTheme/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
+    <link rel="stylesheet" href="~/ApplicationTheme/lib/chosen/bootstrap-chosen.css" />
+}
 @section scripts{
+    <script src="~/ApplicationTheme/lib/chosen/chosen.jquery.js"></script>
+    <script src="~/ApplicationTheme/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript">
         var classSearchRMDetails = function () {
             var init = function () {
@@ -110,9 +116,9 @@
                     ApplicationCommon.showNotification("2", "Enter Effect date to continue.");
                     $("#effect_date").focus();
                 }
-                else if ($("#new_branch_code").val() == "") {
+                else if ($("#new_rm_code").val() == "") {
                     ApplicationCommon.showNotification("2", "Enter RM code to continue");
-                    $("#txtRMCodePop").focus();
+                    $("#new_rm_code").focus();
                 }
                 else if ($("#status_code").val() !== "03" && $("#new_rm").val() == "") {
                     ApplicationCommon.showNotification("2", "Select RM to continue.");
