@@ -19,13 +19,13 @@
                                 <div class="col-lg-12">
                                     <div class="form-group row">
                                         <div class="col-xl-2">
-                                            <label class="col-form-label">SEG ID:<span class="required">*</span></label>
+                                            <label class="col-form-label">Seg Id:<span class="required">*</span></label>
                                         </div>
                                         <div class="col-xl-4">
                                             <select id="SEG_ID" name="SEG_ID" class="form-control form-element"></select>
                                         </div>
                                         <div class="col-xl-2">
-                                            <label class="col-form-label">PRODUCT CODE:<span class="required">*</span></label>
+                                            <label class="col-form-label">Product:<span class="required">*</span></label>
                                         </div>
                                         <div class="col-xl-4">
                                             <select id="PRODUCT_CODE" name="PRODUCT_CODE" class="form-control form-element chosen-select"></select>
@@ -120,7 +120,7 @@
                 changeProduct();
                 $('#AREA_CODE').on('change', function () {
                     combo.getBranchList('BRANCH_CODE', '@Url.Content("~/Common/GetBranchList")', $('#AREA_CODE').val(), true);
-                   // $('#BRANCH_CODE').trigger("chosen:updated");
+                    $('#BRANCH_CODE').trigger("chosen:updated");
                 });
                 $('#SEG_ID').on('change', function ()
                 {

@@ -67,14 +67,15 @@
                                     <ul class="nav nav-second-level collapse" id="ul_@parentScreen.scr_id">
                                         @foreach (var firstChildscreen in appSession.Screens.Where(o => o.scr_parent_id == parentScreen.scr_id))
                                         {
-                                         var templastChildscreen = appSession.Screens.Where(o => o.scr_parent_id == firstChildscreen.scr_id);
-                                        if (templastChildscreen != null && templastChildscreen.Any())
-                                        {
-                                            @foreach (var lastChildscreen in appSession.Screens.Where(o => o.scr_parent_id == firstChildscreen.scr_id))
+                                            var templastChildscreen = appSession.Screens.Where(o => o.scr_parent_id == firstChildscreen.scr_id);
+                                            if (templastChildscreen != null && templastChildscreen.Any())
                                             {
-                                            <li class="menuAction" id="@lastChildscreen.scr_id"><a href="@Url.Content("/AssetManager"+lastChildscreen.scr_link)">@lastChildscreen.scr_name</a></li>
+                                                @foreach (var lastChildscreen in appSession.Screens.Where(o => o.scr_parent_id == firstChildscreen.scr_id))
+                                                {
+                                                    <li class="menuAction" id="@lastChildscreen.scr_id"><a href="@Url.Content("/AssetManager"+lastChildscreen.scr_link)">@lastChildscreen.scr_name</a></li>
+                                                    @*<li class="menuAction" id="@lastChildscreen.scr_id"><a href="@Url.Content(lastChildscreen.scr_link)">@lastChildscreen.scr_name</a></li>*@
+                                                }
                                             }
-                                        }
                                         }
                                     </ul>
                                 </li>
