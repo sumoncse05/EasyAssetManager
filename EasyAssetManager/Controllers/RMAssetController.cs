@@ -20,8 +20,9 @@ namespace EasyAssetManager.Controllers
             return View();
         }
 
-        public IActionResult GetAvailableLoan(string loanType,string loanProduct,string rmCode)
+        public IActionResult GetAvailableLoan(string loanType="",string loanProduct="",string rmCode="")
         {
+            if (string.IsNullOrEmpty(loanProduct)) loanProduct = ""; if (string.IsNullOrEmpty(loanType)) loanType = ""; if (string.IsNullOrEmpty(rmCode)) rmCode = "";
             var availableLoans = rmAssetManager.GetAvailableLoan(loanType, loanProduct, rmCode,Session);
             return PartialView("_GetAvailableLoan", availableLoans);
         }

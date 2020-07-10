@@ -5,7 +5,7 @@
 }
 @if (Model != null && Model.Any())
 {
-    row = Model.Count();
+   // row = Model.Count();
     <table class="table table-striped table-bordered table-hover dataTables-example table-responsive" id="tb-unAuthorizeLoan" width="100%">
         <thead>
             <tr>
@@ -55,6 +55,16 @@ else
 <script type="text/javascript">
     $(document).ready(function () {
         ApplicationCommon.makePagination('tb-unAuthorizeLoan');
+        var rowCount = $('#tb-unAuthorizeLoan >tbody >tr').length;
+        if (rowCount > 0) {
+            $("#sidebarCollapse").addClass('fa-chevron-down').removeClass('fa-chevron-up');
+            $("#divsidebarCollapse").addClass('border-bottom');
+            $('#sidebarContent').css('display', 'none');
+            $('#btnAuthorizeRM').show();
+        } else {
+            $('#btnAuthorizeRM').hide();
+            $("#trBranchPop").hide();
+        }
         $("#UserChkAll").click(function () {
             var checkAll = $("#UserChkAll").prop('checked');
             if (checkAll) {

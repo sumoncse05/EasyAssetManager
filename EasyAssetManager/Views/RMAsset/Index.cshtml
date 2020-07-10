@@ -70,7 +70,7 @@
         <div class="col-lg-12">
             <div class="ibox " id="iboxTbl">
                 <div class="ibox-title">
-                    <h5>Available Loan List to Assign(<label id="lblLoanCount" name="lblLoanCount" /> )</h5>
+                    <h5>Available Loan List to Assign</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up" id="iboxTblImg"></i>
@@ -152,6 +152,7 @@
             };
             var eventInitializer = function ()
             {
+                $('#btnModalOpen').hide();
                 $('#search').click(searchInitiate);
                 $('#btnAssign').click(assignRM);
                 $('#btnModalOpen').click(showModaldata);

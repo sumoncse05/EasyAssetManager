@@ -438,7 +438,7 @@ var ApplicationCommon = function ()
         var year = jsonDate.substring(0, 4);
         var month = jsonDate.substring(5, 7);
         var day = jsonDate.substring(8, 10);
-        var date = day + '-' + ERPApplication.getMonthNameInShortForm(month) + '-' + year;
+        var date = day + '/' + month + '/' + year;
         return date;
     };
     var formateJsonDate = function (jsonDate)

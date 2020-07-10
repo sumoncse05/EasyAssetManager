@@ -65,7 +65,7 @@
                                         </div>
                                         <div class="col-xl-3">
                                             <div class="input-group date">
-                                                <input class="form-control form-element" type="text" id="toDate" name="toDate" placeholder="dd/mm/yyyy" data-mask="99/99/9999" value="@DateTime.Now.ToString("dd/MM/yyyy")">
+                                                <input class="form-control form-element" type="text" id="toDate" name="toDate" placeholder="dd/mm/yyyy" data-mask="99/99/9999">
                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                             </div>
                                         </div>
@@ -122,7 +122,7 @@
             var eventInitializer = function () {
                 $('#search').click(searchInitiate);
                 combo.getAreaList('area', '@Url.Content("~/Common/GetAreaList")', true);
-                combo.getBranchList('branch','@Url.Content("~/Common/GetBranchList")', $('#area').val(), true);
+                //combo.getBranchList('branch','@Url.Content("~/Common/GetBranchList")', $('#area').val(), true);
                 combo.getRmList('rmCode','@Url.Content("~/Common/GetRmList")', $('#branch').val(), true);
                 combo.getReportName('reportName', false);
                 combo.getLoanType('loantype', false);
@@ -150,6 +150,7 @@
                 var rmCode = $('#rmCode').val();
                 var area = $('#area').val();
                 var branch = $('#branch').val();
+                if (!branch) branch = "";
                 var toDate = $('#toDate').val();
                 var reportId = parseInt($('#reportName').val()); 
                 var url = '';

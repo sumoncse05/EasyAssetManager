@@ -103,7 +103,7 @@
             var eventInitializer = function () {
                 $('#search').click(searchInitiate);
                 combo.getAreaList('area', '@Url.Content("~/Common/GetAreaList")', true);
-                combo.getBranchList('branch','@Url.Content("~/Common/GetBranchList")', $('#area').val(), true);
+               // combo.getBranchList('branch','@Url.Content("~/Common/GetBranchList")', $('#area').val(), true);
                 $('#area').on('change', function () {
                     combo.getBranchList('branch','@Url.Content("~/Common/GetBranchList")', $('#area').val(), true);
                    $('#branch').trigger("chosen:updated");
@@ -121,7 +121,8 @@
             };
             var searchInitiate = function () {
                 var area_code = $('#area').val();
-                var branch_code =$('#branch').val();
+                var branch_code = $('#branch').val();
+                if (!branch_code) branch_code = "";
                 var wo_date = $('#wo_date').val();
                 var loanNumber = $('#loanNumber').val();
                 $('#div_loanwo').empty();

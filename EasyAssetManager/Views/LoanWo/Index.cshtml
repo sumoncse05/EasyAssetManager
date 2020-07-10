@@ -72,7 +72,7 @@
                                         </div>
                                         <div class="col-xl-4">
                                             <div class="input-group date">
-                                                <input class="form-control form-element" type="text" id="WO_DATE" name="WO_DATE" placeholder="dd/mm/yyyy" data-mask="99/99/9999" value="@DateTime.Now.ToString("dd/MM/yyyy")">
+                                                <input class="form-control form-element" type="text" id="WO_DATE" name="WO_DATE" placeholder="dd/mm/yyyy" data-mask="99/99/9999">
                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                             </div>
                                         </div>
@@ -108,14 +108,18 @@
                 eventInitializer();
                 validation(formId);
                 var model =@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@ViewBag.LoanWo));
-                ApplicationCommon.setData(model, null);
+                if (model.AREA_CODE) {
+                    combo.getBranchList('BRANCH_CODE', '@Url.Content("~/Common/GetBranchList")', model.AREA_CODE, true);
+                    ApplicationCommon.setData(model, null);
+                    $('#WO_DATE').val(ApplicationCommon.formateDate(model.WO_DATE));
+                };
             };
             var eventInitializer = function ()
             {
                 $('#btnSave').click(saveAgent);
                 $('#btnClear').click(clear);
                 combo.getAreaList('AREA_CODE', '@Url.Content("~/Common/GetAreaList")', true);
-                combo.getBranchList('BRANCH_CODE', '@Url.Content("~/Common/GetBranchList")', $('#AREA_CODE').val(), true);
+                //combo.getBranchList('BRANCH_CODE', '@Url.Content("~/Common/GetBranchList")', $('#AREA_CODE').val(), true);
                 combo.getLoanType('SEG_ID', false);
                 changeProduct();
                 $('#AREA_CODE').on('change', function () {

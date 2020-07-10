@@ -276,8 +276,8 @@
     }
 
     .dataTables_wrapper .dataTables_filter {
-        float: right;
-        text-align: right
+        /*float: right;*/
+        text-align: center
     }
 
         .dataTables_wrapper .dataTables_filter input {

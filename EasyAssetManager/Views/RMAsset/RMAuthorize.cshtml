@@ -4,10 +4,6 @@
 }
 
 
-@{
-    ViewData["Title"] = "Index";
-}
-
 <div class="wrapper wrapper-content animated fadeInRight">
 
     <div class="row">
@@ -108,6 +104,7 @@
 
             };
             var eventInitializer = function () {
+                $('#btnAuthorizeRM').hide();
                 $('#search').click(searchInitiate);
                 $('#btnAuthorizeRM').click(authorizeRM);
                 searchInitiate();
