@@ -1,0 +1,179 @@
+﻿
+@{
+    ViewData["Title"] = "Search Loan Details";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="ibox" id="divsidebarCollapse">
+                <div class="ibox-title">
+                    <h5>Search Loan Details</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="sidebarCollapse"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="sidebarContent">
+                    <form id="stepProcess" action="#" class="wizard-big">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group row">
+                                        <div class="col-xl-2"></div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Area</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <select id="ac_area_code" name="ac_area_code" class="form-control form-element"></select>
+                                        </div>
+                                        <div class="col-xl-5"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-2"></div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Branch</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <select id="ac_branch_code" name="ac_branch_code" class="form-control form-element"></select>
+                                        </div>
+                                        <div class="col-xl-5"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-2"></div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Loan AC No</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="ac_loan_no" name="ac_loan_no" class="form-control form-element" />
+                                        </div>
+                                        <div class="col-xl-5"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-5"></div>
+                                        <div class="col-xl-2">
+                                            <button type="button" class="btn btn-primary" id="search">Search</button>
+                                        </div>
+                                        <div class="col-xl-3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox " id="iboxTbl">
+                <div class="ibox-title">
+                    <h5> Search Loan Details</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="iboxTblImg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="iboxContent">
+                    <div id="acc_openingreq"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/ApplicationTheme/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
+    <link rel="stylesheet" href="~/ApplicationTheme/lib/chosen/bootstrap-chosen.css" />
+}
+@section scripts{
+    <script src="~/ApplicationTheme/lib/chosen/chosen.jquery.js"></script>
+    <script src="~/ApplicationTheme/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript">
+        var classSearchLoanDetails = function () {
+            var init = function () {
+                eventInitializer();
+                //validation(formId);
+            };
+            var eventInitializer = function () {
+                $('#search').click(searchInitiate);
+                combo.getAreaList('ac_area_code', '@Url.Content("~/Common/GetAreaList")', true);
+                $('#ac_area_code').change(loadAreaWiseBranch);
+                $('.chosen-select').chosen({ width: "100%" });
+            };
+            var loadAreaWiseBranch = function () {
+                combo.getBranchList('ac_branch_code', '@Url.Content("~/Common/GetBranchList")', $('#ac_area_code').val(), true);
+            };
+            var searchInitiate = function () {
+                if($("#ac_area_code").val()==''){
+                    ApplicationCommon.showNotification("2", "Select Area to continue.");
+                    $("#ac_area_code").focus();}
+                else if($("#ac_branch_code").val()==''){
+                    ApplicationCommon.showNotification("2", "Select Branch to continue.");
+                    $("#ac_branch_code").focus();
+                }
+                else{
+                    var ac_branch_code = $('#ac_branch_code').val();
+                    var ac_area_code = $('#ac_area_code').val();
+                    var ac_loan_no = $('#ac_loan_no').val();
+                    $('#acc_openingreq').empty();
+                    var url = '@Url.Content("~/LoanSearch/GetLoanDetailList")';
+                    $('#acc_openingreq').load(url + '?ac_area_code=' + ac_area_code + '&&ac_branch_code=' + ac_branch_code + '&&ac_loan_no=' + ac_loan_no);
+                }    
+            };
+            var Updatedata = function () {
+                if( $("#OS_AMOUNT").val()==''){
+                    ApplicationCommon.showNotification("2", "Enter Amount to continue.");
+                    $("#OS_AMOUNT").focus();}
+                else if($("#SEG_ID").val()==''){
+                    ApplicationCommon.showNotification("2", "Select Segment to continue.");
+                    $("#SEG_ID").focus();}
+                else if($("#PRODUCT_CODE").val()==''){
+                    ApplicationCommon.showNotification("2", "Select Product to continue.");
+                    $("#PRODUCT_CODE").focus();}
+                else if($("#BRANCH_CODE").val()==''){
+                    ApplicationCommon.showNotification("2", "Select Branch to continue.");
+                    $("#BRANCH_CODE").focus();}
+                else if($("#AREA_CODE").val()==''){
+                    ApplicationCommon.showNotification("2", "Select Area to continue.");
+                    $("#AREA_CODE").focus();}
+                else if($("#WO_DATE").val()==''){
+                    ApplicationCommon.showNotification("2", "Enter date to continue.");
+                    $("#WO_DATE").focus();}
+                else if ($("#WO_DATE").val() == "__/__/____") {
+                    ApplicationCommon.showNotification("2", "Enter date to continue.");
+                    $("#WO_DATE").focus();}
+	            else if($("#LOAN_AC_NUMBER").val()==''){
+                    ApplicationCommon.showNotification("2", "Enter Loan no to continue.");
+                    $("#LOAN_AC_NUMBER").focus();}
+	            else if($("#WO_AMOUNT").val()==''){
+                    ApplicationCommon.showNotification("2", "Enter amount to continue.");
+                    $("#WO_AMOUNT").focus();}	
+                else{
+                    var agent = ApplicationCommon.getData('form-element');
+                        var url = '@Url.Content("~/LoanWo/SubmitLoanWo")';
+                    ApplicationCommon.request(url, 'POST', agent, false, true, false, function (res)
+                    {
+                        ApplicationCommon.showNotification(res.messageType, res.messageString);
+                        if (res.messageType == 1)
+                        {
+                            $('body').removeClass('modal-open');
+                            $(".modal-backdrop").remove();
+                            searchInitiate();
+                        }
+                    });
+                }
+            };
+
+            return { init: init, Updatedata: Updatedata, searchInitiate: searchInitiate };
+        }();
+
+        classSearchLoanDetails.init();
+
+    </script>
+}

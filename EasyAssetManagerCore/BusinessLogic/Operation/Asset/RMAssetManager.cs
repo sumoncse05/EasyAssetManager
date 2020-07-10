@@ -207,12 +207,44 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
         }
         public IEnumerable<RM> GetRMDetailList(string emp_id,string rm_name, string user_id)
         {
-            return rmRepository.GetRMDetailList(emp_id, rm_name, user_id);            
+            return rmRepository.GetRMDetailList(emp_id, rm_name, user_id);
+        }
+        public IEnumerable<Loan> GetLoanDetailList(string ac_area_code, string ac_branch_code, string ac_loan_no, string user_id)
+        {
+            return rmRepository.GetLoanDetailList(ac_area_code, ac_branch_code, ac_loan_no, user_id);
+        }
+        public Message UpdateMonitoringRM(string loan_ac_no, string moni_rm_code, AppSession session)
+        {
+            try
+            {
+                if (Connection.State != ConnectionState.Open)
+                    Connection.Open();
+                var msg = rmRepository.UpdateMonitoring(loan_ac_no, moni_rm_code, session.User.user_id);
+                if (msg.pvc_status == "40999")
+                {
+                    MessageHelper.Success(Message, "Monitoring RM Update sucessfully:");
+                }
+                else
+                {
+                    MessageHelper.Error(Message, "Monitoring RM Update Failed:");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageHelper.Error(Message, ex.Message);
+            }
+            finally
+            {
+                Connection.Close();
+            }
+            return Message;
         }
     }
 
     public interface IRMAssetManager
     {
+        Message UpdateMonitoringRM(string loan_ac_no, string moni_rm_code, AppSession session);
+        IEnumerable<Loan> GetLoanDetailList(string ac_area_code, string ac_branch_code, string ac_loan_no, string user_id);
         IEnumerable<Branch> GetBranchList(string areacode, string user_id);
         IEnumerable<Area> GetAreaList(string user_id);
         IEnumerable<RM> GetRmList(string branch_code, string user_id);

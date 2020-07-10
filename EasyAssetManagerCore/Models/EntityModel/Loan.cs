@@ -6,6 +6,7 @@
         public string seg_id { get; set; }
         public string seg_desc { get; set; }
         public string area_code { get; set; }
+        public string area_name { get; set; }
         public string branch_code { get; set; }
         public string branch_name { get; set; }
         public string old_rm_code { get; set; }
@@ -15,12 +16,19 @@
         public string loan_ac_number { get; set; }
         public string loan_ac_name { get; set; }
         public string product_code { get; set; }
+        public string product_desc { get; set; }
         public string loan_category { get; set; }
         public string book_date { get; set; }
         public string loan_amount { get; set; }
         public string outstanding_amount { get; set; }
         public string rescheduled { get; set; }
         public string status { get; set; }
+        public string orig_rm_name { get; set; }
+        public string orig_rm_code { get; set; }
+        public string moni_rm_code { get; set; }
+        public string moni_rm_name { get; set; }
+        public string cl_status { get; set; }
+        public string status_desc { get; set; }
         public string ins_date { get; set; }
         public string ins_by { get; set; }
         public string upd_date { get; set; }

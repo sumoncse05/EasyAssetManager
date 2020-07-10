@@ -192,10 +192,34 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
             dyParam.Add("pcr_rmdtl", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
             return Connection.Query<RM>("dpg_search_manager.dpd_get_rmdtl", dyParam, commandType: CommandType.StoredProcedure);
         }
+        public IEnumerable<Loan> GetLoanDetailList(string pvc_area_code, string pvc_branch_code, string pvc_loan_acnumber, string pvc_appuser)
+        {
+            var dyParam = new OracleDynamicParameters();
+            dyParam.Add("pvc_loan_acnumber", pvc_loan_acnumber, OracleMappingType.Varchar2, ParameterDirection.Input, 100);
+            dyParam.Add("pvc_area_code", pvc_area_code, OracleMappingType.Varchar2, ParameterDirection.Input, 10);
+            dyParam.Add("pvc_branch_code", pvc_branch_code, OracleMappingType.Varchar2, ParameterDirection.Input, 10);
+            dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input);
+            dyParam.Add("pcr_loandetails", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
+            return Connection.Query<Loan>("pkg_asset_manager.dpd_get_loandetails", dyParam, commandType: CommandType.StoredProcedure);
+        }
+        public ResponseMessage UpdateMonitoring(string pvc_loan_acnumber, string pvc_monirm_code, string pvc_appuser)
+        {
+            var responseMessage = new ResponseMessage();
+            var dyParam = new OracleDynamicParameters();
+            dyParam.Add("pvc_loan_acnumber", pvc_loan_acnumber, OracleMappingType.Varchar2, ParameterDirection.Input, 100);
+            dyParam.Add("pvc_monirm_code", pvc_monirm_code, OracleMappingType.Varchar2, ParameterDirection.Input, 10);
+            dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input, 50);
+            dyParam.Add("pvc_status", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 5);
+            dyParam.Add("pvc_statusmsg", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 255);
+            var res = responseMessage.QueryExecute(Connection, "pkg_asset_manager.dpd_update_monirm", dyParam);
+            return res;
+        }
     }
 
     public interface IRMAssetRepository
     {
+        ResponseMessage UpdateMonitoring(string pvc_loan_acnumber, string pvc_monirm_code, string pvc_appuser);
+        IEnumerable<Loan> GetLoanDetailList(string pvc_area_code, string pvc_branch_code, string pvc_loan_acnumber, string pvc_appuser);
         IEnumerable<RM> GetRMList(string pvc_branchcode, string pvc_appuser);
         IEnumerable<Loan> GetAvailableLoan(string pvc_seg_id, string pvc_product_code, string pvc_origrm_code, string pvc_appuser);
         ResponseMessage SetRMAssignWithLoan(string pvc_loanlogslno, string pvc_rm_code, string pvc_effdate, string pvc_appuser);
