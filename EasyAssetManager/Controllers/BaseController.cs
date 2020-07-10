@@ -25,7 +25,7 @@ namespace EasyAssetManager.Controllers
                 //}
                 //else
                 //{
-               string redirectTo = string.Format("/Login/Index"); // Redirect to login page
+               string redirectTo = string.Format(Url.Action("Index","Login")); // Redirect to login page
                context.Result = new RedirectResult(redirectTo);
                 //}
             }

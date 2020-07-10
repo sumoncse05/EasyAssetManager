@@ -59,12 +59,12 @@
                             }
                             if (appSession.Screens.Where(o => o.scr_parent_id == parentScreen.scr_id).Count() > 0)
                             {
-                                <li id="@parentScreen.scr_id">
+                                <li id="@parentScreen.scr_id" class="active">
                                     <a href="#">
                                         <i class="@className"></i>
                                         <span class="nav-label" data-i18n="nav.@parentScreen.scr_id">@parentScreen.scr_name</span> <span class="fa arrow"></span>
                                     </a>
-                                    <ul class="nav nav-second-level collapse" id="ul_@parentScreen.scr_id">
+                                    <ul class="nav nav-second-level" id="ul_@parentScreen.scr_id">
                                         @foreach (var firstChildscreen in appSession.Screens.Where(o => o.scr_parent_id == parentScreen.scr_id))
                                         {
                                             var templastChildscreen = appSession.Screens.Where(o => o.scr_parent_id == firstChildscreen.scr_id);

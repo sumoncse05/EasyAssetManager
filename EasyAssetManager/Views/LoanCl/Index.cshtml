@@ -93,7 +93,10 @@
                 eventInitializer();
                 validation(formId);
                 var model =@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@ViewBag.LoanCl));
-                ApplicationCommon.setData(model, null);
+                if (model.LOAN_AC_NUMBER) {
+                    ApplicationCommon.setData(model, null)
+                    $('#EFF_DATE').val(ApplicationCommon.formateDate(model.EFF_DATE));
+                }; 
             };
             var eventInitializer = function ()
             {

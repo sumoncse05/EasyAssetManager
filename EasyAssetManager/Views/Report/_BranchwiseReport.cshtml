@@ -178,6 +178,14 @@ else
         colArray.push([3, 4, 41]);
         title = ApplicationCommon.reportTitleAndHeaderCustomize();
         ApplicationCommon.makePagination('tb-branchwiseReport', 3, rowArray, colArray, title);
+        var rowCount = $('#tb-branchwiseReport >tbody >tr').length;
+        if (rowCount > 0) {
+            $("#sidebarCollapse").addClass('fa-chevron-down').removeClass('fa-chevron-up');
+            $("#divsidebarCollapse").addClass('border-bottom');
+            $('#sidebarContent').css('display', 'none');
+        }
+
+        $("#trBranchPop").hide();
     });
 
 </script>
