@@ -17,10 +17,10 @@
                 <th class="collapse">Product Code</th>
                 <th>Product</th>
                 <th>CL Status</th>
-                @*<th>Book Date</th>*@
-                @*<th>Loan AC No</th>*@
+                <th>Book Date</th>
+                <th>Loan AC No</th>
                 <th>Originating RM</th>
-                @*<th>Monitoring RM</th>*@
+                <th>Monitoring RM</th>
                 <th>Update CL</th>
                 <th>Update WO</th>
                 <th>Update Monitoring RM</th>
@@ -39,10 +39,10 @@
                 <td class="collapse">@v.product_code</td>
                 <td>@v.product_desc</td>
                 <td>@v.status_desc </td>
-                @*<td>@v.book_date</td>*@
-                @*<td>@v.loan_ac_number</td>*@
+                <td>@v.book_date</td>
+                <td>@v.loan_ac_number</td>
                 <td>@v.orig_rm_code<span> - </span>@v.orig_rm_name</td>
-                @*<td>@v.moni_rm_code<span> - </span>@v.moni_rm_name</td>*@
+                <td>@v.moni_rm_code<span> - </span>@v.moni_rm_name</td>
                 <td>
                     <button type="button" class="btn btn-success gridButton" onclick="showCLUpdatedata('@v.loan_ac_number','@v.cl_status','@v.book_date');" data-id="@v.loan_ac_number">
                         <i class="fa fa-save"></i>
