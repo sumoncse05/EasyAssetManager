@@ -17,10 +17,10 @@
                 <th class="collapse">Product Code</th>
                 <th>Product</th>
                 <th>CL Status</th>
-                <th>Book Date</th>
-                <th>Loan AC No</th>
+                @*<th>Book Date</th>*@
+                @*<th>Loan AC No</th>*@
                 <th>Originating RM</th>
-                <th>Monitoring RM</th>
+                @*<th>Monitoring RM</th>*@
                 <th>Update CL</th>
                 <th>Update WO</th>
                 <th>Update Monitoring RM</th>
@@ -39,10 +39,10 @@
                 <td class="collapse">@v.product_code</td>
                 <td>@v.product_desc</td>
                 <td>@v.status_desc </td>
-                <td>@v.book_date</td>
-                <td>@v.loan_ac_number</td>
+                @*<td>@v.book_date</td>*@
+                @*<td>@v.loan_ac_number</td>*@
                 <td>@v.orig_rm_code<span> - </span>@v.orig_rm_name</td>
-                <td>@v.moni_rm_code<span> - </span>@v.moni_rm_name</td>
+                @*<td>@v.moni_rm_code<span> - </span>@v.moni_rm_name</td>*@
                 <td>
                     <button type="button" class="btn btn-success gridButton" onclick="showCLUpdatedata('@v.loan_ac_number','@v.cl_status','@v.book_date');" data-id="@v.loan_ac_number">
                         <i class="fa fa-save"></i>
@@ -184,7 +184,7 @@ else
                         </div>
                         <div class="col-xl-4">
                             <div class="input-group date">
-                                <input class="form-control form-element" type="text" id="WO_DATE" name="WO_DATE" placeholder="dd/mm/yyyy" data-mask="99/99/9999" value="@DateTime.Now.ToString("dd/MM/yyyy")">
+                                <input class="form-control form-element" type="text" id="wo_date" name="wo_date" placeholder="dd/mm/yyyy" data-mask="99/99/9999" value="@DateTime.Now.ToString("dd/MM/yyyy")">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                             </div>
                         </div>
@@ -244,6 +244,7 @@ else
 <script type="text/javascript">
     $(document).ready(function () {
         ApplicationCommon.makePagination("tb-accloandetails");
+        //ApplicationCommon.makePagination("tb-accloandetails");
         combo.getRmList('moni_rm', '@Url.Content("~/Common/GetRmList")', {}, true);
         combo.getAreaList('AREA_CODE', '@Url.Content("~/Common/GetAreaList")', true);
         combo.getBranchList('BRANCH_CODE', '@Url.Content("~/Common/GetBranchList")', $('#AREA_CODE').val(), true);
@@ -322,18 +323,18 @@ else
         else if($("#CL_STATUS").val()==''){
             ApplicationCommon.showNotification("2", "Select CL Status to continue.");
             $("#CL_STATUS").focus();}
-        else if($("#WO_DATE").val()==''){
+        else if($("#wo_date").val()==''){
             ApplicationCommon.showNotification("2", "Enter date to continue.");
-            $("#WO_DATE").focus();}
-        else if ($("#WO_DATE").val() == "__/__/____") {
+            $("#wo_date").focus();}
+        else if ($("#wo_date").val() == "__/__/____") {
             ApplicationCommon.showNotification("2", "Enter date to continue.");
-            $("#WO_DATE").focus();
+            $("#wo_date").focus();
         }
         else{
             var formData = new FormData();
             formData.append("LOAN_AC_NUMBER", $('#loan_ac_number').val());
             formData.append("CL_STATUS", $('#CL_STATUS').val());
-            formData.append("EFF_DATE", $('#WO_DATE').val());
+            formData.append("EFF_DATE", $('#wo_date').val());
             var url = '@Url.Content("~/LoanCl/SubmitLoanCl")';
             ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res)
             {
