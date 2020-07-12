@@ -239,10 +239,20 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             }
             return Message;
         }
+        public DashBord GetDashBoardDetails(string user_id)
+        {
+            return rmRepository.GetDashBoardDetails( user_id);
+        }
+        public IEnumerable<DashBord> GetHalfYearlyDashBoard(string user_id)
+        {
+            return rmRepository.GetHalfYearlyDashBoard(user_id);
+        }
     }
 
     public interface IRMAssetManager
     {
+        IEnumerable<DashBord> GetHalfYearlyDashBoard(string user_id);
+        DashBord GetDashBoardDetails(string user_id);
         Message UpdateMonitoringRM(string loan_ac_no, string moni_rm_code, AppSession session);
         IEnumerable<Loan> GetLoanDetailList(string ac_area_code, string ac_branch_code, string ac_loan_no, string user_id);
         IEnumerable<Branch> GetBranchList(string areacode, string user_id);

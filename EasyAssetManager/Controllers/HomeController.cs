@@ -5,26 +5,29 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using EasyAssetManagerCore.BusinessLogic.Security;
 using EasyAssetManagerCore.Model.CommonModel;
+using EasyAssetManagerCore.BusinessLogic.Operation.Asset;
 
 namespace EasyAssetManager.Controllers
 {
     public class HomeController : BaseController
     {
+        private readonly IRMAssetManager rmAssetManager;
         private readonly ISettingsUsersService settingsUsersService;
         private IHostingEnvironment environment;
         private readonly IHttpContextAccessor contextAccessor;
-        public HomeController(ISettingsUsersService settingsUsersService, IHostingEnvironment environment, IHttpContextAccessor contextAccessor)
+        public HomeController(ISettingsUsersService settingsUsersService, IRMAssetManager rmAssetManager, IHostingEnvironment environment, IHttpContextAccessor contextAccessor)
         {
             this.settingsUsersService = settingsUsersService;
+            this.rmAssetManager = rmAssetManager;
             this.environment = environment;
             this.contextAccessor = contextAccessor;
         }
         public IActionResult Index()
         {
-            return View();
+            var data = rmAssetManager.GetDashBoardDetails(Session.User.user_id);
+            ViewBag.DashbordData = data;
+            return View(); 
         }
-
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error(string errorCode)
         {
@@ -37,7 +40,12 @@ namespace EasyAssetManager.Controllers
             HttpContext.Session.Remove(ApplicationConstant.GlobalSessionSession);
             return RedirectToAction("Index", "Login");
         }
-
+        [HttpGet]
+        public IActionResult GetHalfYearlyDashBoard()
+        {
+            var halfYearlyData = rmAssetManager.GetHalfYearlyDashBoard(Session.User.user_id);
+            return Json(halfYearlyData);
+        }
 
     }
 }

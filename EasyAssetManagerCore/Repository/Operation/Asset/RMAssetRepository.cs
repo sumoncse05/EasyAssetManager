@@ -214,10 +214,26 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
             var res = responseMessage.QueryExecute(Connection, "pkg_asset_manager.dpd_update_monirm", dyParam);
             return res;
         }
+        public DashBord GetDashBoardDetails(string pvc_appuser)
+        {
+            var dyParam = new OracleDynamicParameters();
+            dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input);
+            dyParam.Add("pcr_retailasstdashbord", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
+            return Connection.Query<DashBord>("dpg_dashboard_manager.dpd_get_retailasstdashbord", dyParam, commandType: CommandType.StoredProcedure).FirstOrDefault();
+        }
+        public IEnumerable<DashBord> GetHalfYearlyDashBoard(string pvc_appuser)
+        {
+            var dyParam = new OracleDynamicParameters();
+            dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input);
+            dyParam.Add("pcr_lastsixmonthdata", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
+            return Connection.Query<DashBord>("dpg_dashboard_manager.dpd_get_lastsixmonthdata", dyParam, commandType: CommandType.StoredProcedure);
+        }
     }
 
     public interface IRMAssetRepository
     {
+        IEnumerable<DashBord> GetHalfYearlyDashBoard(string pvc_appuser);
+        DashBord GetDashBoardDetails(string pvc_appuser);
         ResponseMessage UpdateMonitoring(string pvc_loan_acnumber, string pvc_monirm_code, string pvc_appuser);
         IEnumerable<Loan> GetLoanDetailList(string pvc_area_code, string pvc_branch_code, string pvc_loan_acnumber, string pvc_appuser);
         IEnumerable<RM> GetRMList(string pvc_branchcode, string pvc_appuser);
