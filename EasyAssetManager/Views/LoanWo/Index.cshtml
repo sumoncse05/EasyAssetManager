@@ -42,7 +42,9 @@
                                             <label class="col-form-label">Branch:<span class="required">*</span></label>
                                         </div>
                                         <div class="col-xl-4">
-                                            <select id="BRANCH_CODE" name="BRANCH_CODE" class="form-control form-element chosen-select"></select>
+                                            <select id="BRANCH_CODE" name="BRANCH_CODE" class="form-control form-element chosen-select">
+                                                <option value="">Select</option>
+                                            </select>
                                         </div>
                                     </div>
 
@@ -74,6 +76,9 @@
                                             <div class="input-group date">
                                                 <input class="form-control form-element" type="text" id="WO_DATE" name="WO_DATE" placeholder="dd/mm/yyyy" data-mask="99/99/9999">
                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                            <div id="errors">
+
                                             </div>
                                         </div>
                                     </div>
@@ -109,7 +114,7 @@
                 validation(formId);
                 var model =@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@ViewBag.LoanWo));
                 if (model.AREA_CODE) {
-                    combo.getBranchList('BRANCH_CODE', '@Url.Content("~/Common/GetBranchList")', model.AREA_CODE, true);
+                    combo.getBranchList('BRANCH_CODE', '@Url.Content("~/Common/GetBranchList")', model.AREA_CODE, true,"Select");
                     ApplicationCommon.setData(model, null);
                     $('#WO_DATE').val(ApplicationCommon.formateDate(model.WO_DATE));
                 };
@@ -118,12 +123,12 @@
             {
                 $('#btnSave').click(saveAgent);
                 $('#btnClear').click(clear);
-                combo.getAreaList('AREA_CODE', '@Url.Content("~/Common/GetAreaList")', true);
+                combo.getAreaList('AREA_CODE', '@Url.Content("~/Common/GetAreaList")', true,"Select");
                 //combo.getBranchList('BRANCH_CODE', '@Url.Content("~/Common/GetBranchList")', $('#AREA_CODE').val(), true);
-                combo.getLoanType('SEG_ID', false);
+                combo.getLoanType('SEG_ID', false,"Select");
                 changeProduct();
                 $('#AREA_CODE').on('change', function () {
-                    combo.getBranchList('BRANCH_CODE', '@Url.Content("~/Common/GetBranchList")', $('#AREA_CODE').val(), true);
+                    combo.getBranchList('BRANCH_CODE', '@Url.Content("~/Common/GetBranchList")', $('#AREA_CODE').val(), true,"Select");
                     $('#BRANCH_CODE').trigger("chosen:updated");
                 });
                 $('#SEG_ID').on('change', function ()
@@ -165,7 +170,7 @@
             };
             var changeProduct = function () {
                 var loanType = $('#SEG_ID').val();
-                combo.getLoanProductList('PRODUCT_CODE', '@Url.Content("~/Common/GetLoanProductList")', loanType, true);
+                combo.getLoanProductList('PRODUCT_CODE', '@Url.Content("~/Common/GetLoanProductList")', loanType, true,"Select");
                 $('#PRODUCT_CODE').trigger("chosen:updated");
             };
             var validation = function (formId)
@@ -228,7 +233,15 @@
                         LOAN_AC_NUMBER: {
                             required: "Enter loan number to continue."
                         }
-                    }
+                    },
+                    errorPlacement: function (error, element) {
+                        if (element.parent().hasClass('input-group')) {
+                            error.insertAfter(element.parent());
+                        } else {
+                            var trigger = element.next('.chosen-container');
+                            error.insertAfter(trigger.length > 0 ? trigger : element);
+                        }
+                    },
                 });
             };
             return { init: init };

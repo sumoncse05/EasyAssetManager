@@ -64,5 +64,9 @@ namespace EasyAssetManager.Controllers
             return PartialView("_ClientwiseReport", data);
         }
 
+        public IActionResult GraphReport()
+        {
+            return View();
+        }
     }
 }

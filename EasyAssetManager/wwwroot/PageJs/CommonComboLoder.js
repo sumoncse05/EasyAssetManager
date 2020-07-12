@@ -1,5 +1,5 @@
 ﻿var combo = function () {
-    var loadCombo = function (controlId, url, parameter, isDefaultRecordRequired) {
+    var loadCombo = function (controlId, url, parameter, isDefaultRecordRequired,DefaltText) {
         $.ajax({
             url: url,
             type: 'get',
@@ -10,7 +10,7 @@
                 $('#' + controlId).empty();
                 $('#' + controlId).get(0).options.length = 0;
                 if (isDefaultRecordRequired) {
-                    $('#' + controlId).get(0).options[0] = new Option("ALL", "");
+                    $('#' + controlId).get(0).options[0] = new Option(DefaltText, "");
 
                 }
                 if (data !== null && data.length > 0) {
@@ -22,11 +22,11 @@
             error: function () { }
         });
     };
-    var loadComboStatic = function (controlId, data, isDefaultRecordRequired) {
+    var loadComboStatic = function (controlId, data, isDefaultRecordRequired, DefaltText) {
         $('#' + controlId).empty();
         $('#' + controlId).get(0).options.length = 0;
         if (isDefaultRecordRequired) {
-            $('#' + controlId).get(0).options[0] = new Option("ALL", "");
+            $('#' + controlId).get(0).options[0] = new Option(DefaltText, "");
 
         }
         if (data !== null && data.length > 0) {
@@ -37,47 +37,47 @@
 
     };
 
-    var getRmList = function (controlId, url,branchCode, isDefaultRecordRequired)
+    var getRmList = function (controlId, url, branchCode, isDefaultRecordRequired, DefaltText)
     {
         var data = { branchCode: branchCode};
-        loadCombo(controlId, url, data, isDefaultRecordRequired);
+        loadCombo(controlId, url, data, isDefaultRecordRequired, DefaltText);
     };
-    var getBranchList = function (controlId, url, arearId, isDefaultRecordRequired)
+    var getBranchList = function (controlId, url, arearId, isDefaultRecordRequired, DefaltText)
     {
         var data = { arearId: arearId};
-        loadCombo(controlId, url, data, isDefaultRecordRequired);
+        loadCombo(controlId, url, data, isDefaultRecordRequired, DefaltText);
     };
-    var getAreaList = function (controlId, url, isDefaultRecordRequired) {
+    var getAreaList = function (controlId, url, isDefaultRecordRequired, DefaltText) {
         var data = {};
-        loadCombo(controlId, url, data, isDefaultRecordRequired);
+        loadCombo(controlId, url, data, isDefaultRecordRequired, DefaltText);
     };
-    var getLoanProductList = function (controlId, url, loanType, isDefaultRecordRequired) {
+    var getLoanProductList = function (controlId, url, loanType, isDefaultRecordRequired, DefaltText) {
         var data = { loanType: loanType};
-        loadCombo(controlId, url, data, isDefaultRecordRequired);
+        loadCombo(controlId, url, data, isDefaultRecordRequired, DefaltText);
     };
-    var getDesignationList = function (controlId, url, isDefaultRecordRequired) {
+    var getDesignationList = function (controlId, url, isDefaultRecordRequired, DefaltText) {
         var data = {};
-        loadCombo(controlId, url, data, isDefaultRecordRequired);
+        loadCombo(controlId, url, data, isDefaultRecordRequired, DefaltText);
     };
-    var getGradeList = function (controlId, url, isDefaultRecordRequired) {
+    var getGradeList = function (controlId, url, isDefaultRecordRequired, DefaltText) {
         var data = {};
-        loadCombo(controlId, url, data, isDefaultRecordRequired);
+        loadCombo(controlId, url, data, isDefaultRecordRequired, DefaltText);
     };
-    var getDepartmentList = function (controlId, url, isDefaultRecordRequired) {
+    var getDepartmentList = function (controlId, url, isDefaultRecordRequired, DefaltText) {
         var data = {};
-        loadCombo(controlId, url, data, isDefaultRecordRequired);
+        loadCombo(controlId, url, data, isDefaultRecordRequired, DefaltText);
     };
-    var getCategoryList = function (controlId, url, isDefaultRecordRequired) {
+    var getCategoryList = function (controlId, url, isDefaultRecordRequired, DefaltText) {
         var data = {};
-        loadCombo(controlId, url, data, isDefaultRecordRequired);
+        loadCombo(controlId, url, data, isDefaultRecordRequired, DefaltText);
     };
-    var getRMStatusList = function (controlId, url, isDefaultRecordRequired) {
+    var getRMStatusList = function (controlId, url, isDefaultRecordRequired, DefaltText) {
         var data = {};
-        loadCombo(controlId, url, data, isDefaultRecordRequired);
+        loadCombo(controlId, url, data, isDefaultRecordRequired, DefaltText);
     };
    
     
-    var getExcelFiletype = function (controlId, isDefaultRecordRequired) {
+    var getExcelFiletype = function (controlId, isDefaultRecordRequired, DefaltText) {
         var data = [];
         var item = {
             text: "LOAN_PORTFOLIO",
@@ -99,9 +99,9 @@
             value: "4"
         };
         data.push(item);
-        loadComboStatic(controlId, data, isDefaultRecordRequired);
+        loadComboStatic(controlId, data, isDefaultRecordRequired, DefaltText);
     };
-    var getLoanType = function (controlId, isDefaultRecordRequired)
+    var getLoanType = function (controlId, isDefaultRecordRequired, DefaltText)
     {
         var data = [];
         var item = {
@@ -114,9 +114,9 @@
             value: "02"
         };
         data.push(item);
-        loadComboStatic(controlId, data, isDefaultRecordRequired);
+        loadComboStatic(controlId, data, isDefaultRecordRequired, DefaltText);
     };
-    var getCustomerCatagory = function (controlId, isDefaultRecordRequired)
+    var getCustomerCatagory = function (controlId, isDefaultRecordRequired, DefaltText)
     {
         var data = [];
         var item = {
@@ -130,9 +130,9 @@
         };
         data.push(item);
         
-        loadComboStatic(controlId, data, isDefaultRecordRequired);
+        loadComboStatic(controlId, data, isDefaultRecordRequired, DefaltText);
     };
-    var getCustomerStatus = function (controlId, isDefaultRecordRequired)
+    var getCustomerStatus = function (controlId, isDefaultRecordRequired, DefaltText)
     {
         var data = [];
         var item = {
@@ -141,10 +141,10 @@
         };
         data.push(item);
         
-        loadComboStatic(controlId, data, isDefaultRecordRequired);
+        loadComboStatic(controlId, data, isDefaultRecordRequired, DefaltText);
     };
 
-    var getReportName = function (controlId, isDefaultRecordRequired) {
+    var getReportName = function (controlId, isDefaultRecordRequired, DefaltText) {
         var data = [];
         var item = {
             text: "Asset at a glance",
@@ -188,9 +188,9 @@
         };
         data.push(item);
 
-        loadComboStatic(controlId, data, isDefaultRecordRequired);
+        loadComboStatic(controlId, data, isDefaultRecordRequired, DefaltText);
     };
-    var getEmpCategoryType = function (controlId, isDefaultRecordRequired) {
+    var getEmpCategoryType = function (controlId, isDefaultRecordRequired, DefaltText) {
         var data = [];
         var item = {
             text: "RM",
@@ -202,7 +202,7 @@
             value: "BST"
         };
         data.push(item);
-        loadComboStatic(controlId, data, isDefaultRecordRequired);
+        loadComboStatic(controlId, data, isDefaultRecordRequired, DefaltText);
     };
 
 

@@ -46,8 +46,20 @@ var ApplicationCommon = function ()
             contentType: false,
             processData: processData,
             success: successCallBack,
-            error: successCallBack
+            error: function (jqXHR, textStatus, errorThrown) {
+                sessionTimeOut(jqXHR, true);
+            }
         });
+    };
+    var sessionTimeOut = function (jqXHR, isPost = false) {
+        if (jqXHR.status === 401) {
+            showNotification("2", "Session Time Out");
+            setTimeout(function () {
+                window.location.href = '/Login';
+            }, 1000);
+        } else {
+            if (isPost==true) showNotification("2", "Ajax request Problem");
+        }
     };
     var showLoder = function ()
     {
@@ -609,6 +621,7 @@ var ApplicationCommon = function ()
         initializeFormValidation: initializeFormValidation,
         showLoder: showLoder,
         forceModalClose: forceModalClose,
-        reportTitleAndHeaderCustomize: reportTitleAndHeaderCustomize
+        reportTitleAndHeaderCustomize: reportTitleAndHeaderCustomize,
+        sessionTimeOut: sessionTimeOut
     };
 }();

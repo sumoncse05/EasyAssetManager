@@ -54,7 +54,7 @@
                     </button>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-success gridButton" onclick="showUpdateMonitoringRMdata('@v.loan_ac_number','@v.moni_rm_code','@v.branch_code');" data-id="@v.loan_ac_number">
+                    <button type="button" class="btn btn-success gridButton" onclick="showUpdateMonitoringRMdata('@v.loan_ac_number','@v.moni_rm_code','@v.branch_code','@v.moni_rm_name');" data-id="@v.loan_ac_number">
                         <i class="fa fa-save"></i>
                     </button>
                 </td>            
@@ -171,7 +171,7 @@ else
                         </div>
                         <div class="col-xl-4">
                             <select id="CL_STATUS" name="CL_STATUS" class="form-control form-element">
-                                <option value="">ALL</option>
+                                <option value="">Select</option>
                                 <option value="SS">SS</option>
                                 <option value="DF">DF</option>
                                 <option value="BL">BL</option>
@@ -218,12 +218,23 @@ else
                             <label class="col-form-label">Loan Number:<span class="required">*</span></label>
                         </div>
                         <div class="col-xl-8">
-                            <input class="form-control form-element" type="text" id="loan_ac_num" name="loan_ac_num"  readonly="readonly"/>
-                        </div>                        
+                            <input class="form-control form-element" type="text" id="loan_ac_num" name="loan_ac_num" readonly="readonly" />
+                        </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-xl-2">
-                            <label class="col-form-label">Monitoring RM:<span class="required">*</span></label>
+                            <label class="col-form-label">Existing RM:<span class="required">*</span></label>
+                        </div>
+                        <div class="col-xl-8">
+                            <div class="input-group">
+                                <input type="text" id="oldmoni_rm_code" name="oldmoni_rm_code" class="form-control form-element col-lg-3" readonly="readonly"/>
+                                <input class="form-control form-element" type="text" id="oldmoni_rm" name="oldmoni_rm" readonly="readonly" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-xl-2">
+                            <label class="col-form-label">New RM:<span class="required">*</span></label>
                         </div>
                         <div class="col-xl-8">
                             <div class="input-group">
@@ -244,14 +255,13 @@ else
 <script type="text/javascript">
     $(document).ready(function () {
         ApplicationCommon.makePagination("tb-accloandetails");
-        //ApplicationCommon.makePagination("tb-accloandetails");
-        combo.getRmList('moni_rm', '@Url.Content("~/Common/GetRmList")', {}, true);
-        combo.getAreaList('AREA_CODE', '@Url.Content("~/Common/GetAreaList")', true);
-        combo.getBranchList('BRANCH_CODE', '@Url.Content("~/Common/GetBranchList")', $('#AREA_CODE').val(), true);
-        combo.getLoanType('SEG_ID', false);
+        combo.getRmList('moni_rm', '@Url.Content("~/Common/GetRmList")', {}, true,"Select");
+        combo.getAreaList('AREA_CODE', '@Url.Content("~/Common/GetAreaList")', true,"Select");
+        combo.getBranchList('BRANCH_CODE', '@Url.Content("~/Common/GetBranchList")', $('#AREA_CODE').val(), true,"Select");
+        combo.getLoanType('SEG_ID', false,"Select");
         changeProduct();
         $('#AREA_CODE').on('change', function () {
-            combo.getBranchList('BRANCH_CODE', '@Url.Content("~/Common/GetBranchList")', $('#AREA_CODE').val(), true);
+            combo.getBranchList('BRANCH_CODE', '@Url.Content("~/Common/GetBranchList")', $('#AREA_CODE').val(), true,"Select");
             $('#BRANCH_CODE').trigger("chosen:updated");
         });
         $('#SEG_ID').on('change', function ()
@@ -287,7 +297,7 @@ else
     });
     function changeProduct() {
         var loanType = $('#SEG_ID').val();
-        combo.getLoanProductList('PRODUCT_CODE', '@Url.Content("~/Common/GetLoanProductList")', loanType, true);
+        combo.getLoanProductList('PRODUCT_CODE', '@Url.Content("~/Common/GetLoanProductList")', loanType, true,"Select");
         $('#PRODUCT_CODE').trigger("chosen:updated");
     };
     function showWoUpdatedata(seg_id, product_code, area_code, branch_code, loan_ac_number, outstanding_amount, loan_amount, book_date) {
@@ -309,11 +319,11 @@ else
         //$("#WO_DATE").val(book_date);
     }
 
-    function showUpdateMonitoringRMdata(loan_ac_number, moni_rm_code, branch_code) {
+    function showUpdateMonitoringRMdata(loan_ac_number, moni_rm_code, branch_code,moni_rm_name) {
         $('#updateMonitoringRMData').modal('show');
         $("#loan_ac_num").val(loan_ac_number);
-        $("#moni_rm_code").val(moni_rm_code);
-        $("#moni_rm").val(moni_rm_code);
+        $("#oldmoni_rm_code").val(moni_rm_code);
+        $("#oldmoni_rm").val(moni_rm_name);
     }
     function saveCLUpdatedata ()
     {
