@@ -38,7 +38,9 @@
                                             <label class="col-form-label">Branch</label>
                                         </div>
                                         <div class="col-xl-3">
-                                            <select id="ac_branch_code" name="ac_branch_code" class="form-control form-element"></select>
+                                            <select id="ac_branch_code" name="ac_branch_code" class="form-control form-element">
+                                                <option value="">ALL</option>
+                                            </select>
                                         </div>
                                         <div class="col-xl-5"></div>
                                     </div>
@@ -102,12 +104,12 @@
             };
             var eventInitializer = function () {
                 $('#search').click(searchInitiate);
-                combo.getAreaList('ac_area_code', '@Url.Content("~/Common/GetAreaList")', true);
+                combo.getAreaList('ac_area_code', '@Url.Content("~/Common/GetAreaList")', true,"ALL");
                 $('#ac_area_code').change(loadAreaWiseBranch);
                 $('.chosen-select').chosen({ width: "100%" });
             };
             var loadAreaWiseBranch = function () {
-                combo.getBranchList('ac_branch_code', '@Url.Content("~/Common/GetBranchList")', $('#ac_area_code').val(), true);
+                combo.getBranchList('ac_branch_code', '@Url.Content("~/Common/GetBranchList")', $('#ac_area_code').val(), true,"ALL");
             };
             var searchInitiate = function () {
                 if($("#ac_area_code").val()==''){
@@ -123,7 +125,9 @@
                     var ac_loan_no = $('#ac_loan_no').val();
                     $('#acc_openingreq').empty();
                     var url = '@Url.Content("~/LoanSearch/GetLoanDetailList")';
-                    $('#acc_openingreq').load(url + '?ac_area_code=' + ac_area_code + '&&ac_branch_code=' + ac_branch_code + '&&ac_loan_no=' + ac_loan_no);
+                    $('#acc_openingreq').load(url + '?ac_area_code=' + ac_area_code + '&&ac_branch_code=' + ac_branch_code + '&&ac_loan_no=' + ac_loan_no, function (response, status, xhr) {
+                        ApplicationCommon.sessionTimeOut(xhr);
+                    });
                 }    
             };
             var Updatedata = function () {

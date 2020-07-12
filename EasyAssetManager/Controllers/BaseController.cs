@@ -19,15 +19,16 @@ namespace EasyAssetManager.Controllers
                 // Fake implementation of session for development
                 // FakeImplementationOfSession();
 
-                //if (isAjaxRequest)
-                //{
-                //    context.Result = StatusCode(401);
-                //}
-                //else
-                //{
-               string redirectTo = string.Format(Url.Action("Index","Login")); // Redirect to login page
-               context.Result = new RedirectResult(redirectTo);
-                //}
+                if (isAjaxRequest)
+                {
+                    context.Result = StatusCode(401);
+                }
+                else
+                {
+                    string redirectTo = string.Format(Url.Action("Index","Login")); // Redirect to login page
+               context.Result = new RedirectResult("~/Login/Index");
+               // return;
+                }
             }
 
 

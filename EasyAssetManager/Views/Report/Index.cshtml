@@ -49,7 +49,9 @@
                                             <label class="col-form-label">Branch</label>
                                         </div>
                                         <div class="col-xl-3">
-                                            <select id="branch" name="branch" class="form-control form-element chosen-select"></select>
+                                            <select id="branch" name="branch" class="form-control form-element chosen-select">
+                                                <option value="">ALL</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -121,17 +123,17 @@
             };
             var eventInitializer = function () {
                 $('#search').click(searchInitiate);
-                combo.getAreaList('area', '@Url.Content("~/Common/GetAreaList")', true);
+                combo.getAreaList('area', '@Url.Content("~/Common/GetAreaList")', true,"ALL");
                 //combo.getBranchList('branch','@Url.Content("~/Common/GetBranchList")', $('#area').val(), true);
-                combo.getRmList('rmCode','@Url.Content("~/Common/GetRmList")', $('#branch').val(), true);
-                combo.getReportName('reportName', false);
-                combo.getLoanType('loantype', false);
+                combo.getRmList('rmCode','@Url.Content("~/Common/GetRmList")', $('#branch').val(), true,"ALL");
+                combo.getReportName('reportName', false,"ALL");
+                combo.getLoanType('loantype', false,"ALL");
                 $('#area').on('change', function () {
-                    combo.getBranchList('branch','@Url.Content("~/Common/GetBranchList")', $('#area').val(), true);
+                    combo.getBranchList('branch','@Url.Content("~/Common/GetBranchList")', $('#area').val(), true,"ALL");
                     $('#branch').trigger("chosen:updated");
                 });
                 $('#branch').on('change', function () {
-                    combo.getRmList('rmCode', '@Url.Content("~/Common/GetRmList")', $('#branch').val(), true);
+                    combo.getRmList('rmCode', '@Url.Content("~/Common/GetRmList")', $('#branch').val(), true,"ALL");
                     $('#rmCode').trigger("chosen:updated");
                 });
                 $('.input-group.date').datepicker({
@@ -182,7 +184,9 @@
                         break;
                 }
 
-                $('#div-dynamicReportLoad').load(url + '?loanType=' + loanType + '&&rmCode=' + rmCode + '&&areaCode=' + area + '&&branchCode=' + branch + '&&todate=' + toDate);
+                $('#div-dynamicReportLoad').load(url + '?loanType=' + loanType + '&&rmCode=' + rmCode + '&&areaCode=' + area + '&&branchCode=' + branch + '&&todate=' + toDate, function (response, status, xhr) {
+                    ApplicationCommon.sessionTimeOut(xhr);
+                });
 
             };
             return { init: init };

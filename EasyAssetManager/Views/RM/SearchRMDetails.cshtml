@@ -97,7 +97,9 @@
                 var rm_name = $('#rm_name').val().replace(/ /g, "+");
                 $('#acc_openingreq').empty();
                 var url = '@Url.Content("~/RM/GetRMDetailList")';
-                $('#acc_openingreq').load(url + '?ac_rm_code=' + ac_rm_code + '&&rm_name=' + rm_name);
+                $('#acc_openingreq').load(url + '?ac_rm_code=' + ac_rm_code + '&&rm_name=' + rm_name, function (response, status, xhr) {
+                    ApplicationCommon.sessionTimeOut(xhr);
+                });
             };
             var Updatedata = function () {
                 if ($("#status_code").val() == "") {

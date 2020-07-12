@@ -108,8 +108,8 @@
                 $('#search').click(searchInitiate);
                 $('#btnAuthorizeRM').click(authorizeRM);
                 searchInitiate();
-                combo.getBranchList('branchCode', '@Url.Content("~/Common/GetBranchList")', {}, true);
-                combo.getLoanType('loanType', true);
+                combo.getBranchList('branchCode', '@Url.Content("~/Common/GetBranchList")', {}, true,"ALL");
+                combo.getLoanType('loanType', true,"ALL");
                 $('.chosen-select').chosen({ width: "100%" });
             };
 
@@ -120,7 +120,9 @@
                 var branchCode = $('#branchCode').val();
                 var rmCode = $('#rmCode').val();
                 var url ='@Url.Content("~/RMAsset/GetUnAuthorizeRM")';
-                $('#div-unAuthorizeLoan').load(url + '?loanType=' + loanType + '&&branchCode=' + branchCode + '&&rmCode=' + rmCode);
+                $('#div-unAuthorizeLoan').load(url + '?loanType=' + loanType + '&&branchCode=' + branchCode + '&&rmCode=' + rmCode, function (response, status, xhr) {
+                    ApplicationCommon.sessionTimeOut(xhr);
+                });
 
             };
             var authorizeRM = function () {

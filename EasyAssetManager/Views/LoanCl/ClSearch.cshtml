@@ -116,7 +116,9 @@
                 $('#div_loanwo').empty();
                  var url = '@Url.Content("~/LoanCl/GetClLoan")';
                  url =url+'?loan_number=' + loan_number + '&&cl_status=' + cl_status + '&&eff_date=' + eff_date;
-                $('#div_loanwo').load(url);
+                $("#div_loanwo").load(url, function (response, status, xhr) {
+                        ApplicationCommon.sessionTimeOut(xhr);
+                });
             };
             return { init: init};
         }();

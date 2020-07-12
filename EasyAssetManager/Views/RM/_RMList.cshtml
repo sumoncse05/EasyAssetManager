@@ -157,8 +157,8 @@ else
 
     <script type="text/javascript">
     $(document).ready(function () {
-        combo.getRMStatusList('status_code', '@Url.Content("~/Common/GetRMStatusList")', true);
-        combo.getBranchList('new_branch_code', '@Url.Content("~/Common/GetBranchList")', '', true);
+        combo.getRMStatusList('status_code', '@Url.Content("~/Common/GetRMStatusList")', true,"Select");
+        combo.getBranchList('new_branch_code', '@Url.Content("~/Common/GetBranchList")', '', true,"Select");
         combo.getRmList('new_rm', '@Url.Content("~/Common/GetRmList")', {}, true);
 
         $('.input-group.date').datepicker({

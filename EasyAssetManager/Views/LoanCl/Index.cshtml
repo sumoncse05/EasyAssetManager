@@ -44,7 +44,7 @@
                                         </div>
                                         <div class="col-xl-4">
                                             <select id="CL_STATUS" name="CL_STATUS" class="form-control form-element">
-                                                <option value="">ALL</option>
+                                                <option value="">Select</option>
                                                 <option value="SS">SS</option>
                                                 <option value="DF">DF</option>
                                                 <option value="BL">BL</option>
@@ -178,7 +178,15 @@
                         LOAN_AC_NUMBER: {
                             required: "Enter loan number to continue."
                         }
-                    }
+                    },
+                    errorPlacement: function (error, element) {
+                        if (element.parent().hasClass('input-group')) {
+                            error.insertAfter(element.parent());
+                        } else {
+                            var trigger = element.next('.chosen-container');
+                            error.insertAfter(trigger.length > 0 ? trigger : element);
+                        }
+                    },
                 });
             };
             return { init: init };

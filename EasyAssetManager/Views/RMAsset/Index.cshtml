@@ -38,7 +38,9 @@
                                             <label class="col-form-label">Loan Product</label>
                                         </div>
                                         <div class="col-xl-3">
-                                            <select id="loanProduct" name="loanProduct" class="form-control form-element chosen-select"></select>
+                                            <select id="loanProduct" name="loanProduct" class="form-control form-element chosen-select">
+                                                <option value="">ALL</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -157,12 +159,12 @@
                 $('#btnAssign').click(assignRM);
                 $('#btnModalOpen').click(showModaldata);
                 searchInitiate();
-                combo.getRmList('newRmCode', '@Url.Content("~/Common/GetRmList")', true);
-                combo.getLoanType('loanType', true);
+                combo.getRmList('newRmCode', '@Url.Content("~/Common/GetRmList")', true,"Select");
+                combo.getLoanType('loanType', true,"ALL");
                 $('#loanType').on('change', function ()
                 {
                     var loanType = $('#loanType').val();
-                    combo.getLoanProductList('loanProduct','@Url.Content("~/Common/GetLoanProductList")', loanType, true);
+                    combo.getLoanProductList('loanProduct','@Url.Content("~/Common/GetLoanProductList")', loanType, true,"ALL");
                     $('#loanProduct').trigger("chosen:updated");
                 });
                 $('.input-group.date').datepicker({
@@ -205,7 +207,9 @@
                 } 
                 var rmCode = $('#rmCode').val();
                 var url ='@Url.Content("~/RMAsset/GetAvailableLoan")';
-                $('#div-availableLoan').load(url + '?loanType=' + loanType + '&&loanProduct=' + loanProduct + '&&rmCode=' + rmCode);
+                $('#div-availableLoan').load(url + '?loanType=' + loanType + '&&loanProduct=' + loanProduct + '&&rmCode=' + rmCode, function (response, status, xhr) {
+                    ApplicationCommon.sessionTimeOut(xhr);
+                });
 
             };
             var assignRM = function ()

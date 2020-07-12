@@ -175,12 +175,12 @@
                 $('#btnSave').click(saveRM);
                 $('#btnSearch').click(searchRM);
                 $('#btnClear').click(clear);
-                combo.getDesignationList('desig_code', '@Url.Content("~/Common/GetDesignationList")', true);
-                combo.getGradeList('grade_code', '@Url.Content("~/Common/GetGradeList")', true);
-                combo.getDepartmentList('dept_code', '@Url.Content("~/Common/GetDepartmentList")', true);
-                combo.getCategoryList('cat_id', '@Url.Content("~/Common/GetCategoryList")', true);
-                combo.getBranchList('branch_code', '@Url.Content("~/Common/GetBranchList")', '',true);
-                combo.getEmpCategoryType('emp_cat', true);
+                combo.getDesignationList('desig_code', '@Url.Content("~/Common/GetDesignationList")', true,"Select");
+                combo.getGradeList('grade_code', '@Url.Content("~/Common/GetGradeList")', true,"Select");
+                combo.getDepartmentList('dept_code', '@Url.Content("~/Common/GetDepartmentList")', true,"Select");
+                combo.getCategoryList('cat_id', '@Url.Content("~/Common/GetCategoryList")', true,"Select");
+                combo.getBranchList('branch_code', '@Url.Content("~/Common/GetBranchList")', '',true,"Select");
+                combo.getEmpCategoryType('emp_cat', true,"Select");
                 $('.chosen-select').chosen({ width: "100%" });
             };
             var clear = function (){
@@ -303,7 +303,14 @@
                         emp_cat: {
                             required: "Select Employee category to continue."
                         }
-                    }
+                    }, errorPlacement: function (error, element) {
+                        if (element.parent().hasClass('input-group')) {
+                            error.insertAfter(element.parent());
+                        } else {
+                            var trigger = element.next('.chosen-container');
+                            error.insertAfter(trigger.length > 0 ? trigger : element);
+                        }
+                    },
                 });
             };
             return { init: init };

@@ -33,7 +33,9 @@
                                             <label class="col-form-label">Branch</label>
                                         </div>
                                         <div class="col-xl-3">
-                                            <select id="branch" name="branch" class="form-control form-element chosen-select"></select>
+                                            <select id="branch" name="branch" class="form-control form-element chosen-select">
+                                                <option value="">ALL</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -102,10 +104,10 @@
             };
             var eventInitializer = function () {
                 $('#search').click(searchInitiate);
-                combo.getAreaList('area', '@Url.Content("~/Common/GetAreaList")', true);
+                combo.getAreaList('area', '@Url.Content("~/Common/GetAreaList")', true,"ALL");
                // combo.getBranchList('branch','@Url.Content("~/Common/GetBranchList")', $('#area').val(), true);
                 $('#area').on('change', function () {
-                    combo.getBranchList('branch','@Url.Content("~/Common/GetBranchList")', $('#area').val(), true);
+                    combo.getBranchList('branch','@Url.Content("~/Common/GetBranchList")', $('#area').val(), true,"ALL");
                    $('#branch').trigger("chosen:updated");
                 });
                 $('.input-group.date').datepicker({
@@ -128,7 +130,9 @@
                 $('#div_loanwo').empty();
                 var url = '@Url.Content("~/LoanWo/GetWoLoan")';
                 url = url+'?area_code=' + area_code + '&&branch_code=' + branch_code + '&&wo_date=' + wo_date + '&&loanNumber=' + loanNumber;
-                $('#div_loanwo').load(url);
+                $('#div_loanwo').load(url, function (response, status, xhr) {
+                    ApplicationCommon.sessionTimeOut(xhr);
+                });
             };
             return { init: init};
         }();
