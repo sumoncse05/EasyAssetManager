@@ -6,10 +6,12 @@ namespace EasyAssetManager.Controllers
 {
     public class ReportController : BaseController
     {
+        private readonly IRMAssetManager rmAssetManager;
         private IReportManager reportRepository;
         private IHostingEnvironment environment;
-        public ReportController(IReportManager reportRepository, IHostingEnvironment environment)
+        public ReportController(IReportManager reportRepository, IRMAssetManager rmAssetManager, IHostingEnvironment environment)
         {
+            this.rmAssetManager = rmAssetManager;
             this.reportRepository = reportRepository;
             this.environment = environment;
         }
@@ -67,6 +69,12 @@ namespace EasyAssetManager.Controllers
         public IActionResult GraphReport()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult GetYearlyReportData(string area_code, string branch_code, string rm_code, string loantype)
+        {
+            var halfYearlyData = rmAssetManager.GetYearlyReportData(area_code, branch_code, rm_code, loantype, Session);
+            return Json(halfYearlyData);
         }
     }
 }

@@ -64,6 +64,8 @@ namespace EasyAssetManagerCore.Models.EntityModel
         public double wo_lst_amount { get; set; }
         public double close_cnt_ytd { get; set; }
         public double close_amt_ytd { get; set; }
+        public double disb_target_ytd { get; set; }
+        public string month_name { get; set; }
         public string ins_by { get; set; }
         public string ins_date { get; set; }
         public string upd_date { get; set; }

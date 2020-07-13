@@ -1,7 +1,231 @@
 ﻿
 @{
-    ViewData["Title"] = "GraphReport";
+    ViewData["Title"] = "Graph Report";
 }
+<div class="wrapper wrapper-content animated fadeInRight">
 
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox" id="divsidebarCollapseC">
+                <div class="ibox-title">
+                    <h5>Search Parameters</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="sidebarCollapse"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="sidebarContent">
+                    <form id="stepProcess" action="#" class="wizard-big">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Area</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <select id="area" name="area" class="form-control form-element chosen-select">
+                                            </select>
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Branch</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <select id="branch" name="branch" class="form-control form-element chosen-select">
+                                                <option value="">ALL</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">Loan Product</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <select id="loantype" name="loantype" class="form-control form-element chosen-select"></select>
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <label class="col-form-label">RM Code</label>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <input type="text" id="rm_code" name="rm_code" class="form-control form-element" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-5"></div>
+                                        <div class="col-xl-2">
+                                            <button type="button" class="btn btn-primary" id="search">Search</button>
+                                        </div>
+                                        <div class="col-xl-3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox" id="divsidebarCollapse">
+                <div class="ibox-title">
+                    <h5>Half-yeary target vs actual achivements</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up" id="sidebarCollapseC"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="sidebarContentC">
+                    @*<div>
+                        <h3 class="font-bold no-margins">
+                            Half-yeary target vs actual achivements
+                        </h3>
+                    </div>*@
+                    <div class="m-t-sm">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div>
+                                    <canvas id="lineChart" height="114"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-t-md">
+                        <small class="float-right">
+                            <i class="fa fa-clock-o"> </i>
+                            Update on @string.Format("{0:MMM dd, yyyy}", DateTime.Now)
+                        </small>
+                        <small>
+                            <strong>Analysis of achivements:</strong> The value has been changed over time, and last month reached a level over BDT 50,000 Cr.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/ApplicationTheme/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
+    <link rel="stylesheet" href="~/ApplicationTheme/lib/chosen/bootstrap-chosen.css" />
+}
+@section scripts{
+    <environment names="Development">
+        <script src="~/ApplicationTheme/lib/flot/jquery.flot.js"></script>
+        <script src="~/ApplicationTheme/lib/flot/jquery.flot.tooltip.min.js"></script>
+        <script src="~/ApplicationTheme/ApplicationTheme/lib/flot/jquery.flot.resize.js"></script>
+        <script src="~/ApplicationTheme/lib/flot/jquery.flot.pie.js"></script>
+        <script src="~/ApplicationTheme/lib/flot/jquery.flot.time.js"></script>
+        <script src="~/ApplicationTheme/lib/flot/jquery.flot.spline.js"></script>
+        <script src="~/ApplicationTheme/lib/chartJs/Chart.min.js"></script>
+        <script src="~/ApplicationTheme/lib/peity/jquery.peity.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/ApplicationTheme/lib/flot/jquery.flot.js"></script>
+        <script src="~/ApplicationTheme/lib/flot/jquery.flot.tooltip.min.js"></script>
+        <script src="~/ApplicationTheme/lib/flot/jquery.flot.resize.js"></script>
+        <script src="~/ApplicationTheme/lib/flot/jquery.flot.pie.js"></script>
+        <script src="~/ApplicationTheme/lib/flot/jquery.flot.time.js"></script>
+        <script src="~/ApplicationTheme/lib/flot/jquery.flot.spline.js"></script>
+        <script src="~/ApplicationTheme/lib/chartJs/Chart.min.js"></script>
+        <script src="~/ApplicationTheme/lib/peity/jquery.peity.min.js"></script>
+    </environment>
+    <script src="~/ApplicationTheme/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+    <script src="~/ApplicationTheme/lib/chosen/chosen.jquery.js"></script>
+    <script type="text/javascript">
+        var classLoanWoSearch = function () {
+            var init = function () {
+                eventInitializer();
+            };
+            var eventInitializer = function () {
+
+                $("#sidebarCollapseC").addClass('fa-chevron-down').removeClass('fa-chevron-up');
+                $("#divsidebarCollapseC").addClass('border-bottom');
+                $('#sidebarContentC').css('display', 'none');
+
+                $("span.pie").peity("pie", {
+                    fill: ['#1ab394', '#d7d7d7', '#ffffff']
+                })
+
+                $('#search').click(searchInitiate);
+                combo.getLoanType('loantype', false, "ALL");
+                combo.getAreaList('area', '@Url.Content("~/Common/GetAreaList")', true,"ALL");
+                $('#area').on('change', function () {
+                    combo.getBranchList('branch','@Url.Content("~/Common/GetBranchList")', $('#area').val(), true,"ALL");
+                   $('#branch').trigger("chosen:updated");
+                });
+                $('.chosen-select').chosen({ width: "100%" });
+
+            };
+            var searchInitiate = function () {
+                var branch_code = $('#branch').val();
+                if (!branch_code) branch_code = "";
+                //$('#div_loanwo').empty();
+                var formData = new FormData();
+                formData.append("area_code", $('#area').val());
+                formData.append("branch_code", branch_code);
+                formData.append("loantype", $('#loantype').val());
+                formData.append("rm_code", $('#rm_code').val());
+                var url = '@Url.Content("~/Report/GetYearlyReportData")';                
+                ApplicationCommon.request(url, 'POST', formData, false, true, false, function (res)
+                {
+                    if (res && res.length > 0) {
+
+                        $("#sidebarCollapse").addClass('fa-chevron-down').removeClass('fa-chevron-up');
+                        $("#divsidebarCollapse").addClass('border-bottom');
+                        $('#sidebarContent').css('display', 'none');
+
+                        $("#sidebarCollapseC").addClass('fa-chevron-up').removeClass('fa-chevron-down');
+                        $("#divsidebarCollapseC").removeClass('border-bottom');
+                        $('#sidebarContentC').css('display', '');
+
+                        var label = [];
+                        var target = [];
+                        var achivement = [];
+                        for (var i = 0; i < res.length; i++) {
+                            label.push(res[i].month_name);
+                            target.push(res[i].disb_target_ytd);
+                            achivement.push(res[i].disb_amt_ytd);
+                        }
+                        var lineData = {
+                            labels: label,
+                            datasets: [
+                                {
+                                    label: "Target",
+                                    backgroundColor: "rgba(26,179,148,0.5)",
+                                    borderColor: "rgba(26,179,148,0.7)",
+                                    pointBackgroundColor: "rgba(26,179,148,1)",
+                                    pointBorderColor: "#fff",
+                                    data: target
+                                },
+                                {
+                                    label: "Achivement",
+                                    backgroundColor: "rgba(220,220,220,0.5)",
+                                    borderColor: "rgba(220,220,220,1)",
+                                    pointBackgroundColor: "rgba(220,220,220,1)",
+                                    pointBorderColor: "#fff",
+                                    data: achivement
+                                }
+                            ]
+                        };
+
+                        var lineOptions = {
+                            responsive: true
+                        };
+
+                        var ctx = document.getElementById("lineChart").getContext("2d");
+                        new Chart(ctx, { type: 'line', data: lineData, options: lineOptions });
+                    }
+                });
+            };
+            return { init: init};
+        }();
+
+        classLoanWoSearch.init();
+
+    </script>
+}
 

@@ -1,10 +1,12 @@
 ﻿using EasyAssetManagerCore.BusinessLogic.Common;
 using EasyAssetManagerCore.Model.CommonModel;
+using EasyAssetManagerCore.Models.CommonModel;
 using EasyAssetManagerCore.Models.EntityModel;
 using EasyAssetManagerCore.Repository.Operation.Asset;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
 {
@@ -247,14 +249,24 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
         {
             return rmRepository.GetHalfYearlyDashBoard(user_id);
         }
+        public IEnumerable<AstDailyStatus> GetYearlyReportData(string area_code, string branch_code, string rm_code, string loantype, AppSession session)
+        {
+            IEnumerable<AstDailyStatus> reportData = Enumerable.Empty<AstDailyStatus>();
+            //IEnumerable<AstDailyStatus> reportData = new List<AstDailyStatus>();
+            try
+            {
+                 reportData = rmRepository.GetYearlyReportData(area_code, branch_code, rm_code, loantype, session.User.user_id);
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-GetYearlyReportData", ex.Message + "|" + ex.StackTrace.TrimStart());
+            }
+            return reportData;
+        }
     }
 
     public interface IRMAssetManager
     {
-        IEnumerable<DashBord> GetHalfYearlyDashBoard(string user_id);
-        DashBord GetDashBoardDetails(string user_id);
-        Message UpdateMonitoringRM(string loan_ac_no, string moni_rm_code, AppSession session);
-        IEnumerable<Loan> GetLoanDetailList(string ac_area_code, string ac_branch_code, string ac_loan_no, string user_id);
         IEnumerable<Branch> GetBranchList(string areacode, string user_id);
         IEnumerable<Area> GetAreaList(string user_id);
         IEnumerable<RM> GetRmList(string branch_code, string user_id);
@@ -272,5 +284,11 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
         RM GetRMDetails(string emp_id, string user_id);
         IEnumerable<RM> GetRMDetailList(string emp_id, string rm_name, string user_id); 
         Message UpdateRMStatus(RM rm, AppSession session);
+        IEnumerable<DashBord> GetHalfYearlyDashBoard(string user_id);
+        DashBord GetDashBoardDetails(string user_id);
+        Message UpdateMonitoringRM(string loan_ac_no, string moni_rm_code, AppSession session);
+        IEnumerable<Loan> GetLoanDetailList(string ac_area_code, string ac_branch_code, string ac_loan_no, string user_id);
+        IEnumerable<AstDailyStatus> GetYearlyReportData(string area_code, string branch_code, string rm_code, string loantype, AppSession session);
+
     }
 }
