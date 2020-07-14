@@ -4,6 +4,7 @@ using EasyAssetManagerCore.Models.CommonModel;
 using EasyAssetManagerCore.Models.EntityModel;
 using EasyAssetManagerCore.Repository.Common;
 using Oracle.ManagedDataAccess.Client;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -151,6 +152,7 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
             dyParam.Add("pvc_mobile", rm.mobile, OracleMappingType.Varchar2, ParameterDirection.Input, 10);
             dyParam.Add("pvc_dep_code", rm.dept_code, OracleMappingType.Varchar2, ParameterDirection.Input, 10);
             dyParam.Add("pvc_gradecode", rm.grade_code, OracleMappingType.Varchar2, ParameterDirection.Input, 10);
+            dyParam.Add("pvc_empcat", rm.emp_cat, OracleMappingType.Varchar2, ParameterDirection.Input, 10);
             dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input, 50);
             dyParam.Add("pvc_status", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 5);
             dyParam.Add("pvc_statusmsg", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 255);
@@ -228,16 +230,22 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
             dyParam.Add("pcr_lastsixmonthdata", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
             return Connection.Query<DashBord>("dpg_dashboard_manager.dpd_get_lastsixmonthdata", dyParam, commandType: CommandType.StoredProcedure);
         }
+        public IEnumerable<AstDailyStatus> GetYearlyReportData(string pvc_areacode, string pvc_branchcode, string pvc_rmcode, string pvc_segid, string pvc_appuser)
+        {
+            var dyParam = new OracleDynamicParameters();
+            dyParam.Add("pvc_segid", pvc_segid, OracleMappingType.Varchar2, ParameterDirection.Input, 10);
+            dyParam.Add("pvc_areacode", pvc_areacode, OracleMappingType.Varchar2, ParameterDirection.Input, 10);
+            dyParam.Add("pvc_branchcode", pvc_branchcode, OracleMappingType.Varchar2, ParameterDirection.Input, 10);
+            dyParam.Add("pvc_rmcode", pvc_rmcode, OracleMappingType.Varchar2, ParameterDirection.Input, 10);
+            dyParam.Add("pvc_workdate", DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture), OracleMappingType.Varchar2, ParameterDirection.Input, 50);
+            dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input);
+            dyParam.Add("pcr_loanperformance", 0, OracleMappingType.RefCursor, ParameterDirection.Output);
+            return Connection.Query<AstDailyStatus>("dpg_reports_manager.dpd_get_loanperformance", dyParam, commandType: CommandType.StoredProcedure);
+        }
     }
 
     public interface IRMAssetRepository
     {
-        IEnumerable<DashBord> GetHalfYearlyDashBoard(string pvc_appuser);
-        DashBord GetDashBoardDetails(string pvc_appuser);
-        ResponseMessage UpdateMonitoring(string pvc_loan_acnumber, string pvc_monirm_code, string pvc_appuser);
-        IEnumerable<Loan> GetLoanDetailList(string pvc_area_code, string pvc_branch_code, string pvc_loan_acnumber, string pvc_appuser);
-        IEnumerable<RM> GetRMList(string pvc_branchcode, string pvc_appuser);
-        IEnumerable<Loan> GetAvailableLoan(string pvc_seg_id, string pvc_product_code, string pvc_origrm_code, string pvc_appuser);
         ResponseMessage SetRMAssignWithLoan(string pvc_loanlogslno, string pvc_rm_code, string pvc_effdate, string pvc_appuser);
         IEnumerable<Branch> GetBranchList(string pvc_areacode, string pvc_appuser);
         IEnumerable<Area> GetAreaList(string pvc_appuser);
@@ -253,5 +261,13 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
         ResponseMessage UpdateRMStatus(RM rm, string pvc_appuser);
         RM GetRMDetails(string pvc_employeeid, string pvc_appuser);
         IEnumerable<RM> GetRMDetailList(string pvc_employeeid, string pvc_rmname, string pvc_appuser);
+        IEnumerable<DashBord> GetHalfYearlyDashBoard(string pvc_appuser);
+        DashBord GetDashBoardDetails(string pvc_appuser);
+        ResponseMessage UpdateMonitoring(string pvc_loan_acnumber, string pvc_monirm_code, string pvc_appuser);
+        IEnumerable<Loan> GetLoanDetailList(string pvc_area_code, string pvc_branch_code, string pvc_loan_acnumber, string pvc_appuser);
+        IEnumerable<RM> GetRMList(string pvc_branchcode, string pvc_appuser);
+        IEnumerable<Loan> GetAvailableLoan(string pvc_seg_id, string pvc_product_code, string pvc_origrm_code, string pvc_appuser);
+        IEnumerable<AstDailyStatus> GetYearlyReportData(string pvc_areacode, string pvc_branchcode, string pvc_rmcode, string pvc_segid, string pvc_appuser);
+
     }
 }

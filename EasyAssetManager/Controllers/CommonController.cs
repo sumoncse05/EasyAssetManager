@@ -18,7 +18,7 @@ namespace EasyAssetManager.Controllers
         [HttpGet]
         public IActionResult GetBranchList(string arearId="")
         {
-            var userTypes = rMAssetManager.GetBranchList(arearId,Session.User.user_id);
+            var userTypes = rMAssetManager.GetBranchList(arearId,Session);
             if (userTypes != null && userTypes.Any())
             {
                 var selectList = userTypes.Select(x => new SelectListItem() { Text = x.BRANCH_NAME, Value = x.BRANCH_CODE });
@@ -29,7 +29,7 @@ namespace EasyAssetManager.Controllers
         [HttpGet]
         public IActionResult GetAreaList()
         {
-            var userTypes = rMAssetManager.GetAreaList(Session.User.user_id);
+            var userTypes = rMAssetManager.GetAreaList(Session);
             if (userTypes != null && userTypes.Any())
             {
                 var selectList = userTypes.Select(x => new SelectListItem() { Text = x.AREA_NAME, Value = x.AREA_CODE });
@@ -42,7 +42,7 @@ namespace EasyAssetManager.Controllers
         public IActionResult GetRmList(string branchCode="")
         {
             branchCode = string.IsNullOrEmpty(branchCode) ? Session.User.branch_code : branchCode;
-            var userTypes = rMAssetManager.GetRmList(branchCode, Session.User.user_id);
+            var userTypes = rMAssetManager.GetRmList(branchCode, Session);
             if (userTypes != null && userTypes.Any())
             {
                 var selectList = userTypes.Select(x => new SelectListItem() { Text = x.emp_name, Value = x.rm_code });
@@ -53,7 +53,7 @@ namespace EasyAssetManager.Controllers
         [HttpGet]
         public IActionResult GetLoanProductList(string loanType="")
         {
-            var userTypes = rMAssetManager.GetLoanProductList(loanType,Session.User.user_id);
+            var userTypes = rMAssetManager.GetLoanProductList(loanType, Session);
             if (userTypes != null && userTypes.Any())
             {
                 var selectList = userTypes.Select(x => new SelectListItem() { Text = x.PRODUCT_DESC, Value = x.PRODUCT_CODE });
@@ -65,7 +65,7 @@ namespace EasyAssetManager.Controllers
         [HttpGet]
         public IActionResult GetDesignationList()
         {
-            var userTypes = rMAssetManager.GetDesignationList(Session.User.user_id);
+            var userTypes = rMAssetManager.GetDesignationList(Session);
             if (userTypes != null && userTypes.Any())
             {
                 var selectList = userTypes.Select(x => new SelectListItem() { Text = x.desig_name, Value = x.desig_code });
@@ -77,7 +77,7 @@ namespace EasyAssetManager.Controllers
         [HttpGet]
         public IActionResult GetGradeList()
         {
-            var userTypes = rMAssetManager.GetGradeList(Session.User.user_id);
+            var userTypes = rMAssetManager.GetGradeList(Session);
             if (userTypes != null && userTypes.Any())
             {
                 var selectList = userTypes.Select(x => new SelectListItem() { Text = x.grade_name, Value = x.grade_code });
@@ -88,7 +88,7 @@ namespace EasyAssetManager.Controllers
         [HttpGet]
         public IActionResult GetDepartmentList()
         {
-            var userTypes = rMAssetManager.GetDepartmentList(Session.User.user_id);
+            var userTypes = rMAssetManager.GetDepartmentList(Session);
             if (userTypes != null && userTypes.Any())
             {
                 var selectList = userTypes.Select(x => new SelectListItem() { Text = x.dept_name, Value = x.dept_code });
@@ -99,7 +99,7 @@ namespace EasyAssetManager.Controllers
         [HttpGet]
         public IActionResult GetCategoryList()
         {
-            var userTypes = rMAssetManager.GetCategoryList(Session.User.user_id);
+            var userTypes = rMAssetManager.GetCategoryList(Session);
             if (userTypes != null && userTypes.Any())
             {
                 var selectList = userTypes.Select(x => new SelectListItem() { Text = x.cat_desc, Value = x.cat_id });
@@ -110,7 +110,7 @@ namespace EasyAssetManager.Controllers
         [HttpGet]
         public IActionResult GetRMStatusList()
         {
-            var userTypes = rMAssetManager.GetRMStatusList(Session.User.user_id);
+            var userTypes = rMAssetManager.GetRMStatusList(Session);
             if (userTypes != null && userTypes.Any())
             {
                 var selectList = userTypes.Select(x => new SelectListItem() { Text = x.status_desc, Value = x.status_code });

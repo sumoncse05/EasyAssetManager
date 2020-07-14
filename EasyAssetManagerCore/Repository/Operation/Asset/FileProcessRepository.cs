@@ -31,7 +31,7 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
             var dyParam = new OracleDynamicParameters();
             dyParam.Add("pvc_area_code", are_code, OracleMappingType.Varchar2, ParameterDirection.Input);
             dyParam.Add("pvc_branch_code", branch_code, OracleMappingType.Varchar2, ParameterDirection.Input);
-            dyParam.Add("pvc_loan_number", wo_date, OracleMappingType.Varchar2, ParameterDirection.Input);
+            dyParam.Add("pvc_loan_number", loan_number, OracleMappingType.Varchar2, ParameterDirection.Input);
             dyParam.Add("pvc_wo_date", wo_date, OracleMappingType.Varchar2, ParameterDirection.Input);
             dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input);
 

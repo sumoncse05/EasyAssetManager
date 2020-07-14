@@ -1,10 +1,12 @@
 ﻿using EasyAssetManagerCore.BusinessLogic.Common;
 using EasyAssetManagerCore.Model.CommonModel;
+using EasyAssetManagerCore.Models.CommonModel;
 using EasyAssetManagerCore.Models.EntityModel;
 using EasyAssetManagerCore.Repository.Operation.Asset;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
 {
@@ -18,26 +20,66 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
 
         public IEnumerable<Loan> GetUnAuthorizeRM(string loanType, string branchCode, string rmCode,AppSession session)
         {
-            return rmRepository.GetUnAuthorizeLoanRM(loanType, branchCode, rmCode, session.User.user_id);
+            try
+            {
+                return rmRepository.GetUnAuthorizeLoanRM(loanType, branchCode, rmCode, session.User.user_id);
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-GetUnAuthorizeRM", ex.Message + "|" + ex.StackTrace.TrimStart());
+                return null;
+            }
         }
 
-        public IEnumerable<Branch> GetBranchList(string pvc_areacode, string user_id)
+        public IEnumerable<Branch> GetBranchList(string pvc_areacode, AppSession session)
         {
-            return rmRepository.GetBranchList(pvc_areacode,user_id);
+            try
+            {
+                return rmRepository.GetBranchList(pvc_areacode, session.User.user_id);
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-GetBranchList", ex.Message + "|" + ex.StackTrace.TrimStart());
+                return null;
+            }
         }
 
-        public IEnumerable<Area> GetAreaList(string user_id)
+        public IEnumerable<Area> GetAreaList(AppSession session)
         {
-            return rmRepository.GetAreaList(user_id);
+            try
+            {
+                return rmRepository.GetAreaList(session.User.user_id);
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-GetAreaList", ex.Message + "|" + ex.StackTrace.TrimStart());
+                return null;
+            }
         }
-        public IEnumerable<LoanProduct> GetLoanProductList(string loanType, string user_id)
+        public IEnumerable<LoanProduct> GetLoanProductList(string loanType, AppSession session)
         {
-            return rmRepository.GetLoanProduct(loanType, user_id);
+            try
+            {
+                return rmRepository.GetLoanProduct(loanType, session.User.user_id);
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-GetLoanProductList", ex.Message + "|" + ex.StackTrace.TrimStart());
+                return null;
+            }
         }
 
-        public IEnumerable<RM> GetRmList(string branch_code,string user_id)
+        public IEnumerable<RM> GetRmList(string branch_code,AppSession session)
         {
-            return rmRepository.GetRMList(branch_code, user_id);
+            try
+            {
+                return rmRepository.GetRMList(branch_code, session.User.user_id);
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-GetRmList", ex.Message + "|" + ex.StackTrace.TrimStart());
+                return null;
+            }
         }
 
         public Message SetAssignRM(List<string> loans, string newRmCode, string effectDate, AppSession session)
@@ -65,6 +107,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             }
             catch (Exception ex)
             {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-SetAssignRM", ex.Message + "|" + ex.StackTrace.TrimStart());
 
                 MessageHelper.Error(Message, ex.Message);
             }
@@ -101,7 +144,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             }
             catch (Exception ex)
             {
-
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-SetAuthorizeRM", ex.Message + "|" + ex.StackTrace.TrimStart());
                 MessageHelper.Error(Message, ex.Message);
             }
             finally
@@ -114,28 +157,76 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
 
         public IEnumerable<Loan> GetAvailableLoan(string loanType, string loanProduct, string rmCode, AppSession session)
         {
-            return rmRepository.GetAvailableLoan(loanType, loanProduct, rmCode,session.User.user_id);
+            try
+            {
+                return rmRepository.GetAvailableLoan(loanType, loanProduct, rmCode, session.User.user_id);
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-GetAvailableLoan", ex.Message + "|" + ex.StackTrace.TrimStart());
+                return null;
+            }
         }
 
-        public IEnumerable<Designation> GetDesignationList(string user_id)
+        public IEnumerable<Designation> GetDesignationList(AppSession session)
         {
-            return rmRepository.GetDesignationList(user_id);
+            try
+            {
+                return rmRepository.GetDesignationList(session.User.user_id);
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-GetDesignationList", ex.Message + "|" + ex.StackTrace.TrimStart());
+                return null;
+            }
         }
-        public IEnumerable<Grade> GetGradeList(string user_id)
+        public IEnumerable<Grade> GetGradeList(AppSession session)
         {
-            return rmRepository.GetGradeList(user_id);
+            try
+            {
+                return rmRepository.GetGradeList(session.User.user_id);
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-GetGradeList", ex.Message + "|" + ex.StackTrace.TrimStart());
+                return null;
+            }
         }
-        public IEnumerable<Department> GetDepartmentList(string user_id)
+        public IEnumerable<Department> GetDepartmentList(AppSession session)
         {
-            return rmRepository.GetDepartmentList(user_id);
+            try
+            {
+                return rmRepository.GetDepartmentList(session.User.user_id);
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-GetDepartmentList", ex.Message + "|" + ex.StackTrace.TrimStart());
+                return null;
+            }
         }
-        public IEnumerable<Category> GetCategoryList(string user_id)
+        public IEnumerable<Category> GetCategoryList(AppSession session)
         {
-            return rmRepository.GetCategoryList(user_id);
+            try
+            {
+                return rmRepository.GetCategoryList(session.User.user_id);
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-GetCategoryList", ex.Message + "|" + ex.StackTrace.TrimStart());
+                return null;
+            }
         }
-        public IEnumerable<RMStatus> GetRMStatusList(string user_id)
+        public IEnumerable<RMStatus> GetRMStatusList(AppSession session)
         {
-            return rmRepository.GetRMStatusList(user_id);
+            try
+            {
+                return rmRepository.GetRMStatusList(session.User.user_id);
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-GetRMStatusList", ex.Message + "|" + ex.StackTrace.TrimStart());
+                return null;
+            }
         }
         
         public Message SetRM(RM rm, AppSession session)
@@ -157,6 +248,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             }
             catch (Exception ex)
             {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-SetRM", ex.Message + "|" + ex.StackTrace.TrimStart());
                 MessageHelper.Error(Message, ex.Message);
             }
             finally
@@ -184,6 +276,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             }
             catch (Exception ex)
             {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-UpdateRMStatus", ex.Message + "|" + ex.StackTrace.TrimStart());
                 MessageHelper.Error(Message, ex.Message);
             }
             finally
@@ -192,26 +285,50 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             }
             return Message;
         }
-        public RM GetRMDetails(string emp_id, string user_id)
+        public RM GetRMDetails(string emp_id, AppSession session)
         {
-            var rmDetails = rmRepository.GetRMDetails(emp_id,user_id);
-            if (rmDetails == null)
+            try
             {
-                rmDetails = new RM();
-                MessageHelper.Error(Message,"No Employee found");
-            } 
-            else
-                MessageHelper.Success(Message, "Employee found");
-            rmDetails.Message = Message;
-            return rmDetails;
+                var rmDetails = rmRepository.GetRMDetails(emp_id, session.User.user_id);
+                if (rmDetails == null)
+                {
+                    rmDetails = new RM();
+                    MessageHelper.Error(Message, "No Employee found");
+                }
+                else
+                    MessageHelper.Success(Message, "Employee found");
+                rmDetails.Message = Message;
+                return rmDetails;
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-GetRMDetails", ex.Message + "|" + ex.StackTrace.TrimStart());
+                return null;
+            }
         }
-        public IEnumerable<RM> GetRMDetailList(string emp_id,string rm_name, string user_id)
+        public IEnumerable<RM> GetRMDetailList(string emp_id,string rm_name, AppSession session)
         {
-            return rmRepository.GetRMDetailList(emp_id, rm_name, user_id);
+            try
+            {
+                return rmRepository.GetRMDetailList(emp_id, rm_name, session.User.user_id);
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-GetRMDetailList", ex.Message + "|" + ex.StackTrace.TrimStart());
+                return null;
+            }
         }
-        public IEnumerable<Loan> GetLoanDetailList(string ac_area_code, string ac_branch_code, string ac_loan_no, string user_id)
+        public IEnumerable<Loan> GetLoanDetailList(string ac_area_code, string ac_branch_code, string ac_loan_no, AppSession session)
         {
-            return rmRepository.GetLoanDetailList(ac_area_code, ac_branch_code, ac_loan_no, user_id);
+            try
+            {
+                return rmRepository.GetLoanDetailList(ac_area_code, ac_branch_code, ac_loan_no, session.User.user_id);
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-GetLoanDetailList", ex.Message + "|" + ex.StackTrace.TrimStart());
+                return null;
+            }
         }
         public Message UpdateMonitoringRM(string loan_ac_no, string moni_rm_code, AppSession session)
         {
@@ -231,6 +348,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             }
             catch (Exception ex)
             {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-UpdateMonitoringRM", ex.Message + "|" + ex.StackTrace.TrimStart());
                 MessageHelper.Error(Message, ex.Message);
             }
             finally
@@ -239,38 +357,68 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             }
             return Message;
         }
-        public DashBord GetDashBoardDetails(string user_id)
+        public DashBord GetDashBoardDetails(AppSession session)
         {
-            return rmRepository.GetDashBoardDetails( user_id);
+            try
+            {
+                return rmRepository.GetDashBoardDetails(session.User.user_id);
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-GetDashBoardDetails", ex.Message + "|" + ex.StackTrace.TrimStart());
+                return null;
+            }
         }
-        public IEnumerable<DashBord> GetHalfYearlyDashBoard(string user_id)
+        public IEnumerable<DashBord> GetHalfYearlyDashBoard(AppSession session)
         {
-            return rmRepository.GetHalfYearlyDashBoard(user_id);
+            try
+            {
+                return rmRepository.GetHalfYearlyDashBoard(session.User.user_id);
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-GetHalfYearlyDashBoard", ex.Message + "|" + ex.StackTrace.TrimStart());
+                return null;
+            }
+        }
+        public IEnumerable<AstDailyStatus> GetYearlyReportData(string area_code, string branch_code, string rm_code, string loantype, AppSession session)
+        {
+            try
+            {
+                return rmRepository.GetYearlyReportData(area_code, branch_code, rm_code, loantype, session.User.user_id);
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-GetYearlyReportData", ex.Message + "|" + ex.StackTrace.TrimStart());
+                return null;
+            }
         }
     }
 
     public interface IRMAssetManager
     {
-        IEnumerable<DashBord> GetHalfYearlyDashBoard(string user_id);
-        DashBord GetDashBoardDetails(string user_id);
-        Message UpdateMonitoringRM(string loan_ac_no, string moni_rm_code, AppSession session);
-        IEnumerable<Loan> GetLoanDetailList(string ac_area_code, string ac_branch_code, string ac_loan_no, string user_id);
-        IEnumerable<Branch> GetBranchList(string areacode, string user_id);
-        IEnumerable<Area> GetAreaList(string user_id);
-        IEnumerable<RM> GetRmList(string branch_code, string user_id);
-        IEnumerable<LoanProduct> GetLoanProductList(string loanType, string user_id);
+        IEnumerable<Branch> GetBranchList(string areacode, AppSession session);
+        IEnumerable<Area> GetAreaList(AppSession session);
+        IEnumerable<RM> GetRmList(string branch_code, AppSession session);
+        IEnumerable<LoanProduct> GetLoanProductList(string loanType, AppSession session);
         Message SetAssignRM(List<string> loans, string newRmCode, string effectDate, AppSession session);
         IEnumerable<Loan> GetUnAuthorizeRM(string loanType, string branchCode, string rmCode, AppSession session);
         Message SetAuthorizeRM(List<string> loans, AppSession session);
         IEnumerable<Loan> GetAvailableLoan(string loanType, string loanProduct, string rmCode, AppSession session);
-        IEnumerable<Designation> GetDesignationList(string user_id); 
-        IEnumerable<Grade> GetGradeList(string user_id);
-        IEnumerable<Department> GetDepartmentList(string user_id);
-        IEnumerable<Category> GetCategoryList(string user_id);
-        IEnumerable<RMStatus> GetRMStatusList(string user_id);
+        IEnumerable<Designation> GetDesignationList(AppSession session); 
+        IEnumerable<Grade> GetGradeList(AppSession session);
+        IEnumerable<Department> GetDepartmentList(AppSession session);
+        IEnumerable<Category> GetCategoryList(AppSession session);
+        IEnumerable<RMStatus> GetRMStatusList(AppSession session);
         Message SetRM(RM rm, AppSession session); 
-        RM GetRMDetails(string emp_id, string user_id);
-        IEnumerable<RM> GetRMDetailList(string emp_id, string rm_name, string user_id); 
+        RM GetRMDetails(string emp_id, AppSession session);
+        IEnumerable<RM> GetRMDetailList(string emp_id, string rm_name, AppSession session); 
         Message UpdateRMStatus(RM rm, AppSession session);
+        IEnumerable<DashBord> GetHalfYearlyDashBoard(AppSession session);
+        DashBord GetDashBoardDetails(AppSession session);
+        Message UpdateMonitoringRM(string loan_ac_no, string moni_rm_code, AppSession session);
+        IEnumerable<Loan> GetLoanDetailList(string ac_area_code, string ac_branch_code, string ac_loan_no, AppSession session);
+        IEnumerable<AstDailyStatus> GetYearlyReportData(string area_code, string branch_code, string rm_code, string loantype, AppSession session);
+
     }
 }

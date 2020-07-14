@@ -9,7 +9,7 @@
         <div class="col-lg-12">
             <div class="ibox" id="divsidebarCollapse">
                 <div class="ibox-title">
-                    <h5>RM Assign</h5>
+                    <h5>Asset RM Assign</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up" id="sidebarCollapse"></i>
@@ -159,7 +159,7 @@
                 $('#btnAssign').click(assignRM);
                 $('#btnModalOpen').click(showModaldata);
                 searchInitiate();
-                combo.getRmList('newRmCode', '@Url.Content("~/Common/GetRmList")', true,"Select");
+                combo.getRmList('newRmCode', '@Url.Content("~/Common/GetRmList")', {}, true,"Select");
                 combo.getLoanType('loanType', true,"ALL");
                 $('#loanType').on('change', function ()
                 {

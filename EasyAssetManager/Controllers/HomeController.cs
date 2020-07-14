@@ -24,7 +24,7 @@ namespace EasyAssetManager.Controllers
         }
         public IActionResult Index()
         {
-            var data = rmAssetManager.GetDashBoardDetails(Session.User.user_id);
+            var data = rmAssetManager.GetDashBoardDetails(Session);
             ViewBag.DashbordData = data;
             return View(); 
         }
@@ -43,7 +43,7 @@ namespace EasyAssetManager.Controllers
         [HttpGet]
         public IActionResult GetHalfYearlyDashBoard()
         {
-            var halfYearlyData = rmAssetManager.GetHalfYearlyDashBoard(Session.User.user_id);
+            var halfYearlyData = rmAssetManager.GetHalfYearlyDashBoard(Session);
             return Json(halfYearlyData);
         }
 

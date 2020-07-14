@@ -82,9 +82,9 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                                     AREA_NAME = wooksheet.Cells[i, 4].Text.Trim(),
                                     BRANCH_CODE = wooksheet.Cells[i, 5].Text.Trim(),
                                     BRANCH_NAME = wooksheet.Cells[i, 6].Text.Trim(),
-                                    PRODUCT_CODE = wooksheet.Cells[i, 7].Text.Trim(),
-                                    PRODUCT_DESC = wooksheet.Cells[i, 8].Text.Trim(),
-                                    LOAN_AC_NUMBER = wooksheet.Cells[i, 9].Text.Trim(),
+                                    LOAN_AC_NUMBER = wooksheet.Cells[i, 7].Text.Trim(),
+                                    PRODUCT_CODE = wooksheet.Cells[i, 8].Text.Trim(),
+                                    PRODUCT_DESC = wooksheet.Cells[i, 9].Text.Trim(),
                                     OS_AMOUNT = valid(wooksheet.Cells[i, 10].Text.Trim(), "LOAN_OUTSTANDING", "Number"),
                                     WO_AMOUNT = valid(wooksheet.Cells[i, 11].Text.Trim(), "WO_AMOUNT", "Number"),
                                     WO_DATE = Convert.ToDateTime(wooksheet.Cells[i, 12].Text.Trim()),
@@ -129,6 +129,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             }
             catch (Exception ex)
             {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "FileProcessManager-Process_LOAN_WO", ex.Message + "|" + ex.StackTrace.TrimStart());
                 MessageHelper.Error(Message, ex.Message);
             }
             finally
@@ -181,7 +182,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                                     BRANCH_NAME = wooksheet.Cells[i, 4].Text.Trim(),
                                     RM_CODE = wooksheet.Cells[i, 5].Text.Trim(),
                                     RM_NAME = wooksheet.Cells[i, 6].Text.Trim(),
-                                    LOAN_AC_NUMBER = valid(wooksheet.Cells[i, 7].Text.Trim(), "LOAN_AC_NUMBER", "Number"),
+                                    LOAN_AC_NUMBER = wooksheet.Cells[i, 7].Text.Trim(),
                                     EFF_DATE = Convert.ToDateTime(wooksheet.Cells[i, 8].Text.Trim()),
                                     INS_BY = session.User.user_id,
                                     INS_DATE = DateTime.Now
@@ -224,6 +225,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             }
             catch (Exception ex)
             {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "FileProcessManager-Process_LOAN_PORTFOLIO", ex.Message + "|" + ex.StackTrace.TrimStart());
                 MessageHelper.Error(Message, ex.Message);
             }
             finally
@@ -324,6 +326,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             }
             catch (Exception ex)
             {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "FileProcessManager-Process_LOAN_TARGET", ex.Message + "|" + ex.StackTrace.TrimStart());
                 MessageHelper.Error(Message, ex.Message);
             }
             finally
@@ -378,7 +381,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                                     RM_NAME = wooksheet.Cells[i, 6].Text.Trim(),
                                     BST_CODE = wooksheet.Cells[i, 7].Text.Trim(),
                                     BST_NAME = wooksheet.Cells[i, 8].Text.Trim(),
-                                    LOAN_AC_NUMBER = valid(wooksheet.Cells[i, 9].Text.Trim(), "LOAN_AC_NUMBER", "Number"),
+                                    LOAN_AC_NUMBER = wooksheet.Cells[i, 9].Text.Trim(), 
                                     CL_STATUS = valid(wooksheet.Cells[i, 10].Text.Trim(), "CL_STATUS", "Digit"),
                                     EFF_DATE = Convert.ToDateTime(wooksheet.Cells[i, 11].Text.Trim()),
                                     INS_BY = session.User.user_id,
@@ -422,6 +425,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             }
             catch (Exception ex)
             {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "FileProcessManager-Process_LOAN_CL", ex.Message + "|" + ex.StackTrace.TrimStart());
                 MessageHelper.Error(Message, ex.Message);
             }
             finally
@@ -469,9 +473,17 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             return strVal;
         }
 
-        public IEnumerable<AST_LOAN_WO_STATUS_TEMP> Getloanwo(string loan_number, string are_code, string branch_code, string wo_date, string pvc_appuser)
+        public IEnumerable<AST_LOAN_WO_STATUS_TEMP> Getloanwo(string loan_number, string are_code, string branch_code, string wo_date, AppSession session)
         {
-            return fileProcessRepository.Getloanwo(loan_number,are_code, branch_code, wo_date, pvc_appuser);
+            try
+            {
+                return fileProcessRepository.Getloanwo(loan_number, are_code, branch_code, wo_date, session.User.user_id);
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "FileProcessManager-Getloanwo", ex.Message + "|" + ex.StackTrace.TrimStart());
+                return null;
+            }
         }
 
         public Message Set_LOAN_WO(AST_LOAN_WO_STATUS_TEMP loan_wo, AppSession session)
@@ -493,6 +505,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             }
             catch (Exception ex)
             {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "FileProcessManager-Set_LOAN_WO", ex.Message + "|" + ex.StackTrace.TrimStart());
                 MessageHelper.Error(Message, ex.Message);
             }
             finally
@@ -503,9 +516,17 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             return Message;
         }
 
-        public IEnumerable<AST_LOAN_CL_TMP> Getloancl(string loan_number, string cl_status, string eff_date, string pvc_appuser)
+        public IEnumerable<AST_LOAN_CL_TMP> Getloancl(string loan_number, string cl_status, string eff_date, AppSession session)
         {
-            return fileProcessRepository.Getloancl(loan_number, cl_status, eff_date, pvc_appuser);
+            try
+            {
+                return fileProcessRepository.Getloancl(loan_number, cl_status, eff_date, session.User.user_id);
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "FileProcessManager-Getloancl", ex.Message + "|" + ex.StackTrace.TrimStart());
+                return null;
+            }
         }
 
         public Message Set_LOAN_CL(AST_LOAN_CL_TMP loan_wo, AppSession session)
@@ -527,6 +548,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
             }
             catch (Exception ex)
             {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "FileProcessManager-Set_LOAN_CL", ex.Message + "|" + ex.StackTrace.TrimStart());
                 MessageHelper.Error(Message, ex.Message);
             }
             finally
@@ -556,9 +578,9 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
     {
         Message ProcessFile(int businessYear, int file_Type, string filepath, AppSession session);
 
-        IEnumerable<AST_LOAN_WO_STATUS_TEMP> Getloanwo(string loan_number, string are_code, string branch_code, string wo_date, string pvc_appuser);
+        IEnumerable<AST_LOAN_WO_STATUS_TEMP> Getloanwo(string loan_number, string are_code, string branch_code, string wo_date, AppSession session);
         Message Set_LOAN_WO(AST_LOAN_WO_STATUS_TEMP loan_wo, AppSession session);
-        IEnumerable<AST_LOAN_CL_TMP> Getloancl(string loan_number, string cl_status, string eff_date, string pvc_appuser);
+        IEnumerable<AST_LOAN_CL_TMP> Getloancl(string loan_number, string cl_status, string eff_date, AppSession session);
         Message Set_LOAN_CL(AST_LOAN_CL_TMP loan_wo, AppSession session);
     }
 }
