@@ -251,17 +251,15 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
         }
         public IEnumerable<AstDailyStatus> GetYearlyReportData(string area_code, string branch_code, string rm_code, string loantype, AppSession session)
         {
-            IEnumerable<AstDailyStatus> reportData = Enumerable.Empty<AstDailyStatus>();
-            //IEnumerable<AstDailyStatus> reportData = new List<AstDailyStatus>();
             try
             {
-                 reportData = rmRepository.GetYearlyReportData(area_code, branch_code, rm_code, loantype, session.User.user_id);
+                return rmRepository.GetYearlyReportData(area_code, branch_code, rm_code, loantype, session.User.user_id);
             }
             catch (Exception ex)
             {
                 Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "RMAssetManager-GetYearlyReportData", ex.Message + "|" + ex.StackTrace.TrimStart());
+                return null;
             }
-            return reportData;
         }
     }
 
