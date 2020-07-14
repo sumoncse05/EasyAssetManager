@@ -22,7 +22,7 @@ namespace EasyAssetManager.Controllers
         {
             var loanwo = new AST_LOAN_WO_STATUS_TEMP();
             if (loanNumber != null )
-                loanwo = fileProcessManager.Getloanwo(loanNumber, "", "","", Session.User.user_id).FirstOrDefault();
+                loanwo = fileProcessManager.Getloanwo(loanNumber, "", "","", Session).FirstOrDefault();
             ViewBag.LoanWo = loanwo;
             return View();
         }
@@ -32,7 +32,7 @@ namespace EasyAssetManager.Controllers
         }
         public IActionResult GetWoLoan(string loanNumber="",string area_code="",string branch_code="",string wo_date="")
         {
-            var loans = fileProcessManager.Getloanwo(loanNumber,area_code, branch_code, wo_date, Session.User.user_id);
+            var loans = fileProcessManager.Getloanwo(loanNumber,area_code, branch_code, wo_date, Session);
             return PartialView("_GetWoLoan", loans);
         }
         [HttpPost]

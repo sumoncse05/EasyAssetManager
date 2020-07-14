@@ -37,19 +37,19 @@ namespace EasyAssetManager.Controllers
         }
         public IActionResult GetRMDetails(string emp_id)
         {
-            var message = rmAssetManager.GetRMDetails(emp_id, Session.User.user_id);
+            var message = rmAssetManager.GetRMDetails(emp_id, Session);
             return Json(message);
         }
 
         public IActionResult GetRMDetail(string emp_id)
         {
-            var message = rmAssetManager.GetRMDetails(emp_id, Session.User.user_id);
+            var message = rmAssetManager.GetRMDetails(emp_id, Session);
             ViewBag.RMDetails = message;
             return View("Index");
         }
         public IActionResult GetRMDetailList(string emp_id,string rm_name)
         {
-            var data = rmAssetManager.GetRMDetailList(emp_id, rm_name, Session.User.user_id);
+            var data = rmAssetManager.GetRMDetailList(emp_id, rm_name, Session);
             return PartialView("_RMList", data); 
         }
     }

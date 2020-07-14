@@ -23,7 +23,7 @@ namespace EasyAssetManager.Controllers
         }
         public IActionResult GetLoanDetailList(string ac_area_code, string ac_branch_code, string ac_loan_no)
         {
-            var data = rmAssetManager.GetLoanDetailList(ac_area_code, ac_branch_code, ac_loan_no, Session.User.user_id);
+            var data = rmAssetManager.GetLoanDetailList(ac_area_code, ac_branch_code, ac_loan_no, Session);
             return PartialView("_LoanList", data);
         }
         [HttpPost]

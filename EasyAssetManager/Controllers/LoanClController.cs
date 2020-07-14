@@ -22,7 +22,7 @@ namespace EasyAssetManager.Controllers
         {
             var loancl = new AST_LOAN_CL_TMP();
             if (loan_number != null)
-                loancl = fileProcessManager.Getloancl(loan_number, "", "", Session.User.user_id).FirstOrDefault();
+                loancl = fileProcessManager.Getloancl(loan_number, "", "", Session).FirstOrDefault();
             ViewBag.LoanCl = loancl;
             return View();
         }
@@ -32,7 +32,7 @@ namespace EasyAssetManager.Controllers
         }
         public IActionResult GetClLoan(string loan_number, string cl_status, string eff_date)
         {
-            var loans = fileProcessManager.Getloancl(loan_number, cl_status, eff_date, Session.User.user_id);
+            var loans = fileProcessManager.Getloancl(loan_number, cl_status, eff_date, Session);
             return PartialView("_GetClLoan", loans);
         }
         [HttpPost]
