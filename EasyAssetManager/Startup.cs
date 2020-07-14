@@ -1,8 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
 using EasyAssetManagerCore.BusinessLogic.Operation;
 using EasyAssetManagerCore.BusinessLogic.Operation.Asset;
 using EasyAssetManagerCore.BusinessLogic.Security;
 using EasyAssetManagerCore.Model.CommonModel;
+using EasyAssetManagerCore.Models.CommonModel;
 using EasyAssetManagerCore.Models.EntityModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -58,6 +60,7 @@ namespace EasyAssetManager
         {
             services.AddMvc();
             services.AddMemoryCache();
+            TypeDescriptor.AddAttributes(typeof(DateTime), new TypeConverterAttribute(typeof(DeDateTimeConverter)));
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromDays(1);

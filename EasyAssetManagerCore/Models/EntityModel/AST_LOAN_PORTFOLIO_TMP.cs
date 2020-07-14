@@ -1,5 +1,7 @@
 ﻿using EasyAssetManagerCore.Model.CommonModel;
+using EasyAssetManagerCore.Models.CommonModel;
 using System;
+using System.ComponentModel;
 
 namespace EasyAssetManagerCore.Models.EntityModel
 {
@@ -14,6 +16,7 @@ namespace EasyAssetManagerCore.Models.EntityModel
         public string RM_CODE { get; set; }
         public string RM_NAME { get; set; }
         public string LOAN_AC_NUMBER { get; set; }
+        [TypeConverter(typeof(DeDateTimeConverter))]
         public DateTime EFF_DATE { get; set; }
         public string INS_BY { get; set; }
         public DateTime INS_DATE { get; set; }
