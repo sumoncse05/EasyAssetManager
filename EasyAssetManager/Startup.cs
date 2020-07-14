@@ -121,8 +121,8 @@ namespace EasyAssetManager
                 //                    });
                 //                });
 
-                app.UseExceptionHandler("/Login/Index");
-               // app.UseStatusCodePagesWithRedirects("/Error/{0}");
+               // app.UseExceptionHandler("/Login/Index");
+                app.UseStatusCodePagesWithRedirects("/Error/{0}");
             }
 
             app.UseStaticFiles();
