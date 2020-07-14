@@ -152,6 +152,7 @@ namespace EasyAssetManagerCore.Repository.Operation.Asset
             dyParam.Add("pvc_mobile", rm.mobile, OracleMappingType.Varchar2, ParameterDirection.Input, 10);
             dyParam.Add("pvc_dep_code", rm.dept_code, OracleMappingType.Varchar2, ParameterDirection.Input, 10);
             dyParam.Add("pvc_gradecode", rm.grade_code, OracleMappingType.Varchar2, ParameterDirection.Input, 10);
+            dyParam.Add("pvc_empcat", rm.emp_cat, OracleMappingType.Varchar2, ParameterDirection.Input, 10);
             dyParam.Add("pvc_appuser", pvc_appuser, OracleMappingType.Varchar2, ParameterDirection.Input, 50);
             dyParam.Add("pvc_status", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 5);
             dyParam.Add("pvc_statusmsg", 0, OracleMappingType.Varchar2, ParameterDirection.Output, 255);

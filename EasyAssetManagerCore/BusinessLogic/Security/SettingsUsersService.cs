@@ -70,6 +70,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Security
             }
             catch (Exception ex)
             {
+                Logging.WriteToErrLog(appSession.User.StationIp, appSession.User.user_id, "ISettingsUsersService-DoLogin", ex.Message + "|" + ex.StackTrace.TrimStart());
                 MessageHelper.Error(Message, "System Error!!");
             }
             finally
