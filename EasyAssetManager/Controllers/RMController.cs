@@ -47,9 +47,9 @@ namespace EasyAssetManager.Controllers
             ViewBag.RMDetails = message;
             return View("Index");
         }
-        public IActionResult GetRMDetailList(string emp_id,string rm_name)
+        public IActionResult GetRMDetailList(string ac_rm_code, string rm_name)
         {
-            var data = rmAssetManager.GetRMDetailList(emp_id, rm_name, Session);
+            var data = rmAssetManager.GetRMDetailList(ac_rm_code, rm_name, Session);
             return PartialView("_RMList", data); 
         }
     }
