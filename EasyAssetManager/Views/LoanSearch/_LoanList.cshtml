@@ -254,7 +254,7 @@ else
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        ApplicationCommon.makePagination("tb-accloandetails");
+        ApplicationCommon.makeNormalPagination("tb-accloandetails");
         combo.getRmList('moni_rm', '@Url.Content("~/Common/GetRmList")', {}, true,"Select");
         combo.getAreaList('AREA_CODE', '@Url.Content("~/Common/GetAreaList")', true,"Select");
         combo.getBranchList('BRANCH_CODE', '@Url.Content("~/Common/GetBranchList")', $('#AREA_CODE').val(), true,"Select");
