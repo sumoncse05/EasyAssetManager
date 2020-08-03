@@ -85,7 +85,7 @@
         };
         data.push(item);
         item = {
-            text: "LOAN_TARGET",
+            text: "RM_LOAN_TARGET",
             value: "2"
         };
         data.push(item);
@@ -97,6 +97,16 @@
         item = {
             text: "LOAN_WO",
             value: "4"
+        };
+        data.push(item);
+        item = {
+            text: "BST_LOAN_TARGET",
+            value: "5"
+        };
+        data.push(item);
+        item = {
+            text: "BRANCH_LOAN_TARGET",
+            value: "6"
         };
         data.push(item);
         loadComboStatic(controlId, data, isDefaultRecordRequired, DefaltText);

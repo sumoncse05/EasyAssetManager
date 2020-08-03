@@ -59,6 +59,8 @@ namespace EasyAssetManagerCore.Models.EntityModel
         public string OS_TARGET_AMT { get; set; }
         public string DISB_TARGET_AMT { get; set; }
         public string INC_TARGET_AMT { get; set; }
+        public string IS_BRANCHTARGET { get; set; }
+        public string CL_TARGET_AMT { get; set; }
         public string INS_BY { get; set; }
         public DateTime INS_DATE { get; set; }
     }

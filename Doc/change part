@@ -1,0 +1,13 @@
+  INSERT INTO rmp_rm_balance_dtl ( 
+                        business_date, branch_code, rm_code, customer_type, cust_count, cd_balance, savings_balance, 
+                        snd_balance, rd_balance, fd_balance, tot_balance,ins_date, ins_by) 
+                 SELECT max(vdt_currbusinessdate), b.branch_code,m.rm_code,b.customer_type,count(*),sum(cd_balance), sum(savings_balance), 
+                        sum(snd_balance), sum(rd_balance), sum(fd_balance), sum(tot_balance), max(sysdate), max(pvc_appuser) 
+                   FROM rmp_customer_balance_tmp b ,rmp_customer c, rmp_rm_customer m
+                  WHERE b.cust_no = c.cust_no 
+                    AND b.customer_type = c.customer_type
+                    AND b.branch_code = m.branch_code 
+                    AND m.cust_no = c.cust_no 
+                    AND eff_date <= vdt_currbusinessdate
+                    AND exp_date is null
+               GROUP BY b.branch_code,m.rm_code,b.customer_type;

@@ -424,6 +424,19 @@ var ApplicationCommon = function ()
 
         });
     };
+
+    var makeNormalPagination = function (tableId) {
+        $('#' + tableId).DataTable({
+            pageLength: 10,
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [
+                {
+                    extend: 'excel',
+                }
+            ]
+
+        });
+    };
     var showNotification = function (messageType, message)
     {
         messageType = messageType.toString().toLowerCase();
@@ -622,6 +635,7 @@ var ApplicationCommon = function ()
         showLoder: showLoder,
         forceModalClose: forceModalClose,
         reportTitleAndHeaderCustomize: reportTitleAndHeaderCustomize,
-        sessionTimeOut: sessionTimeOut
+        sessionTimeOut: sessionTimeOut,
+        makeNormalPagination: makeNormalPagination
     };
 }();

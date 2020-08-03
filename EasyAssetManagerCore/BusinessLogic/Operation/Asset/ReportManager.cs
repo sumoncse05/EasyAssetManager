@@ -77,7 +77,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                 return null;
             }
         }
-        public IEnumerable<AstDailyStatus> ProductwiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate, AppSession session)
+        public IEnumerable<ProductWiseReport> ProductwiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate, AppSession session)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                 return null;
             }
         }
-        public IEnumerable<AstDailyStatus> YearwiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate, AppSession session)
+        public IEnumerable<YearWiseReport> YearwiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate, AppSession session)
         {
             try
             {
@@ -121,8 +121,8 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
         IEnumerable<AstDailyStatus> BranchwiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate, AppSession session);
         IEnumerable<AstDailyStatus> RmwiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate, AppSession session);
         IEnumerable<AstDailyStatus> BstwiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate, AppSession session);
-        IEnumerable<AstDailyStatus> ProductwiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate, AppSession session);
-        IEnumerable<AstDailyStatus> YearwiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate, AppSession session);
+        IEnumerable<ProductWiseReport> ProductwiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate, AppSession session);
+        IEnumerable<YearWiseReport> YearwiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate, AppSession session);
         IEnumerable<AstDailyStatus> ClientwiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate, AppSession session);
     }
 }

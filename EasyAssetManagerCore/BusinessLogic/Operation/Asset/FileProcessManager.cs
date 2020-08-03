@@ -27,14 +27,20 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                 case (int)FileType.AST_RM_PORTFOLIO_TMP:
                     Message = Process_LOAN_PORTFOLIO(filepath, session, FileType.AST_RM_PORTFOLIO_TMP.ToString(), businessYear);
                     break;
-                case (int)FileType.AST_LOAN_TARGET_TMP:
-                    Message = Process_LOAN_TARGET(filepath, session, FileType.AST_LOAN_TARGET_TMP.ToString(), businessYear);
+                case (int)FileType.AST_RM_TARGET_TMP:
+                    Message = Process_RM_TARGET(filepath, session, "AST_LOAN_TARGET_TMP", businessYear);
                     break;
                 case (int)FileType.AST_LOAN_CL_TMP:
                     Message = Process_LOAN_CL(filepath, session, FileType.AST_LOAN_CL_TMP.ToString(), businessYear);
                     break;
                 case (int)FileType.AST_LOAN_WO_STATUS_TEMP:
                     Message = Process_LOAN_WO(filepath, session, FileType.AST_LOAN_WO_STATUS_TEMP.ToString(), businessYear);
+                    break;
+                case (int)FileType.AST_BST_TARGET:
+                    Message = Process_BST_TARGET(filepath, session, "AST_LOAN_TARGET_TMP", businessYear);
+                    break;
+                case (int)FileType.AST_BRANCH_TARGET:
+                    Message = Process_BRANCH_TARGET(filepath, session, "AST_LOAN_TARGET_TMP", businessYear);
                     break;
             }
             return Message;
@@ -235,7 +241,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
 
             return Message;
         }
-        private Message Process_LOAN_TARGET(string filepath, AppSession session, string tableName, int businessYear)
+        private Message Process_RM_TARGET(string filepath, AppSession session, string tableName, int businessYear)
         {
             try
             {
@@ -258,7 +264,7 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                         {
                             for (var j = 1; j <= columnCount; j++)
                             {
-                                if (wooksheet.Cells[i, j].Text.Trim() == null && !ExcelColumn.LOAN_TARGET.Contains(wooksheet.Cells[i, j].Text.Trim()))
+                                if (wooksheet.Cells[i, j].Text.Trim() == null && !ExcelColumn.RM_TARGET.Contains(wooksheet.Cells[i, j].Text.Trim()))
                                 {
                                     isProcess = false;
                                 }
@@ -280,11 +286,9 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                                     BRANCH_NAME = wooksheet.Cells[i, 6].Text.Trim(),
                                     RM_CODE = wooksheet.Cells[i, 7].Text.Trim(),
                                     RM_NAME = wooksheet.Cells[i, 8].Text.Trim(),
-                                    BST_CODE = wooksheet.Cells[i, 9].Text.Trim(),
-                                    BST_NAME = wooksheet.Cells[i, 10].Text.Trim(),
-                                    OS_TARGET_AMT = valid(wooksheet.Cells[i, 11].Text.Trim(), "OS_TARGET_AMT", "Number"),
-                                    DISB_TARGET_AMT = valid(wooksheet.Cells[i, 12].Text.Trim(), "DISB_TARGET_AMT", "Number"),
-                                    INC_TARGET_AMT = valid(wooksheet.Cells[i, 13].Text.Trim(), "INC_TARGET_AMT", "Number"),
+                                    OS_TARGET_AMT = valid(wooksheet.Cells[i, 9].Text.Trim(), "OS_TARGET_AMT", "Number"),
+                                    INC_TARGET_AMT = valid(wooksheet.Cells[i, 10].Text.Trim(), "INC_TARGET_AMT", "Number"),
+                                    IS_BRANCHTARGET="N",
                                     INS_BY = session.User.user_id,
                                     INS_DATE = DateTime.Now
                                 };
@@ -295,7 +299,205 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
                                 var row = fileProcessRepository.Process_LOAN_TARGET(portFolios);
                                 if (row > 0)
                                 {
-                                    var response = fileProcessRepository.SetProcess_LOAN_TARGET(fileProcessID, businessYear, session.User.user_id);
+                                    var response = fileProcessRepository.SetProcess_LOAN_TARGET(fileProcessID, businessYear, session.User.user_id,"2");
+                                    if (response.pvc_status == "40999")
+                                    {
+                                        MessageHelper.Success(Message, "Data upload and process successfully....");
+                                    }
+                                    else
+                                    {
+                                        MessageHelper.Error(Message, response.pvc_statusmsg);
+                                    }
+
+                                }
+                                else
+                                {
+                                    MessageHelper.Error(Message, "No data process...");
+                                }
+                            }
+                            else
+                            {
+                                MessageHelper.Error(Message, "No rows found this excel file.");
+                            }
+                        }
+                        else
+                        {
+                            MessageHelper.Error(Message, "File structure is not valid. Invalid Columns.");
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "FileProcessManager-Process_LOAN_TARGET", ex.Message + "|" + ex.StackTrace.TrimStart());
+                MessageHelper.Error(Message, ex.Message);
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return Message;
+        }
+
+        private Message Process_BST_TARGET(string filepath, AppSession session, string tableName, int businessYear)
+        {
+            try
+            {
+                if (Connection.State != ConnectionState.Open)
+                    Connection.Open();
+                fileProcessRepository.DeleteTable(tableName, session.User.user_id);
+                var random = new Random();
+                var fileProcessID = random.Next(10000);
+                using (var package = new ExcelPackage(new FileInfo(@filepath)))
+                {
+                    var totalWorkSheet = package.Workbook.Worksheets.Count;
+                    var isProcess = true;
+                    for (var index = 1; index <= totalWorkSheet; index++)
+                    {
+                        var wooksheet = package.Workbook.Worksheets[index];
+                        var xx = wooksheet.Name;
+                        int rowCount = wooksheet.Dimension.Rows;
+                        int columnCount = wooksheet.Dimension.Columns;
+                        for (var i = 1; i <= 1; i++)
+                        {
+                            for (var j = 1; j <= columnCount; j++)
+                            {
+                                if (wooksheet.Cells[i, j].Text.Trim() == null && !ExcelColumn.BST_TARGET.Contains(wooksheet.Cells[i, j].Text.Trim()))
+                                {
+                                    isProcess = false;
+                                }
+                            }
+                        }
+                        if (isProcess)
+                        {
+                            var portFolios = new List<AST_LOAN_TARGET_TMP>();
+                            for (var i = 2; i <= rowCount; i++)
+                            {
+                                var portFolio = new AST_LOAN_TARGET_TMP
+                                {
+                                    File_Process_ID = fileProcessID,
+                                    SEG_ID = wooksheet.Cells[i, 1].Text.Trim(),
+                                    SEG_NAME = wooksheet.Cells[i, 2].Text.Trim(),
+                                    AREA_CODE = wooksheet.Cells[i, 3].Text.Trim(),
+                                    AREA_NAME = wooksheet.Cells[i, 4].Text.Trim(),
+                                    BRANCH_CODE = wooksheet.Cells[i, 5].Text.Trim(),
+                                    BRANCH_NAME = wooksheet.Cells[i, 6].Text.Trim(),
+                                    BST_CODE = wooksheet.Cells[i, 7].Text.Trim(),
+                                    BST_NAME = wooksheet.Cells[i, 8].Text.Trim(),
+                                    DISB_TARGET_AMT = valid(wooksheet.Cells[i, 9].Text.Trim(), "DISB_TARGET_AMT", "Number"),
+                                    IS_BRANCHTARGET="N",
+                                    INS_BY = session.User.user_id,
+                                    INS_DATE = DateTime.Now
+                                };
+                                portFolios.Add(portFolio);
+                            }
+                            if (portFolios.Count > 0)
+                            {
+                                var row = fileProcessRepository.Process_LOAN_TARGET(portFolios);
+                                if (row > 0)
+                                {
+                                    var response = fileProcessRepository.SetProcess_LOAN_TARGET(fileProcessID, businessYear, session.User.user_id,"4");
+                                    if (response.pvc_status == "40999")
+                                    {
+                                        MessageHelper.Success(Message, "Data upload and process successfully....");
+                                    }
+                                    else
+                                    {
+                                        MessageHelper.Error(Message, response.pvc_statusmsg);
+                                    }
+
+                                }
+                                else
+                                {
+                                    MessageHelper.Error(Message, "No data process...");
+                                }
+                            }
+                            else
+                            {
+                                MessageHelper.Error(Message, "No rows found this excel file.");
+                            }
+                        }
+                        else
+                        {
+                            MessageHelper.Error(Message, "File structure is not valid. Invalid Columns.");
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteToErrLog(session.User.StationIp, session.User.user_id, "FileProcessManager-Process_LOAN_TARGET", ex.Message + "|" + ex.StackTrace.TrimStart());
+                MessageHelper.Error(Message, ex.Message);
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return Message;
+        }
+
+        private Message Process_BRANCH_TARGET(string filepath, AppSession session, string tableName, int businessYear)
+        {
+            try
+            {
+                if (Connection.State != ConnectionState.Open)
+                    Connection.Open();
+                fileProcessRepository.DeleteTable(tableName, session.User.user_id);
+                var random = new Random();
+                var fileProcessID = random.Next(10000);
+                using (var package = new ExcelPackage(new FileInfo(@filepath)))
+                {
+                    var totalWorkSheet = package.Workbook.Worksheets.Count;
+                    var isProcess = true;
+                    for (var index = 1; index <= totalWorkSheet; index++)
+                    {
+                        var wooksheet = package.Workbook.Worksheets[index];
+                        var xx = wooksheet.Name;
+                        int rowCount = wooksheet.Dimension.Rows;
+                        int columnCount = wooksheet.Dimension.Columns;
+                        for (var i = 1; i <= 1; i++)
+                        {
+                            for (var j = 1; j <= columnCount; j++)
+                            {
+                                if (wooksheet.Cells[i, j].Text.Trim() == null && !ExcelColumn.BRANCH_TARGET.Contains(wooksheet.Cells[i, j].Text.Trim()))
+                                {
+                                    isProcess = false;
+                                }
+                            }
+                        }
+                        if (isProcess)
+                        {
+                            var portFolios = new List<AST_LOAN_TARGET_TMP>();
+                            for (var i = 2; i <= rowCount; i++)
+                            {
+                                var portFolio = new AST_LOAN_TARGET_TMP
+                                {
+                                    File_Process_ID = fileProcessID,
+                                    SEG_ID = wooksheet.Cells[i, 1].Text.Trim(),
+                                    SEG_NAME = wooksheet.Cells[i, 2].Text.Trim(),
+                                    AREA_CODE = wooksheet.Cells[i, 3].Text.Trim(),
+                                    AREA_NAME = wooksheet.Cells[i, 4].Text.Trim(),
+                                    BRANCH_CODE = wooksheet.Cells[i, 5].Text.Trim(),
+                                    BRANCH_NAME = wooksheet.Cells[i, 6].Text.Trim(),
+                                    OS_TARGET_AMT = valid(wooksheet.Cells[i, 7].Text.Trim(), "OS_TARGET_AMT", "Number"),
+                                    INC_TARGET_AMT = valid(wooksheet.Cells[i, 8].Text.Trim(), "INC_TARGET_AMT", "Number"),
+                                    CL_TARGET_AMT = valid(wooksheet.Cells[i, 9].Text.Trim(), "CL_TARGET_AMT", "Number"),
+                                    IS_BRANCHTARGET ="Y",
+                                    INS_BY = session.User.user_id,
+                                    INS_DATE = DateTime.Now
+                                };
+                                portFolios.Add(portFolio);
+                            }
+                            if (portFolios.Count > 0)
+                            {
+                                var row = fileProcessRepository.Process_LOAN_TARGET(portFolios);
+                                if (row > 0)
+                                {
+                                    var response = fileProcessRepository.SetProcess_LOAN_TARGET(fileProcessID, businessYear, session.User.user_id,"5");
                                     if (response.pvc_status == "40999")
                                     {
                                         MessageHelper.Success(Message, "Data upload and process successfully....");
@@ -563,16 +765,20 @@ namespace EasyAssetManagerCore.BusinessLogic.Operation.Asset
     public enum FileType
     {
         AST_RM_PORTFOLIO_TMP = 1,
-        AST_LOAN_TARGET_TMP = 2,
+        AST_RM_TARGET_TMP = 2,
         AST_LOAN_CL_TMP = 3,
-        AST_LOAN_WO_STATUS_TEMP = 4
+        AST_LOAN_WO_STATUS_TEMP = 4,
+        AST_BST_TARGET=5,
+        AST_BRANCH_TARGET=6
     }
     public static class ExcelColumn
     {
         public static List<string> LOAN_CL = new List<string> { "AREA_CODE", "AREA_NAME", "BRANCH_CODE", "BRANCH_NAME", "RM_CODE", "RM_NAME", "BST_CODE", "BST_NAME", "LOAN_AC_NUMBER", "CL_STATUS", "EFF_DATE" };
         public static List<string> LOAN_PORTFOLIO = new List<string> { "AREA_CODE", "AREA_NAME", "BRANCH_CODE", "BRANCH_NAME", "RM_CODE", "RM_NAME", "LOAN_AC_NUMBER", "EFF_DATE" };
-        public static List<string> LOAN_TARGET = new List<string> { "SEG_ID", "SEG_NAME", "AREA_CODE", "AREA_NAME", "BRANCH_CODE", "BRANCH_NAME", "RM_CODE", "RM_NAME", "BST_CODE", "BST_NAME", "OS_TARGET_AMT", "DISB_TARGET_AMT", "INC_TARGET_AMT" };
+        public static List<string> RM_TARGET = new List<string> { "SEG_ID", "SEG_NAME", "AREA_CODE", "AREA_NAME", "BRANCH_CODE", "BRANCH_NAME", "RM_CODE", "RM_NAME",  "OS_TARGET_AMT", "INC_TARGET_AMT" };
         public static List<string> LOAN_WO = new List<string> { "SEG_ID", "SEG_NAME", "AREA_CODE", "AREA_NAME", "BRANCH_CODE", "BRANCH_NAME", "PRODUCT_CODE", "PRODUCT_DESC", "LOAN_AC_NUMBER", "OS_AMOUNT", "WO_AMOUNT", "WO_DATE" };
+        public static List<string> BST_TARGET = new List<string> { "SEG_ID", "SEG_NAME", "AREA_CODE", "AREA_NAME", "BRANCH_CODE", "BRANCH_NAME", "BST_CODE", "BST_NAME", "DISB_TARGET_AMT" };
+        public static List<string> BRANCH_TARGET = new List<string> { "SEG_ID", "SEG_NAME", "AREA_CODE", "AREA_NAME", "BRANCH_CODE", "BRANCH_NAME", "OS_TARGET_AMT", "CL_TARGET_AMT", "INC_TARGET_AMT" };
     }
     public interface IFileProcessManager
     {

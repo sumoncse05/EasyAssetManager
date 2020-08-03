@@ -169,7 +169,7 @@ else
             autoclose: true,
             format: 'dd/mm/yyyy',
         });
-        ApplicationCommon.makePagination("tb-accreq");
+        ApplicationCommon.makeNormalPagination("tb-accreq");
         var rowCount = $('#tb-accreq >tbody >tr').length;
         if (rowCount > 0) {
             $("#sidebarCollapse").addClass('fa-chevron-down').removeClass('fa-chevron-up');
