@@ -52,16 +52,19 @@ namespace EasyAssetManager.Controllers
         }
         public IActionResult ProductwiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate)
         {
+            if (string.IsNullOrEmpty(rmCode)) rmCode = ""; if (string.IsNullOrEmpty(areaCode)) areaCode = ""; if (string.IsNullOrEmpty(branchCode)) branchCode = "";
             var data = reportRepository.ProductwiseReport(loanType, rmCode, areaCode, branchCode, todate, Session);
             return PartialView("_ProductwiseReport", data);
         }
         public IActionResult YearwiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate)
         {
+            if (string.IsNullOrEmpty(rmCode)) rmCode = ""; if (string.IsNullOrEmpty(areaCode)) areaCode = ""; if (string.IsNullOrEmpty(branchCode)) branchCode = "";
             var data = reportRepository.YearwiseReport(loanType, rmCode, areaCode, branchCode, todate, Session);
             return PartialView("_YearwiseReport", data);
         }
         public IActionResult ClientwiseReport(string loanType, string rmCode, string areaCode, string branchCode, string todate)
         {
+            if (string.IsNullOrEmpty(rmCode)) rmCode = ""; if (string.IsNullOrEmpty(areaCode)) areaCode = ""; if (string.IsNullOrEmpty(branchCode)) branchCode = "";
             var data = reportRepository.ClientwiseReport(loanType, rmCode, areaCode, branchCode, todate, Session);
             return PartialView("_ClientwiseReport", data);
         }
