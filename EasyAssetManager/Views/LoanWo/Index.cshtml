@@ -114,7 +114,8 @@
                 validation(formId);
                 var model =@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@ViewBag.LoanWo));
                 if (model.AREA_CODE) {
-                    combo.getBranchList('BRANCH_CODE', '@Url.Content("~/Common/GetBranchList")', model.AREA_CODE, true,"Select");
+                    combo.getBranchList('BRANCH_CODE', '@Url.Content("~/Common/GetBranchList")', model.AREA_CODE, true, "Select");
+                    changeProduct(model.SEG_ID);
                     ApplicationCommon.setData(model, null);
                     $('#WO_DATE').val(ApplicationCommon.formateDate(model.WO_DATE));
                 };
@@ -126,14 +127,14 @@
                 combo.getAreaList('AREA_CODE', '@Url.Content("~/Common/GetAreaList")', true,"Select");
                 //combo.getBranchList('BRANCH_CODE', '@Url.Content("~/Common/GetBranchList")', $('#AREA_CODE').val(), true);
                 combo.getLoanType('SEG_ID', false,"Select");
-                changeProduct();
+                changeProduct($('#SEG_ID').val());
                 $('#AREA_CODE').on('change', function () {
                     combo.getBranchList('BRANCH_CODE', '@Url.Content("~/Common/GetBranchList")', $('#AREA_CODE').val(), true,"Select");
                     $('#BRANCH_CODE').trigger("chosen:updated");
                 });
                 $('#SEG_ID').on('change', function ()
                 {
-                    changeProduct();
+                    changeProduct($('#SEG_ID').val());
                    
                 });
                 $('.input-group.date').datepicker({
@@ -168,8 +169,8 @@
                     });
                 }
             };
-            var changeProduct = function () {
-                var loanType = $('#SEG_ID').val();
+            var changeProduct = function (loanType) {
+               // var loanType = $('#SEG_ID').val();
                 combo.getLoanProductList('PRODUCT_CODE', '@Url.Content("~/Common/GetLoanProductList")', loanType, true,"Select");
                 $('#PRODUCT_CODE').trigger("chosen:updated");
             };
